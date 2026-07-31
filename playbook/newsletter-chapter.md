@@ -1,168 +1,160 @@
-# Operational Playbook — Chapter: City Newsletters
+# Chapter 8 — City Newsletters
 
-> Draft for the CTC Operational Playbook. Two parts, per manager direction:
-> **Part 1** — how to launch a new city newsletter. **Part 2** — the full weekly
-> production process. The NYC newsletter is the pilot used to validate every step
-> below before this chapter is considered final.
+> Draft for the CTC Operational Playbook. Part A covers launching a newsletter in
+> a new chapter city; Part B covers the weekly production cycle. Validated
+> against the New York newsletter before submission.
+
+The weekly newsletter is CTC's flagship programme. This chapter exists so that
+producing an issue is cheap enough that a busy month doesn't kill it, and so a
+new chapter can run one without a founder's time.
 
 ---
 
-## Part 1 — Launching a New City Newsletter
+## Part A — Launching a City Newsletter
 
-### 1.0 Readiness check (before anything else)
+### A.1 What you need before starting
 
-A city newsletter launches only when all four are true:
+- A chapter lead (or interim editor) who owns the newsletter — budget ~2–3 hours/week
+- A Substack publication for the chapter
+- The three CTC skills from the shared Drive folder (take the latest version number): `ctc-source-map`, `ctc-harvest`, `ctc-assemble`
 
-- [ ] A chapter lead (or interim editor) owns the newsletter and can commit ~3 hrs/week
-- [ ] At least 8–10 recurring event sources exist for the city (see 1.1)
-- [ ] A starting audience exists — chapter members, Luma calendar subscribers, or a partner list
-- [ ] The first three issue dates are on the calendar
+### A.2 Build the source registry (`ctc-source-map`)
 
-### 1.1 Build the source registry
+Run `ctc-source-map` with your city name. Run it **once at launch, refresh quarterly**.
 
-The registry is a standing, per-city list of everywhere events come from. It is
-set up once at launch and refreshed quarterly. Harvest sweeps exactly this list —
-if a source isn't in the registry, its events don't exist.
+It researches nine source categories — Luma first (highest yield), then
+Eventbrite organisers, universities, incubators, government and utilities,
+professional groups, adjacent newsletters, climate orgs, and arts/civic venues —
+and outputs a registry CSV: `name, url, platform, method, tier, category,
+cadence, last_event, confidence, notes`.
 
-Source types to cover (aim for 8–15 total):
+Every source passes five verification gates: the page loads; it has been active
+within 90 days; past events show a repeating pattern; it's a real organisation
+with genuinely climate-relevant events; the URL is stable. Syndicated commercial
+training spam — the most common junk on ticketing platforms — is rejected
+aggressively. CTC's own properties are never registered.
 
-| Type | Examples | Notes |
+**The registry sets your ceiling.** Issue size is an output, not a target: a
+mature issue carries 40–55 listings, and thin issues mean a weak registry, not a
+reason to pad. If harvest keeps coming back light, the fix is here, not downstream.
+
+### A.3 Pilot before you announce
+
+Run the full weekly cycle (Part B) once with no public send. Expect fetch
+friction — this run is where you learn which sources need the browser tier and
+which need paste. Fix registry problems, run once more, then announce the first
+issue in chapter channels.
+
+---
+
+## Part B — The Weekly Cycle
+
+```
+harvest (skill) → events .xlsx → YOU cut rows in Excel → assemble (skill)
+→ Substack markdown → YOU write the 3 editorial blocks → send
+```
+
+Collection and judgment are separate stages by design: harvest sweeps wide with
+no quality filtering, and the human triage pass is where issue size is decided.
+
+### B.1 Harvest (`ctc-harvest`)
+
+Run weekly with the registry and the date window: next 7 days = `this_week`,
+days 8–56 = `upcoming`. Output is an `.xlsx` (sheet `Events`) with the 14
+standard columns plus `Block`:
+
+`Event Name` · `Date` · `Start Time (TZ)` · `End Time (TZ)` · `Registration Link` · `Event Type` · `Access` · `Location` · `City / Neighborhood` · `Google Maps` · `Format` · `Host Organization(s)` · `Description` · `Categories`
+
+Controlled vocabularies — do not invent values:
+
+- **Event Type:** `In-person` / `Hybrid` / `Online`
+- **Access:** `Free` / `Free — register to view address` / `Ticketed (Paid)` / `Ticketed (Paid) — register to view address`
+- **Categories (22):** Adaptation, AI & Data, Arts & Culture, Biodiversity & Nature, Buildings, Circular Economy & Waste Management, Cities, Climate Tech & Startups, Communications, Corporate Sustainability, Energy, Environmental Justice, Finance, Food & Agriculture, Fun for Kids, Get Outside, Health, Mobility & Logistics, Philanthropy, Policy, Social, Water
+
+`Google Maps` is derived from the Location, never looked up. Fetching is
+three-tier: plain fetch → browser (when a page blocks or renders via JavaScript)
+→ paste fallback. **CAPTCHA is a hard stop** — never solved, never bypassed, no
+credentials ever entered. The skill dedupes on date + fuzzy name and surfaces
+collisions rather than resolving them silently; it leaves cells blank rather
+than guessing and never fabricates an event, time, or venue.
+
+### B.2 Triage — you, in Excel
+
+The judgment stage, never automated. Working the harvest sheet:
+
+1. Resolve flagged collisions — keep the row with the best link
+2. Cut off-topic rows, low-quality listings, and anything that slipped past the spam gates
+3. Fill or cut rows with blanks the skill left (missing date or link = cut unless worth chasing)
+4. Choose your picks — the 2–4 events the picks block will feature
+
+What survives is the issue. Save the edited `.xlsx`.
+
+### B.3 Assemble (`ctc-assemble`)
+
+Run on the edited sheet. Output is Substack-ready markdown, nine blocks in
+publication order — **note the sign-off sits mid-document, not at the end**:
+
+| # | Block | Who |
 |---|---|---|
-| Luma calendars | City climate calendar, org calendars | Highest quality; start here |
-| Eventbrite feeds | "climate" + city search | Noisier; expect fetch friction |
-| Meetup groups | Climate tech, cleantech, energy groups | |
-| University calendars | Public lectures, sustainability centers | Refresh each semester |
-| Org event pages | Cleantech alliances, incubators, accelerators | |
-| Government/civic | City sustainability office, utilities | Low volume, high credibility |
+| 1 | Title | skill |
+| 2 | Subtitle | skill |
+| 3 | Opening note | **scaffold — you write** |
+| 4 | Picks of the week | **scaffold — you write** |
+| 5 | Housekeeping + sign-off | fixed convention |
+| 6 | Opportunities | **scaffold — you write** |
+| 7 | This Week's Events | skill |
+| 8 | Upcoming Events | skill |
+| 9 | Events in Detail (optional) → standing footer | skill |
 
-Registry columns: **Source name · Type · URL · Fetch tier (plain fetch / browser / paste) · Last refreshed · Owner**
+### B.4 The three editorial blocks — never generated
 
-Quarterly refresh: verify each URL still resolves, drop dead sources, add new ones
-surfaced during the quarter (the sheet's Source column shows which registries are pulling weight).
+House position: the models can't write, and everything they produce reads like a
+computer. A 3,000-word issue contains roughly 80 words of human prose, and those
+80 words are why anyone subscribes. The skill drafts scaffolds so nobody faces a
+blank page — it does not write the voice.
 
-### 1.2 Set up the infrastructure
+The tool cannot know, and must mark rather than invent: the weather, local news,
+how the last event went, why the chapter is excited, internal scheduling decisions.
+Those markers are your writing prompts.
 
-1. **Event sheet template** — copy the master template: the 14 standard columns
-   (as specified in the climate week export format) **plus the `Block` column**
-   (`this_week` / `upcoming`) used only for weekly issues.
-2. **Skills** — the three production skills are city-parameterized, not city-specific:
-   - `ctc-harvest` — pass the city and timezone (e.g. `--tz EDT` for NYC)
-   - `ctc-assemble` — produces the nine-section draft from the curated sheet
-   - `ctc-qa` — pre-send checks
-3. **Email platform** — create the city list/publication, install the newsletter
-   template (nine sections in canonical order, see 2.3), set the sender identity.
-4. **Log** — create the city's issue log tab (see 2.6).
+Voice conventions (measured from 190 NYC archive issues):
 
-### 1.3 Pilot issues
+- Greeting: `Hi all,` or `Hi friends,`
+- Sign-off: `Til next week!` then `[Names], and the Climate Tech Cities team` (variant: `As always,`)
+- Picks: bold day → verb → place or reason → linked title with emoji; multiple events joined with `or`, never `and`
+- Day words: `Today`, `Tomorrow`, weekday names, `Next Tuesday` for just past the window
+- Sentence case throughout; contractions; no marketing register
+- Acknowledge quiet weeks plainly rather than inflating them
 
-Run **two full dry runs** before the first public send:
+Emoji: propose semantically from title and category, override freely, fall back
+to 🌱 or 🌍. There is no lookup table — the archive uses 251 distinct emoji.
 
-- Dry run 1: full pipeline, internal recipients only. Expect source problems —
-  this is where fetch tiers get assigned per source.
-- Dry run 2: fix what broke, run again, and time each stage. If the whole cycle
-  exceeds ~3 hours of human time, cut sources or tighten curation rules before launch.
+### B.5 Checks before send
 
-### 1.4 Launch checklist
+There is no separate QA tool: link checks, duplicate detection, past-date
+filtering, and block-mismatch checks live inside harvest and assemble. Before
+sending, do one human read top-to-bottom in the Substack preview — you are
+checking voice and picks, not links.
 
-- [ ] Registry complete, every source fetch-tested
-- [ ] Two dry runs done, stage timings recorded
-- [ ] First issue's opening note drafted by the chapter lead (voice is set locally, from issue one)
-- [ ] Subscribe path live and linked from chapter channels
-- [ ] Issue #1 date announced to chapter
+### B.6 Send, and cadence
 
----
+Weekly is the standard. Write it as the target.
 
-## Part 2 — Weekly Production Process
-
-### 2.0 The pipeline
-
-**Sources → Harvest → Event sheet → Assemble → You write → QA → Send → Log**
-
-| Stage | Who | Time budget |
-|---|---|---|
-| Harvest | Skill (`ctc-harvest`) | 15 min supervision |
-| Curate sheet | Editor | 30–45 min |
-| Assemble | Skill (`ctc-assemble`) | 10 min supervision |
-| Write human sections | Editor | 45–60 min |
-| QA | Skill (`ctc-qa`) + editor review | 15 min |
-| Send + log | Editor | 10 min |
-
-Suggested weekly rhythm (adjust per city; send day fixed per city):
-**Day 1** harvest + curate · **Day 2** assemble + write · **Day 3** QA + send + log.
-
-### 2.1 Harvest
-
-Run `ctc-harvest` for the city. It sweeps the source registry and outputs the
-event sheet in the standard 14-column format plus `Block`, with the controlled
-vocabularies (Event Type: In-person/Hybrid/Online; the four Access values; the
-22-category list). Escalation is tiered: plain fetch → browser fetch (for empty
-shells or 403s) → manual paste. CAPTCHA is a hard stop: the skill reports and
-moves on; the editor decides whether the source is worth manual effort.
-
-Harvest **warns, never silently fixes**: missing dates, missing links,
-off-vocabulary values, and invented categories get flagged for the editor.
-
-Target volume for a weekly issue: **15–20 events for this week, 25–40 upcoming**
-(next 2–3 weeks). If harvest returns far more, tighten curation; far less,
-check the registry.
-
-### 2.2 Curate the event sheet
-
-The editor's judgment stage — never automated:
-
-1. **Dedupe** — same event from multiple sources: keep the row with the best link, mark the rest DUPE.
-2. **Cut** — off-topic, low-quality, or generic webinars: mark CUT with a one-word reason.
-3. **Flag picks** — 2–4 events marked PICK; these drive the Picks section and Events in Detail.
-4. **Resolve harvest warnings** — fill missing dates/links or cut the row.
-
-### 2.3 Assemble
-
-Run `ctc-assemble` on the curated sheet. It produces the full draft skeleton in
-the canonical nine-section order — note that **the sign-off sits mid-document,
-not at the end**:
-
-1. **Opening note** — *placeholder; human writes*
-2. **Picks for the week** — skill drafts from PICK rows; runs directly out of the opening note ("Here are our picks for the week:")
-3. **Housekeeping** — *placeholder; human writes as needed*
-4. **Sign-off** — "'Til next week!" — fixed position, after housekeeping
-5. **Opportunities** — *placeholder; human curates*
-6. **This Week's Events** — skill, from `this_week` rows; short punchy entries
-7. **Upcoming Events** — skill, from `upcoming` rows; one line each
-8. **Events in Detail** — skill, PICK rows only; ~3 sentences / 50–70 words each (weekly length, not the ~177-word climate-week guide length)
-9. **Footer** — CTC + Streetlife Ventures startup and talent platforms; fixed template
-
-Sections 2, 6, 7, 8 come out styled on past issues but never verbatim from them.
-
-### 2.4 You write (stays human)
-
-The editor writes: the **opening note** (voice of the newsletter), any
-**housekeeping**, the **opportunities** section (jobs, grants, calls for
-speakers — sourced from chapter channels, not harvested), and tweaks the
-drafted picks so the "why this one" is genuinely theirs.
-
-Rule of thumb: if a reader could tell a machine wrote it, it belongs to the
-editor. If it's a listing, it belongs to the skill.
-
-### 2.5 QA
-
-Run `ctc-qa` on the full draft. It checks: dead/malformed links (verified live),
-duplicate events across blocks, past-dated events, and date/venue mismatches
-against the sheet. Output is a numbered issue list or CLEAN. The editor fixes
-and re-runs until CLEAN, then does one final human read top-to-bottom.
-
-### 2.6 Send and log
-
-Send via the city's email platform. Then log the issue immediately:
-
-**Issue # · Date sent · Events harvested · Events published · Picks · Open rate (added later) · Notes (what broke, source problems, timing)**
-
-The Notes column is what makes the quarterly registry refresh and playbook
-revisions evidence-based rather than guesswork.
+**If you miss a week — and chapters do — resume without ceremony.** No apology
+paragraph, no explanation owed. The house answer to a gap is the next issue:
+New York went dark for seven months in 2025 and restarted with "Hi friends,"
+and carried on. A missed week is a scheduling fact, not a crisis; a dead
+newsletter is the only failure mode that matters.
 
 ---
 
-## Validation plan (NYC pilot)
+## Skill versions and distribution
 
-1. Run one full NYC issue with this chapter open, following it literally.
-2. Anywhere reality diverges from the chapter, fix the chapter, not the process notes.
-3. After two consecutive smooth issues, submit the chapter for the playbook.
+Skills live as `.skill` files in the versioned Google Drive folder with a
+changelog alongside; updates are announced in Slack. The version number is in
+the filename — always take the latest, and never edit a skill locally without
+versioning it back, or chapters drift.
+
+Excel is the interchange format on purpose: either skill can be rebuilt without
+touching the other, and the week the tooling breaks, a human can take over
+mid-pipeline with nothing but a spreadsheet.

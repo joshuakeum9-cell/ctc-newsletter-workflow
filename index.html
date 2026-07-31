@@ -133,7 +133,7 @@
 
   <header class="site">
     <div class="brand">Climate Tech <span>Cities</span> · Newsletter Workflow</div>
-    <div class="tagline">Sources → Harvest → Sheet → Assemble → Write → QA → Send → Log</div>
+    <div class="tagline">Source map → Harvest → Triage → Assemble → Write → Send → Log</div>
   </header>
 
   <!-- City selector -->
@@ -151,20 +151,20 @@
 
   <!-- Pipeline stepper -->
   <nav class="pipeline">
-    <div class="step" onclick="jump('sources')"><span class="num">1</span>Sources</div>
+    <div class="step skill" onclick="jump('sources')"><span class="num">1</span>Source map</div>
     <div class="step skill" onclick="jump('harvest')"><span class="num">2</span>Harvest</div>
     <div class="step" onclick="jump('sheet')"><span class="num">3</span>Event sheet</div>
     <div class="step skill" onclick="jump('assemble')"><span class="num">4</span>Assemble</div>
     <div class="step human" onclick="jump('write')"><span class="num">5</span>You write</div>
-    <div class="step skill" onclick="jump('qa')"><span class="num">6</span>QA</div>
+    <div class="step" onclick="jump('qa')"><span class="num">6</span>Checks</div>
     <div class="step" onclick="jump('send')"><span class="num">7</span>Send</div>
     <div class="step" onclick="jump('log')"><span class="num">8</span>Log</div>
   </nav>
 
   <!-- 1. SOURCES -->
   <section class="stage" id="sources">
-    <h2>1. Sources <span class="badge auto">standing registry</span></h2>
-    <p class="desc">A per-city registry of event sources, set up at launch and refreshed quarterly. Harvest sweeps exactly this list — nothing else.</p>
+    <h2>1. Source map <span class="badge skill">ctc-source-map</span></h2>
+    <p class="desc">A per-city registry of event sources — built once by the <strong>ctc-source-map</strong> skill, refreshed quarterly. Nine source categories, Luma first; five verification gates per source. Harvest sweeps exactly this list — nothing else. The registry sets the issue-size ceiling: thin issues mean a weak registry, not a reason to pad.</p>
     <div class="table-scroll">
       <table id="sources-table">
         <thead><tr><th>Source</th><th>Type</th><th>URL</th><th>Last refreshed</th></tr></thead>
@@ -209,8 +209,8 @@
 
   <!-- 4. ASSEMBLE -->
   <section class="stage" id="assemble">
-    <h2>4. Assemble <span class="badge skill">Claude skill</span></h2>
-    <p class="desc">Turns the curated sheet into three of the nine newsletter blocks: <strong>This Week's Events</strong>, <strong>Upcoming Events</strong>, and <strong>Events in Detail</strong>. Opens in your Claude with the sheet contents and formatting rules pre-loaded.</p>
+    <h2>4. Assemble <span class="badge skill">ctc-assemble</span></h2>
+    <p class="desc">Turns the edited sheet into Substack-ready markdown — nine blocks in publication order. Six built by the skill (title, subtitle, <strong>This Week's Events</strong>, <strong>Upcoming Events</strong>, <strong>Events in Detail</strong>, footer); three scaffolded for the human (opening note, picks, opportunities). The sign-off sits mid-document, after housekeeping.</p>
     <button class="btn" onclick="runSkill('assemble')">Run Assemble in my Claude →</button>
     <p class="note amber">Placeholder prompt — the real Assemble skill (block formats, house style) gets embedded here.</p>
   </section>
@@ -229,10 +229,8 @@
 
   <!-- 6. QA -->
   <section class="stage" id="qa">
-    <h2>6. QA <span class="badge skill">small skill</span></h2>
-    <p class="desc">Checks the draft for dead links, duplicates, and past dates before anything goes out.</p>
-    <button class="btn secondary" onclick="runSkill('qa')">Run QA in my Claude →</button>
-    <p class="note amber">Placeholder prompt — swap in the QA checklist skill.</p>
+    <h2>6. Checks <span class="badge auto">built into the skills</span></h2>
+    <p class="desc">There is no separate QA tool. Link checks, duplicate detection, past-date filtering, and block-mismatch checks live inside harvest and assemble. Before sending: one human read top-to-bottom in the Substack preview — checking voice and picks, not links.</p>
   </section>
 
   <!-- 7. SEND -->
@@ -291,12 +289,6 @@
         '(2) UPCOMING EVENTS — days 8–21, one line each; ' +
         '(3) EVENTS IN DETAIL — expanded write-ups of only the rows marked PICK. ' +
         'Keep house style: tight, factual, no hype words. Here is the sheet: [PASTE SHEET HERE]';
-    },
-    qa: function (city) {
-      return 'You are the QA skill for the Climate Tech Cities newsletter (' + city + ' edition). ' +
-        'I will paste the full draft below. Check for: (1) dead or malformed links — verify each with web search/fetch; ' +
-        '(2) duplicate events listed twice; (3) any event dated in the past; (4) date/venue mismatches. ' +
-        'Return a numbered issue list with exact quotes, or "CLEAN" if nothing found. Draft: [PASTE DRAFT HERE]';
     }
   };
 
