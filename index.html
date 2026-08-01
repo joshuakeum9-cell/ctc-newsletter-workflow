@@ -67,6 +67,7 @@
   .key.claude { background: var(--green); border-radius: 3px; }
   .key.you { background: #fff; border: 2px solid var(--coral); border-radius: 50%; }
   .key.page { background: #fff; border: 1.5px dashed var(--slate); border-radius: 50%; }
+  .diagram-text { font-size: 13.5px; color: var(--body-muted); margin-top: 14px; max-width: 80ch; }
 
   /* rhythm strip */
   .rhythm { display: flex; gap: 8px; flex-wrap: wrap; margin: 24px 0 8px; }
@@ -107,6 +108,13 @@
   }
   details.stage summary { cursor: pointer; list-style: none; }
   details.stage summary::-webkit-details-marker { display: none; }
+  details.stage summary:focus-visible { outline: 3px solid #4c6ee6; outline-offset: 4px; border-radius: var(--r-sm); }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, label.btn:focus-within {
+    outline: 3px solid #4c6ee6; outline-offset: 2px;
+  }
+  .expand-hint { font-size: 13px; color: var(--blue); margin-top: 6px; display: inline-block; }
+  details.stage[open] .expand-hint::after { content: "Collapse"; }
+  details.stage:not([open]) .expand-hint::after { content: "Expand"; }
   .stage h2 {
     font-weight: 400; font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.01em;
     display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px;
@@ -199,7 +207,21 @@
   @media (max-width: 640px) {
     .hero { padding: 34px 0 22px; }
     .dark-band { padding: 26px 20px; }
-    .stage h2 { font-size: 1.2rem; }
+    .stage h2 { font-size: 1.2rem; gap: 8px; }
+    .stage h2 .dayname { font-size: 0.6em; padding: 4px 11px; }
+    .diagram-card { padding: 18px 14px 14px; }
+    .diagram-card svg { min-width: 720px; }
+    .legend { gap: 12px; }
+    .legend span { font-size: 12px; }
+    .rhythm a { flex: 1 1 100%; }
+    .city-bar { padding: 16px; }
+    .btn { padding: 12px 20px; }
+    pre.prompt { font-size: 12.5px; padding: 13px; }
+    .wrap { padding: 0 16px 48px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
   }
 </style>
 </head>
@@ -262,6 +284,7 @@
       <text x="810" y="84" font-size="11" fill="#93939f" text-anchor="middle">this page</text>
       <path d="M 810 100 V 142" stroke="#93939f" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
     </svg>
+    <p class="diagram-text">In words: Claude builds your source map once per city, then harvests events every Thursday. You cut the sheet on Friday. Claude assembles the issue on Monday, you write the words and send on Tuesday. This page helps with the pre-send checks and keeps your issue log.</p>
   </div>
 
   <!-- weekly rhythm (clickable) -->
@@ -278,8 +301,9 @@
   <details class="stage" id="setup" open>
     <summary>
       <h2>Set up once <span class="badge day">about 2 hours</span></h2>
-      <p class="summary-line" id="setup-summary">Not set up yet. <span class="chg">Expand</span></p>
+      <p class="summary-line" id="setup-summary">Not set up yet.</p>
       <p class="desc">The toolkit is three Claude skills you install in your own Claude account. You need a paid Claude plan. You don't need to know how to code. Do this once and Thursdays take care of themselves.</p>
+      <span class="expand-hint"></span>
     </summary>
 
     <h3>Get the toolkit</h3>
@@ -470,7 +494,8 @@ Here are our picks for the week:</pre>
   <details class="stage" id="troubleshooting">
     <summary>
       <h2>When something breaks</h2>
-      <p class="desc">The 9pm questions. Click to expand.</p>
+      <p class="desc">The 9pm questions.</p>
+      <span class="expand-hint"></span>
     </summary>
     <h3>Harvest returned almost nothing</h3>
     <p class="desc">A source broke; sites change. Ask Claude which sources returned zero, then check those by hand. Don't assume the city went quiet.</p>
@@ -500,7 +525,7 @@ Here are our picks for the week:</pre>
   </section>
 
   <details class="stage">
-    <summary><h2>Changelog</h2></summary>
+    <summary><h2>Changelog</h2><span class="expand-hint"></span></summary>
     <div class="cl-list" id="changelog">See <a href="CHANGELOG.md" download>CHANGELOG.md</a>.</div>
   </details>
 
@@ -580,10 +605,10 @@ function reflectSetupState() {
   var summary = document.getElementById("setup-summary");
   if (hasCity) {
     if (!setup.dataset.userOpened) setup.open = false;
-    summary.innerHTML = "Set up · " + esc(last.city) + " · <span class='chg'>change</span>";
+    summary.textContent = "Set up · " + last.city;
   } else {
     setup.open = true;
-    summary.innerHTML = "Not set up yet. <span class='chg'>Expand</span>";
+    summary.textContent = "Not set up yet.";
   }
 }
 

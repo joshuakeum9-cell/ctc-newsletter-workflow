@@ -20,3 +20,14 @@ All toolkit releases. The site reads `version.json`; this file is the human-read
 ## 1.2.0 - 2026-07-31
 
 - Import a backup: load a previously exported .json file to restore sources, sheets, drafts and the issue log, e.g. after clearing browser data or moving to a new computer
+
+## 2.0.0 - 2026-07-31
+
+- Restructured around the four weekdays: Thursday Collect, Friday Cut, Monday Write (assemble folded in), Tuesday Send (checks folded in). Source registry moved into Set up; Log is a thin bar
+- Setup is expanded on first visit and collapses to a one-line summary once a city is saved
+- New install verification step: ask Claude which newsletter skills it has
+- Browser triage table removed; cutting happens in the spreadsheet, guidance kept as prose
+- localStorage reduced to city, week, sources, and log. Writing blocks replaced with copy-the-scaffold buttons
+- Troubleshooting section added
+- The page is now the current guide; START-HERE.md is the offline reference
+- Accessibility and mobile pass: focus rings, aria-expanded on collapsibles, text alternative for the diagram, shape plus colour in the legend, reduced-motion support
