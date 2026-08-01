@@ -37,3 +37,10 @@ All toolkit releases. The site reads `version.json`; this file is the human-read
 - Re-skinned to the Climate Tech Cities design system: one olive green ink (#25331a) for text, borders and fills; cream (#f5f4e9) paper canvas alternating with warm white in full-width bands; Jost Light 300 with positive letter-spacing as the substitute for Halyard Display; square outlined buttons with no radius; no shadows anywhere
 - Accents rationed to one home each: lavender on the one-rule green band, pale blue behind the workflow diagram
 - Structure, copy and behaviour unchanged from 2.0.0
+
+## 3.0.0 - 2026-08-01
+
+- The page is now setup, workflow and prompts only. Removed the source registry table, the issue log, backup export and import, and the workspace, along with everything they stored. The page saves nothing and clears anything earlier versions left in the browser
+- Removed the three writing scaffolds: the assemble skill already produces them, with the gaps marked, inside the document it hands back
+- Setup is open by default and no longer collapses
+- One city field fills all three prompts. Nothing is stored

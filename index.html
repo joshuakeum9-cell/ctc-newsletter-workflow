@@ -9,18 +9,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;700&display=swap" rel="stylesheet" />
 <style>
   :root {
-    /* one ink */
     --ink: #25331a;
-    --ink-faded: rgba(37, 51, 26, 0.45);
     --rule: rgba(37, 51, 26, 0.18);
     --hairline: rgba(0, 0, 0, 0.12);
     --muted: #55554e;
-    /* canvases */
     --cream: #f5f4e9;
     --white-warm: #fefefd;
     --white-soft: #fcfcf9;
     --on-dark: #f5f4e9;
-    /* rationed accents */
     --lavender: #e2bdff;
     --pale-blue: #cfe3ec;
   }
@@ -28,28 +24,19 @@
   html { scroll-behavior: smooth; }
   body {
     font-family: Jost, "Century Gothic", Futura, -apple-system, "Segoe UI", sans-serif;
-    font-weight: 300;
-    font-size: 18px;
-    letter-spacing: 0.03em;
-    line-height: 1.4;
-    background: var(--cream);
-    color: var(--ink);
+    font-weight: 300; font-size: 18px; letter-spacing: 0.03em; line-height: 1.4;
+    background: var(--cream); color: var(--ink);
   }
 
-  /* full-width bands, one idea each */
   .band { width: 100%; }
   .band-cream { background: var(--cream); }
   .band-white { background: var(--white-warm); }
-  .band-soft { background: var(--white-soft); }
   .band-blue { background: var(--pale-blue); }
   .band-green { background: var(--ink); color: var(--on-dark); }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 56px 24px; }
   .wrap.tight { padding: 34px 24px; }
 
-  .tracked {
-    font-size: 16px; font-weight: 400; letter-spacing: 0.16em;
-    text-transform: uppercase; color: var(--ink);
-  }
+  .tracked { font-size: 16px; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; }
 
   /* hero */
   .hero .tracked { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 22px; }
@@ -57,14 +44,11 @@
     font-size: 14px; font-weight: 300; letter-spacing: 0.1em; color: var(--ink);
     border: 1px solid var(--ink); padding: 4px 12px; text-decoration: none;
   }
-  h1 {
-    font-weight: 300; font-size: clamp(2.3rem, 6vw, 3.44rem);
-    line-height: 1.13; letter-spacing: 0.02em; max-width: 20ch;
-  }
+  h1 { font-weight: 300; font-size: clamp(2.3rem, 6vw, 3.44rem); line-height: 1.13; letter-spacing: 0.02em; max-width: 20ch; }
   h1 strong { font-weight: 700; }
-  .lede { font-size: 23px; letter-spacing: 0.05em; max-width: 54ch; margin-top: 26px; }
+  .lede { font-size: 23px; letter-spacing: 0.05em; max-width: 56ch; margin-top: 26px; }
 
-  /* diagram, on the single pale blue wash */
+  /* diagram */
   .diagram-scroll { overflow-x: auto; }
   .diagram-scroll svg { min-width: 860px; width: 100%; height: auto; display: block; }
   .legend { display: flex; gap: 33px; flex-wrap: wrap; margin-bottom: 26px; }
@@ -75,20 +59,17 @@
   .key.page { background: var(--white-warm); border: 1.5px dashed var(--ink); }
   .diagram-text { font-size: 18px; margin-top: 26px; max-width: 80ch; }
 
-  /* weekly rhythm */
+  /* rhythm */
   .rhythm { display: flex; gap: 20px; flex-wrap: wrap; }
   .rhythm a {
     flex: 1 1 200px; border: 2px solid var(--ink); padding: 20px 22px;
-    font-size: 18px; color: var(--ink); background: transparent; text-decoration: none;
+    font-size: 18px; color: var(--ink); text-decoration: none;
   }
   .rhythm a:hover { background: var(--ink); color: var(--on-dark); }
   .rhythm a strong { display: block; font-size: 23px; font-weight: 300; margin: 4px 0 6px; }
   .rhythm .day { font-size: 15px; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; }
 
   /* sections */
-  section.stage, details.stage { display: block; }
-  details.stage summary { cursor: pointer; list-style: none; }
-  details.stage summary::-webkit-details-marker { display: none; }
   .stage h2 {
     font-weight: 300; font-size: clamp(1.6rem, 3.4vw, 1.88rem); line-height: 1.21;
     letter-spacing: 0.02em; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
@@ -99,80 +80,56 @@
   }
   .stage .desc { font-size: 20px; letter-spacing: 0.045em; margin: 20px 0; max-width: 62ch; }
   .stage h3 { font-size: 23px; font-weight: 300; letter-spacing: 0.03em; margin: 33px 0 12px; }
+  .stage h3:first-child { margin-top: 0; }
 
-  /* setup collapsed state */
-  #setup .summary-line { display: none; font-size: 20px; letter-spacing: 0.045em; margin-top: 14px; }
-  #setup:not([open]) .summary-line { display: block; }
-  #setup:not([open]) .desc { display: none; }
+  details.stage summary { cursor: pointer; list-style: none; }
+  details.stage summary::-webkit-details-marker { display: none; }
   .expand-hint { font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 16px; display: inline-block; border-bottom: 1px solid var(--ink); }
   details.stage[open] .expand-hint::after { content: "Collapse"; }
   details.stage:not([open]) .expand-hint::after { content: "Expand"; }
 
-  body.needs-setup .weekly { opacity: 0.42; }
-  body.needs-setup #finish-setup-note { display: block; }
-  #finish-setup-note { display: none; font-size: 18px; border-left: 3px solid var(--ink); padding: 14px 20px; max-width: 70ch; }
-
-  /* buttons: square, outlined, generous */
+  /* buttons */
   .btn {
     display: inline-block; font-family: inherit; font-size: 20px; font-weight: 400;
     letter-spacing: 0.04em; line-height: 1; padding: 20px 38px; border: 2px solid var(--ink);
-    border-radius: 0; background: transparent; color: var(--ink); cursor: pointer; text-decoration: none;
+    border-radius: 0; background: transparent; color: var(--ink); cursor: pointer;
   }
   .btn:hover { background: var(--ink); color: var(--on-dark); }
-  .btn.filled { background: var(--ink); color: var(--on-dark); }
-  .btn.filled:hover { background: transparent; color: var(--ink); }
-  .btn.ghost { font-size: 18px; padding: 15px 28px; }
-  .btn.small { font-size: 15px; padding: 8px 16px; border-width: 1.5px; letter-spacing: 0.06em; }
   .btn-row { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; align-items: center; }
 
-  /* badges: square, shape-differentiated */
   .badge {
     font-size: 14px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase;
     padding: 5px 12px; white-space: nowrap;
   }
   .badge.claude { background: var(--ink); color: var(--on-dark); }
-  .badge.you { border: 2px solid var(--ink); color: var(--ink); }
-  .badge.page { border: 1.5px dashed var(--ink); color: var(--ink); }
-  .badge.day { border: 1px solid var(--ink); color: var(--ink); }
+  .badge.you { border: 2px solid var(--ink); }
+  .badge.page { border: 1.5px dashed var(--ink); }
+  .badge.day { border: 1px solid var(--ink); }
 
-  /* inputs */
-  label {
-    display: block; font-size: 15px; font-weight: 400; letter-spacing: 0.14em;
-    text-transform: uppercase; margin-bottom: 9px;
-  }
-  input, textarea {
+  /* the one city input */
+  label { display: block; font-size: 15px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 9px; }
+  input {
     width: 100%; font-family: inherit; font-size: 20px; font-weight: 300; letter-spacing: 0.03em;
     padding: 16px 18px; border: 1px solid var(--hairline); border-radius: 0;
     background: #ffffff; color: var(--ink); outline: none;
   }
-  input:focus, textarea:focus { border-color: var(--ink); }
-  textarea { resize: vertical; min-height: 110px; }
-  .city-bar { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-end; }
-  .city-bar .field { flex: 1 1 210px; }
-  .storage-line { font-size: 16px; color: var(--muted); margin-top: 20px; max-width: 70ch; }
-
-  /* tables */
-  table { width: 100%; border-collapse: collapse; font-size: 18px; border-color: var(--rule); }
-  th, td { text-align: left; padding: 14px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
-  th { font-size: 14px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
-  .table-scroll { overflow-x: auto; }
-  td input { padding: 10px 12px; font-size: 17px; }
-  a { color: var(--ink); }
+  input:focus { border-color: var(--ink); }
+  .city-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-end; }
+  .city-row .field { flex: 1 1 260px; max-width: 420px; }
+  .city-note { font-size: 18px; color: var(--muted); max-width: 60ch; }
 
   .note {
     font-size: 18px; letter-spacing: 0.03em; border-left: 3px solid var(--ink);
     padding: 14px 20px; margin-top: 22px; max-width: 70ch; background: var(--white-soft);
   }
-  .empty { font-size: 18px; color: var(--muted); max-width: 66ch; }
 
   pre.prompt {
     background: #ffffff; border: 1px solid var(--hairline); border-radius: 0;
     padding: 22px; font-size: 16px; white-space: pre-wrap; word-break: break-word;
     font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; letter-spacing: 0;
-    max-height: 280px; overflow-y: auto; margin: 16px 0 0; line-height: 1.65; color: var(--ink);
+    margin: 16px 0 0; line-height: 1.65; color: var(--ink);
   }
 
-  /* the one rule: the single green band, the single lavender moment */
   .rule-band { padding: 44px 0; }
   .rule-band .tracked { color: var(--lavender); margin-bottom: 20px; }
   .rule-band p { font-size: clamp(1.5rem, 3.5vw, 2.1rem); font-weight: 300; line-height: 1.2; letter-spacing: 0.02em; max-width: 30ch; }
@@ -194,6 +151,7 @@
     justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 18px; align-items: center;
   }
   .dl-list a { font-weight: 400; }
+  a { color: var(--ink); }
 
   .cl-list { font-size: 18px; margin-top: 14px; }
   .cl-list ul { margin: 6px 0 20px 24px; }
@@ -201,12 +159,9 @@
   footer { font-size: 16px; color: var(--muted); line-height: 1.7; }
   footer a { color: var(--muted); }
 
-  /* focus, keyboard */
-  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible,
-  summary:focus-visible, label.btn:focus-within {
+  a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible {
     outline: 3px solid var(--ink); outline-offset: 3px;
   }
-  .band-green a:focus-visible { outline-color: var(--lavender); }
 
   @media (max-width: 767px) {
     body { font-size: 17px; }
@@ -220,7 +175,6 @@
     .legend { gap: 18px; }
     .legend span { font-size: 16px; }
     .btn { font-size: 18px; padding: 17px 28px; width: 100%; text-align: center; }
-    .btn.small { width: auto; }
     .btn-row { gap: 14px; }
     pre.prompt { font-size: 15px; padding: 16px; }
   }
@@ -241,16 +195,16 @@
   </div>
 </div>
 
-<!-- WORKFLOW DIAGRAM, on the single pale blue wash -->
+<!-- WORKFLOW DIAGRAM -->
 <div class="band band-blue">
   <div class="wrap">
     <div class="legend">
       <span><span class="key claude" aria-hidden="true"></span> Claude does this (solid)</span>
       <span><span class="key you" aria-hidden="true"></span> You do this (outlined)</span>
-      <span><span class="key page" aria-hidden="true"></span> This page helps (dashed)</span>
+      <span><span class="key page" aria-hidden="true"></span> Where this page helps (dashed)</span>
     </div>
     <div class="diagram-scroll">
-      <svg viewBox="0 0 1060 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Workflow: Claude builds the source map and harvests events on Thursday, you cut the sheet on Friday, Claude assembles the issue on Monday, you write the words and send on Tuesday, and this page helps with checks and keeps the log.">
+      <svg viewBox="0 0 1060 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Workflow: Claude builds the source map once per city and harvests events on Thursday, you cut the sheet on Friday, Claude assembles the issue on Monday, you write the words and send on Tuesday. This page gives you the prompts.">
         <defs>
           <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M 0 1 L 8 5 L 0 9 z" fill="#25331a"/>
@@ -262,7 +216,6 @@
         <path d="M 360 85 L 400 165" stroke="#25331a" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
         <path d="M 530 165 L 570 85" stroke="#25331a" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
         <path d="M 700 85 L 740 165" stroke="#25331a" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
-        <path d="M 870 190 H 902" stroke="#25331a" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
         <g font-family="Jost, sans-serif" font-weight="300">
           <rect x="70" y="40" width="120" height="60" fill="#25331a"/>
           <text x="130" y="66" font-size="15" fill="#f5f4e9" text-anchor="middle">Source map</text>
@@ -279,17 +232,10 @@
           <rect x="750" y="150" width="120" height="60" fill="#fefefd" stroke="#25331a" stroke-width="2"/>
           <text x="810" y="170" font-size="15" fill="#25331a" text-anchor="middle">Write and send</text>
           <text x="810" y="189" font-size="12" fill="#55554e" text-anchor="middle">Mon and Tue</text>
-          <rect x="910" y="150" width="120" height="60" fill="#fefefd" stroke="#25331a" stroke-width="1.5" stroke-dasharray="5 4"/>
-          <text x="970" y="176" font-size="15" fill="#25331a" text-anchor="middle">Log it</text>
-          <text x="970" y="195" font-size="12" fill="#55554e" text-anchor="middle">this page</text>
-          <rect x="750" y="40" width="120" height="60" fill="#fefefd" stroke="#25331a" stroke-width="1.5" stroke-dasharray="5 4"/>
-          <text x="810" y="66" font-size="15" fill="#25331a" text-anchor="middle">Checks</text>
-          <text x="810" y="85" font-size="12" fill="#55554e" text-anchor="middle">this page</text>
         </g>
-        <path d="M 810 100 V 142" stroke="#25331a" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
       </svg>
     </div>
-    <p class="diagram-text">In words: Claude builds your source map once per city, then harvests events every Thursday. You cut the sheet on Friday. Claude assembles the issue on Monday, you write the words and send on Tuesday. This page helps with the pre-send checks and keeps your issue log.</p>
+    <p class="diagram-text">In words: Claude builds your source map once per city, then harvests events every Thursday. You cut the sheet on Friday. Claude assembles the issue on Monday, and you write the words and send on Tuesday. Everything runs in your own Claude account. This page is here to hand you the prompts and explain the steps.</p>
   </div>
 </div>
 
@@ -302,20 +248,15 @@
       <a href="#monday"><span class="day">Monday</span><strong>Write</strong>Claude assembles, you write the three human blocks. 45 minutes.</a>
       <a href="#tuesday"><span class="day">Tuesday</span><strong>Send</strong>Check, paste into Substack, read it once, send. 15 minutes.</a>
     </nav>
-    <p id="finish-setup-note">The weekly steps below unlock properly once you finish setup and save your city. They are shown so you can see what is coming.</p>
   </div>
 </div>
 
-<!-- SETUP -->
+<!-- SETUP, always open -->
 <div class="band band-white">
   <div class="wrap">
-    <details class="stage" id="setup" open>
-      <summary>
-        <h2>Set up once <span class="badge day">about 2 hours</span></h2>
-        <p class="summary-line" id="setup-summary">Not set up yet.</p>
-        <p class="desc">The toolkit is three Claude skills you install in your own Claude account. You need a paid Claude plan. You do not need to know how to code. Do this once and Thursdays take care of themselves.</p>
-        <span class="expand-hint"></span>
-      </summary>
+    <section class="stage" id="setup">
+      <h2>Set up once <span class="badge day">about 2 hours</span></h2>
+      <p class="desc">The toolkit is three Claude skills you install in your own Claude account. You need a paid Claude plan. You do not need to know how to code. Do this once and Thursdays take care of themselves.</p>
 
       <h3>Get the toolkit</h3>
       <ul class="dl-list">
@@ -337,84 +278,52 @@
       <div class="shot-placeholder">Screenshot coming: the code execution toggle in the same panel</div>
 
       <h3>2 · Install the Claude Chrome extension</h3>
-      <p class="desc">Some event sites hide their data from simple requests, so Claude needs to look at those pages in a real browser: yours. Search for "Claude for Chrome", install it, sign in with the same account.</p>
+      <p class="desc">Some event sites hide their data from simple requests, so Claude needs to look at those pages in a real browser: yours. Search for "Claude for Chrome", install it, and sign in with the same account.</p>
 
       <h3>3 · Fill in your city config</h3>
-      <p class="desc">Open <a href="downloads/city-config-template.md" download="city-config-template.md">city-config-template.md</a> and fill it in: chapter name, timezone, what counts as local, who signs the newsletter, your footer. Save it as <code>city-config.md</code>. Ten minutes. It gets uploaded to your Claude project in the next step.</p>
+      <p class="desc">Open <a href="downloads/city-config-template.md" download="city-config-template.md">city-config-template.md</a> and fill it in: chapter name, timezone, what counts as local, who signs the newsletter, your footer. Save it as <code>city-config.md</code>. Ten minutes.</p>
 
       <h3>4 · Create a Claude project</h3>
-      <p class="desc">Make a new project (something like "Boston Newsletter") and upload your <code>city-config.md</code> to it. Everything weekly happens inside that project, so Claude always knows your city.</p>
+      <p class="desc">Make a new project, something like "Boston Newsletter", and upload your <code>city-config.md</code> to it. Every week from now on happens inside that project, so Claude always knows your city and never has to be told twice.</p>
 
-      <h3>5 · Check that it worked</h3>
-      <p class="desc">Before you leave this section, prove the install to yourself. In your Claude project, ask:</p>
+      <h3>5 · Check that the install worked</h3>
+      <p class="desc">Before you leave setup, prove it to yourself. In your new project, ask:</p>
       <pre class="prompt" id="verify-prompt">Which newsletter skills do you have available?</pre>
-      <div class="btn-row">
-        <button class="btn" onclick="copyText('verify-prompt', this)">Copy prompt</button>
-      </div>
-      <p class="note">Claude should name all three: <strong>ctc-source-map</strong>, <strong>ctc-harvest</strong>, and <strong>ctc-assemble</strong>. If it does, you are installed, and Thursday will work.</p>
-      <p class="note">If it does not: re-upload the three .skill files, confirm code execution is turned on in the same panel, then start a new conversation and ask again. Skills do not appear mid-conversation.</p>
+      <div class="btn-row"><button class="btn" onclick="copyText('verify-prompt', this)">Copy prompt</button></div>
+      <p class="note">Claude should name all three: ctc-source-map, ctc-harvest, and ctc-assemble. If it does, you are installed and Thursday will work. If it does not, re-upload the three .skill files, confirm code execution is on, then start a new conversation and ask again. Skills do not appear mid-conversation.</p>
 
       <h3>6 · Build your source registry</h3>
-      <p class="desc">Your standing list of everywhere events come from. This is the most important hour you will spend: everything downstream depends on it. Aim for 20 to 30 verified sources, and redo this every three months, because calendars die quietly.</p>
-      <div id="sources-empty" class="empty">
-        In your Claude project, run:
-        <pre class="prompt" id="sourcemap-prompt">Build the source map for [your city].</pre>
-        <div class="btn-row">
-          <button class="btn" onclick="copyText('sourcemap-prompt', this)">Copy prompt</button>
-        </div>
-        <p class="desc">Read what Claude gives you. You live there and Claude does not; if it missed the obvious weekly meetup, say so and have it add them. Save the result as sources.csv and upload it to your project. Then list the verified sources below; the table makes Thursday's harvest prompt better and reminds you when a quarterly refresh is due.</p>
-      </div>
-      <div class="table-scroll" id="sources-table-wrap" hidden>
-        <table>
-          <thead><tr><th>Source</th><th>Type</th><th>URL</th><th>Last refreshed</th><th></th></tr></thead>
-          <tbody id="sources-tbody"></tbody>
-        </table>
-      </div>
-      <div class="btn-row">
-        <button class="btn ghost" onclick="addSourceRow()">Add source</button>
-        <button class="btn ghost" onclick="exportSourcesMd()">Export as markdown</button>
-      </div>
-      <p class="note" id="sources-stale-note" hidden></p>
-
-      <h3>7 · Save your city here</h3>
-      <p class="desc">Type your city in the workspace bar just below and press Open workspace. That is what collapses this section and switches the page into weekly mode.</p>
-    </details>
+      <p class="desc">Your standing list of everywhere events get announced in your city. This is the most important hour you will spend, because the weekly harvest only ever finds what this list points at. Run it once now, and again every three months, because calendars die quietly.</p>
+      <pre class="prompt" id="sourcemap-prompt">Build the source map for [your city].</pre>
+      <div class="btn-row"><button class="btn" onclick="copyText('sourcemap-prompt', this)">Copy prompt</button></div>
+      <p class="desc">Claude researches Luma calendars, Eventbrite organisers, universities, incubators, city government, professional groups and arts venues, verifies each one is real and active, and hands you a registry. Read what it gives you. You live there and Claude does not, so if it missed the meetup everyone goes to, say so and have it add them.</p>
+      <p class="note">Save the registry as <strong>sources.csv</strong> and upload it to your project alongside your city config. That is the last piece of setup. From here on, the weekly cycle is four short sittings.</p>
+    </section>
   </div>
 </div>
 
-<!-- WORKSPACE BAR -->
+<!-- CITY FIELD -->
 <div class="band band-cream">
   <div class="wrap tight">
-    <div class="city-bar">
+    <div class="city-row">
       <div class="field">
         <label for="city">Your city</label>
-        <input type="text" id="city" placeholder="Boston" />
+        <input type="text" id="city" placeholder="Boston" autocomplete="off" />
       </div>
-      <div class="field">
-        <label for="week-start">Issue week starts</label>
-        <input type="date" id="week-start" />
-      </div>
-      <button class="btn filled" onclick="loadWorkspace()">Open workspace</button>
-      <button class="btn ghost" onclick="exportAll()">Export backup</button>
-      <label class="btn ghost" style="text-align:center;">
-        Import a backup <input type="file" id="backup-file" accept=".json,application/json" hidden onchange="importBackup(this)" />
-      </label>
+      <p class="city-note">Type it once and every prompt below fills in. Nothing is saved; this page does not store anything or connect to your Claude account.</p>
     </div>
-    <p class="storage-line">This page remembers your city, sources, and log in this browser only. Export a backup if you switch computers.</p>
   </div>
 </div>
 
 <!-- THURSDAY -->
 <div class="band band-white">
   <div class="wrap">
-    <section class="stage weekly" id="thursday">
+    <section class="stage" id="thursday">
       <h2><span class="dayname">Thursday</span> Collect <span class="badge claude">claude does this</span></h2>
-      <p class="desc">Copy the prompt below and paste it into your Claude project. Claude sweeps every source on your list and hands you a spreadsheet. It collects everything with no filtering; that is on purpose, because collecting and judging are different jobs. If it asks to use your Chrome browser, say yes. It is reading pages, not clicking anything. About 15 minutes of your attention.</p>
+      <p class="desc">Copy the prompt and paste it into your project. Claude sweeps every source on your registry and hands back a spreadsheet. It collects everything with no filtering, which is on purpose: collecting and judging are different jobs, and mixing them turns a short task into a long one.</p>
       <pre class="prompt" id="harvest-prompt">Harvest this week's events for [your city].</pre>
-      <div class="btn-row">
-        <button class="btn" onclick="copyText('harvest-prompt', this)">Copy prompt</button>
-      </div>
-      <p class="note">Save the spreadsheet Claude gives you. Friday's job is cutting it down.</p>
+      <div class="btn-row"><button class="btn" onclick="copyText('harvest-prompt', this)">Copy prompt</button></div>
+      <p class="note">If Claude asks to use your Chrome browser, say yes. Some sites, Eventbrite especially, hide their listings from simple requests. Claude is reading those pages, not clicking anything. Save the spreadsheet when it is done.</p>
     </section>
   </div>
 </div>
@@ -422,18 +331,18 @@
 <!-- FRIDAY -->
 <div class="band band-cream">
   <div class="wrap">
-    <section class="stage weekly" id="friday">
+    <section class="stage" id="friday">
       <h2><span class="dayname">Friday</span> Cut <span class="badge you">you do this</span></h2>
-      <p class="desc">Open yesterday's spreadsheet and delete rows. This is your job and nobody can do it for you: how many events end up in the newsletter is decided right here, and there is no target number. A good week is however many good events your city has. About 30 minutes.</p>
+      <p class="desc">Open yesterday's spreadsheet and delete rows. No prompt for this one: it is judgment, and nobody can do it for you. How many events end up in the newsletter is decided right here, and there is no target number. A good week is however many good events your city has.</p>
       <h3>What to cut</h3>
       <ul class="plain">
-        <li>Anything outside your scope rule (it is written in your city config for exactly this moment)</li>
+        <li>Anything outside your scope rule, which is written in your city config for exactly this moment</li>
         <li>Anything not really climate</li>
         <li>Anything with a dead link or no date</li>
         <li>If two rows are the same event from different calendars, keep the one with the better registration link and delete the other</li>
       </ul>
       <h3>What to flag</h3>
-      <p class="desc">Mark three to six candidates for the picks. A convention that works: type <strong>PICK</strong> in a spare column for candidates, and just delete the rows you are cutting. What is left in the file is the issue; the PICK rows are what you will write about on Monday.</p>
+      <p class="desc">Mark three to six candidates for the picks. Type <strong>PICK</strong> in a spare column next to them, and simply delete the rows you are cutting. What is left in the file is the issue, and the PICK rows are what you will write about on Monday.</p>
     </section>
   </div>
 </div>
@@ -441,21 +350,18 @@
 <!-- MONDAY -->
 <div class="band band-white">
   <div class="wrap">
-    <section class="stage weekly" id="monday">
+    <section class="stage" id="monday">
       <h2><span class="dayname">Monday</span> Write <span class="badge claude">claude assembles</span> <span class="badge you">you write</span></h2>
-      <p class="desc">One sitting, two halves, about 45 minutes. First, have Claude assemble the issue. Then write the three parts it hands back in [square brackets], because Claude cannot know them.</p>
-
-      <h3>First: assemble</h3>
-      <p class="desc">Copy the prompt, paste it into your Claude project, and attach your edited spreadsheet. Claude returns a Word document and an HTML page formatted for Substack. The listings, links, emoji, day headers and footer are finished.</p>
-      <pre class="prompt" id="assemble-prompt">Assemble the [your city] issue from this sheet.</pre>
-      <div class="btn-row">
-        <button class="btn" onclick="copyText('assemble-prompt', this)">Copy prompt</button>
-      </div>
+      <p class="desc">Copy the prompt, paste it into your project, and attach your edited spreadsheet. Claude returns a Word document and an HTML page, both formatted for Substack.</p>
+      <pre class="prompt" id="assemble-prompt">Assemble the [your city] issue from this sheet. Rows marked PICK are my picks.</pre>
+      <div class="btn-row"><button class="btn" onclick="copyText('assemble-prompt', this)">Copy prompt</button></div>
+      <p class="desc">Six of the nine blocks come back finished: the title, the subtitle, both event listings, the detailed write-ups, and the footer. Every link, emoji and day header is already in place.</p>
+      <p class="note">Three blocks come back as scaffolds with gaps marked in [square brackets]: the opening note, the picks, and the opportunities. The skill writes the structure and leaves the gaps on purpose. Those gaps are yours.</p>
     </section>
   </div>
 </div>
 
-<!-- THE ONE RULE: the single green band -->
+<!-- THE ONE RULE -->
 <div class="band band-green">
   <div class="wrap rule-band">
     <div class="tracked">The one rule</div>
@@ -463,35 +369,18 @@
   </div>
 </div>
 
-<!-- MONDAY, second half -->
+<!-- WHAT YOU FILL IN -->
 <div class="band band-white">
   <div class="wrap">
-    <section class="stage weekly">
-      <h3 style="margin-top:0;">Then: write the words</h3>
-      <p class="desc">Write these directly in the assembled document, replacing the [placeholders]. Do not let Claude write them; generated prose reads like generated prose, and readers can tell. Each scaffold below copies a starting structure so you never face a blank page.</p>
-
-      <h3>Opening note</h3>
-      <p class="desc">Two or three sentences about your city this week: the weather, something in the news, how your last event went. The archive's opening notes run short.</p>
-      <pre class="prompt" id="scaffold-note">Hi all,
-
-[Two or three sentences about your city this week. The weather, something in the news, how your last event went.]
-
-Here are our picks for the week:</pre>
-      <div class="btn-row"><button class="btn ghost" onclick="copyText('scaffold-note', this)">Copy scaffold</button></div>
-
-      <h3>Picks</h3>
-      <p class="desc">Bold day, verb, place or reason, then the linked title with its emoji. Join two events with "or", never "and". Real ones read like "make calls (and friends!)" and "an infrastructure tour on wheels". That is the difference between a newsletter and a list.</p>
-      <pre class="prompt" id="scaffold-picks">**[Day]**, [verb, place or reason]: [emoji] [linked event title]
-
-**[Day]**, [verb, place or reason]: [emoji] [event] or [emoji] [event]</pre>
-      <div class="btn-row"><button class="btn ghost" onclick="copyText('scaffold-picks', this)">Copy scaffold</button></div>
-
-      <h3>Opportunities</h3>
-      <p class="desc">Fellowships, grants, deadlines. Keep a running list somewhere you will find it; most stay open for weeks, so carry them over issue to issue.</p>
-      <pre class="prompt" id="scaffold-opps">[Fellowship or grant]: applications close [date]. [link]
-
-[Job or program worth a look]: [link]</pre>
-      <div class="btn-row"><button class="btn ghost" onclick="copyText('scaffold-opps', this)">Copy scaffold</button></div>
+    <section class="stage">
+      <h3>Filling in the three gaps</h3>
+      <p class="desc">Write straight into the document Claude hands back, over the [brackets]. Do not ask Claude to fill them. Generated prose reads like generated prose, and readers can tell.</p>
+      <ul class="plain">
+        <li><strong>The opening note.</strong> Two or three sentences about your city this week: the weather, something in the news, how your last event went. Then the skill's line, "Here are our picks for the week". Claude cannot know any of this, which is exactly why it left the gap.</li>
+        <li><strong>The picks.</strong> Claude drafts the structure and orders the candidates. You add the asides that make it sound like a person. The archive's best read like "make calls (and friends!)" and "an infrastructure tour on wheels", and that is the difference between a newsletter and a list.</li>
+        <li><strong>The opportunities.</strong> Fellowships, grants and deadlines you know about. Keep a running list somewhere; most stay open for weeks, so they carry over from issue to issue.</li>
+      </ul>
+      <p class="note">If the finished issue sounds like a robot, it is because these three were skipped. They are the whole point.</p>
     </section>
   </div>
 </div>
@@ -499,35 +388,24 @@ Here are our picks for the week:</pre>
 <!-- TUESDAY -->
 <div class="band band-cream">
   <div class="wrap">
-    <section class="stage weekly" id="tuesday">
+    <section class="stage" id="tuesday">
       <h2><span class="dayname">Tuesday</span> Send <span class="badge you">you do this</span></h2>
-      <p class="desc">Check, paste, read, send. About 15 minutes.</p>
-
-      <h3>First: the pre-send checks</h3>
-      <p class="desc">Two minutes with the assembled issue open. Nothing here is automatic, and that is fine; you are the last gate.</p>
+      <p class="desc">Check, paste, read, send. About 15 minutes, and the newsletter is out.</p>
+      <h3>Check first</h3>
       <ul class="plain">
         <li>Search the document for a square bracket. Nothing in brackets ships.</li>
-        <li>Scan the dates: nothing in the past, this week's events actually this week</li>
-        <li>Click two or three links at random; if one is dead, check its neighbours from the same source</li>
-        <li>Scan for the same event listed twice</li>
+        <li>Scan the dates. Nothing in the past, and this week's events actually this week.</li>
+        <li>Click two or three links at random. If one is dead, check its neighbours from the same source.</li>
+        <li>Scan for the same event listed twice.</li>
       </ul>
-
-      <h3>Then: paste into Substack</h3>
+      <h3>Then paste into Substack</h3>
       <ol class="steps">
-        <li>Open the HTML file (or Word document) Claude assembled.</li>
-        <li>Make sure your three written blocks have replaced every [placeholder]. Nothing in square brackets ships.</li>
-        <li>Select all, copy, paste into a new Substack post. Formatting and links come across.</li>
-        <li><strong>Read the whole issue once, top to bottom.</strong> You are checking voice and picks, not links.</li>
-        <li>Send. Then log it below; thirty seconds, and future you will thank you.</li>
+        <li>Open the HTML file, or the Word document, whichever you prefer.</li>
+        <li>Select all, copy, and paste into a new Substack post. Formatting and links come across.</li>
+        <li>Read the whole issue once, top to bottom. You are checking voice and picks, not links.</li>
+        <li>Send.</li>
       </ol>
-
-      <h3>Mark this issue sent</h3>
-      <div class="city-bar" style="margin-top:16px;">
-        <div class="field"><label for="log-harvested">Events harvested</label><input type="number" id="log-harvested" min="0" /></div>
-        <div class="field"><label for="log-published">Events published</label><input type="number" id="log-published" min="0" /></div>
-        <div class="field"><label for="log-minutes">Minutes spent</label><input type="number" id="log-minutes" min="0" /></div>
-        <button class="btn filled" onclick="markSent()">Log it</button>
-      </div>
+      <p class="note">Your first issue will be small, maybe five or eight events. That is what every newsletter looks like at the start. Send it anyway, on the same day, every week. A thin issue that arrives beats a good issue that does not. And if you miss a week, just send the next one, with no apology and no explanation.</p>
     </section>
   </div>
 </div>
@@ -544,221 +422,55 @@ Here are our picks for the week:</pre>
       <h3>Harvest returned almost nothing</h3>
       <p class="desc">A source broke; sites change. Ask Claude which sources returned zero, then check those by hand. Do not assume the city went quiet.</p>
       <h3>A calendar stopped working</h3>
-      <p class="desc">Mark it manual in your source registry and check it yourself each week.</p>
+      <p class="desc">Mark it manual in your sources.csv and check it yourself each week.</p>
       <h3>Claude keeps asking to use my browser</h3>
       <p class="desc">Normal. Eventbrite in particular blocks simple requests. Say yes; it is reading pages, not clicking anything.</p>
       <h3>A page is asking me to prove I am human</h3>
       <p class="desc">Claude will stop and tell you. Open the page yourself and paste what you see. Claude will not solve these.</p>
       <h3>The output sounds like a robot</h3>
-      <p class="desc">You skipped the writing step. The bracketed blocks are the whole point.</p>
+      <p class="desc">You skipped the writing step. The three bracketed blocks are the whole point.</p>
       <h3>Formatting broke when I pasted into Substack</h3>
       <p class="desc">Try the HTML file rather than the Word document, or the other way round.</p>
     </details>
   </div>
 </div>
 
-<!-- LOG -->
-<div class="band band-cream">
-  <div class="wrap">
-    <section class="stage" id="log">
-      <h2>Issue log <span class="badge page">this page</span></h2>
-      <p class="desc">Every issue for this city. After four weeks, look back: what took longest? Fix that before adding anything new. And if you miss a week, just send the next one. No apology, no explanation.</p>
-      <p class="empty" id="log-empty">No issues logged yet. The first one will be small, maybe five or eight events. That is what every newsletter looks like at the start. Send anyway.</p>
-      <div class="table-scroll" id="log-table-wrap" hidden>
-        <table>
-          <thead><tr><th>Date sent</th><th>Week of</th><th>Harvested</th><th>Published</th><th>Minutes</th><th></th></tr></thead>
-          <tbody id="log-tbody"></tbody>
-        </table>
-      </div>
-    </section>
-  </div>
-</div>
-
 <!-- CHANGELOG AND FOOTER -->
-<div class="band band-white">
+<div class="band band-cream">
   <div class="wrap">
     <details class="stage">
       <summary><h2>Changelog</h2><span class="expand-hint"></span></summary>
       <div class="cl-list" id="changelog">See <a href="CHANGELOG.md" download>CHANGELOG.md</a>.</div>
     </details>
     <footer style="margin-top:44px;">
-      Climate Tech Cities · Newsletter Toolkit companion. Static page, no backend, no analytics, no cookies.<br/>
-      Your city, sources, and log live in this browser's localStorage only.<br/>
-      This page is the current guide to the process. <a href="downloads/START-HERE.md" download>START-HERE.md</a> is the offline reference that ships in the toolkit.
+      Climate Tech Cities · Newsletter Toolkit companion. A static page: no backend, no accounts, no analytics, no cookies, and nothing saved.<br/>
+      The skills run in your own Claude account. This page is the current guide to the process, and <a href="downloads/START-HERE.md" download>START-HERE.md</a> is the offline reference that ships in the toolkit.
     </footer>
   </div>
 </div>
 
-<noscript>
-  <style>.city-bar, .weekly, #log { display: none; }</style>
-  <div class="band band-cream"><div class="wrap tight">
-    <p style="border-left:3px solid #25331a;padding:14px 20px;font-size:18px;">
-      JavaScript is off, so the workspace tools are hidden. Everything you need to get started still works:
-      the downloads in the setup section, and START-HERE.md is the offline reference.
-    </p>
-  </div></div>
-</noscript>
-
 <script>
 "use strict";
-/* ---------- state & storage ---------- */
-var NS = "ctcnw:";
-function cityKey() { return (document.getElementById("city").value.trim() || "").toLowerCase(); }
-function weekKey() { return document.getElementById("week-start").value || ""; }
-function store(k, v) { try { localStorage.setItem(NS + k, JSON.stringify(v)); } catch (e) {} }
-function load(k, fallback) {
-  try { var v = localStorage.getItem(NS + k); return v === null ? fallback : JSON.parse(v); }
-  catch (e) { return fallback; }
+function cityName() {
+  var el = document.getElementById("city");
+  var v = el ? el.value.trim() : "";
+  return v || "[your city]";
 }
-
-var sources = [];
-
-/* ---------- boot ---------- */
-window.addEventListener("DOMContentLoaded", function () {
-  // one-time cleanup: this page no longer stores sheets or drafts
-  try {
-    for (var i = localStorage.length - 1; i >= 0; i--) {
-      var k = localStorage.key(i);
-      if (k.indexOf(NS) === 0 && (k.indexOf(":sheet") > -1 || k.indexOf(":write") > -1 || k === NS + "storage-warned" || k === NS + "setup")) {
-        localStorage.removeItem(k);
-      }
-    }
-  } catch (e) {}
-  var last = load("last-workspace", null);
-  if (last) {
-    document.getElementById("city").value = last.city || "";
-    document.getElementById("week-start").value = last.week || "";
-  }
-  if (!document.getElementById("week-start").value) {
-    var d = new Date(); document.getElementById("week-start").value = d.toISOString().slice(0, 10);
-  }
-  loadWorkspace();
-  document.querySelectorAll("details.stage > summary").forEach(function (s) {
-    s.setAttribute("role", "button");
-    s.setAttribute("aria-expanded", s.parentElement.open ? "true" : "false");
-    s.parentElement.addEventListener("toggle", function () {
-      s.setAttribute("aria-expanded", s.parentElement.open ? "true" : "false");
-    });
-  });
-  fetch("version.json").then(function (r) { return r.json(); }).then(renderVersion).catch(function () {});
-});
-
-function reflectSetupState() {
-  var last = load("last-workspace", null);
-  var hasCity = !!(last && last.city);
-  document.body.classList.toggle("needs-setup", !hasCity);
-  var setup = document.getElementById("setup");
-  var summary = document.getElementById("setup-summary");
-  if (hasCity) {
-    if (!setup.dataset.userOpened) setup.open = false;
-    summary.textContent = "Set up · " + last.city;
-  } else {
-    setup.open = true;
-    summary.textContent = "Not set up yet.";
-  }
-}
-
-function jump(id) { var el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }
-
-function renderVersion(v) {
-  var b = document.getElementById("version-badge");
-  b.textContent = "v" + v.version + " · " + v.date;
-  document.querySelectorAll("[data-dl]").forEach(function (a) {
-    a.setAttribute("download", a.getAttribute("data-dl") + "-v" + v.version + ".zip");
-  });
-  var cl = document.getElementById("changelog");
-  cl.innerHTML = v.changelog.map(function (rel) {
-    return "<strong>v" + esc(rel.version) + " · " + esc(rel.date) + "</strong><ul>" +
-      rel.notes.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") + "</ul>";
-  }).join("");
-}
-function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
-
-/* ---------- workspace ---------- */
-function loadWorkspace() {
-  var c = cityKey();
-  store("last-workspace", { city: document.getElementById("city").value.trim(), week: weekKey() });
-  sources = c ? load("city:" + c + ":sources", []) : [];
-  renderSources(); renderLog(); buildPrompts();
-  reflectSetupState();
-}
-function cityName() { return document.getElementById("city").value.trim() || "[your city]"; }
-
-/* ---------- sources (inside setup) ---------- */
-function renderSources() {
-  var tbody = document.getElementById("sources-tbody");
-  tbody.innerHTML = "";
-  var has = sources.length > 0;
-  document.getElementById("sources-empty").hidden = has;
-  document.getElementById("sources-table-wrap").hidden = !has;
-  document.getElementById("sourcemap-prompt").textContent = "Build the source map for " + cityName() + ".";
-  sources.forEach(function (s, i) {
-    var tr = document.createElement("tr");
-    ["name","type","url","refreshed"].forEach(function (f) {
-      var td = document.createElement("td");
-      var inp = document.createElement("input");
-      inp.value = s[f] || "";
-      inp.setAttribute("aria-label", { name: "Source name", type: "Source type", url: "Source URL", refreshed: "Last refreshed" }[f]);
-      inp.placeholder = { name: "Source name", type: "Luma, Eventbrite, org", url: "https://", refreshed: "YYYY-MM" }[f];
-      inp.addEventListener("input", function () { sources[i][f] = inp.value; saveSources(false); });
-      inp.addEventListener("blur", function () { saveSources(true); });
-      td.appendChild(inp); tr.appendChild(td);
-    });
-    var tdDel = document.createElement("td");
-    var btn = document.createElement("button");
-    btn.className = "btn small"; btn.textContent = "Remove";
-    btn.setAttribute("aria-label", "Remove source " + (s.name || i + 1));
-    btn.onclick = function () { sources.splice(i, 1); saveSources(true); };
-    tdDel.appendChild(btn); tr.appendChild(tdDel);
-    tbody.appendChild(tr);
-  });
-  staleNote();
-}
-function addSourceRow() {
-  if (!cityKey()) { alert("Enter your city in the workspace bar first, then press Open workspace."); return; }
-  sources.push({ name: "", type: "", url: "", refreshed: "" });
-  saveSources(true);
-}
-function saveSources(rerender) {
-  var c = cityKey(); if (!c) return;
-  store("city:" + c + ":sources", sources);
-  if (rerender) renderSources(); else { staleNote(); buildPrompts(); }
-}
-function staleNote() {
-  var note = document.getElementById("sources-stale-note");
-  var dates = sources.map(function (s) { return Date.parse(s.refreshed); }).filter(function (t) { return !isNaN(t); });
-  if (!dates.length) { note.hidden = true; return; }
-  var newest = Math.max.apply(null, dates);
-  var months = (Date.now() - newest) / (1000 * 60 * 60 * 24 * 30);
-  if (months > 3) {
-    note.textContent = "Your newest refresh date is over three months old. Calendars die quietly. Re-run the source map.";
-    note.hidden = false;
-  } else { note.hidden = true; }
-}
-function exportSourcesMd() {
-  if (!sources.length) { alert("No sources to export yet."); return; }
-  var md = "## Event sources: " + cityName() + "\n\n| Source | Type | URL | Last refreshed |\n|---|---|---|---|\n" +
-    sources.map(function (s) { return "| " + [s.name, s.type, s.url, s.refreshed].map(function (x) { return (x || "").replace(/\|/g, "\\|"); }).join(" | ") + " |"; }).join("\n") + "\n";
-  downloadFile(cityKey() + "-sources.md", md);
-}
-
-/* ---------- prompts ---------- */
 function buildPrompts() {
-  var c = cityName(), w = weekKey();
-  var weekTxt = w ? " The issue week starts " + w + " (this_week covers the 7 days from then; upcoming covers days 8 to 56)." : "";
-  var p = "Harvest this week's events for " + c + "." + weekTxt;
-  if (sources.length) {
-    p += "\n\nSweep these sources (my current registry):\n" +
-      sources.filter(function (s) { return s.name || s.url; })
-             .map(function (s) { return "- " + (s.name || s.url) + (s.url ? " (" + s.url + ")" : ""); }).join("\n");
-  }
-  document.getElementById("harvest-prompt").textContent = p;
+  var c = cityName();
+  document.getElementById("sourcemap-prompt").textContent = "Build the source map for " + c + ".";
+  document.getElementById("harvest-prompt").textContent = "Harvest this week's events for " + c + ".";
   document.getElementById("assemble-prompt").textContent =
     "Assemble the " + c + " issue from this sheet. Rows marked PICK are my picks.";
 }
 function copyText(id, btn) {
   var text = document.getElementById(id).textContent;
-  function done() { if (btn) { var t = btn.textContent; btn.textContent = "Copied"; setTimeout(function () { btn.textContent = t; }, 1500); } }
+  function done() {
+    if (!btn) return;
+    var t = btn.textContent;
+    btn.textContent = "Copied";
+    setTimeout(function () { btn.textContent = t; }, 1500);
+  }
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text, done); });
   } else fallbackCopy(text, done);
@@ -766,89 +478,44 @@ function copyText(id, btn) {
 function fallbackCopy(text, done) {
   var ta = document.createElement("textarea");
   ta.value = text; document.body.appendChild(ta); ta.select();
-  try { document.execCommand("copy"); done(); } catch (e) { alert("Copy failed. Select the prompt text and copy it manually."); }
+  try { document.execCommand("copy"); done(); }
+  catch (e) { alert("Copy failed. Select the prompt text and copy it manually."); }
   document.body.removeChild(ta);
 }
-
-/* ---------- send & log ---------- */
-function markSent() {
-  var c = cityKey();
-  if (!c) { alert("Enter your city first."); return; }
-  var entries = load("city:" + c + ":log", []);
-  entries.unshift({
-    sent: new Date().toISOString().slice(0, 10),
-    week: weekKey() || "",
-    harvested: document.getElementById("log-harvested").value || "",
-    published: document.getElementById("log-published").value || "",
-    minutes: document.getElementById("log-minutes").value || ""
-  });
-  store("city:" + c + ":log", entries);
-  renderLog(); jump("log");
-}
-function renderLog() {
-  var c = cityKey();
-  var entries = c ? load("city:" + c + ":log", []) : [];
-  var has = entries.length > 0;
-  document.getElementById("log-empty").hidden = has;
-  document.getElementById("log-table-wrap").hidden = !has;
-  var tbody = document.getElementById("log-tbody"); tbody.innerHTML = "";
-  entries.forEach(function (e, i) {
-    var tr = document.createElement("tr");
-    [e.sent, e.week, e.harvested, e.published, e.minutes].forEach(function (v) {
-      var td = document.createElement("td"); td.textContent = v; tr.appendChild(td);
-    });
-    var td = document.createElement("td");
-    var b = document.createElement("button"); b.className = "btn small"; b.textContent = "Remove";
-    b.setAttribute("aria-label", "Remove log entry from " + e.sent);
-    b.onclick = function () {
-      if (!confirm("Remove this log entry?")) return;
-      entries.splice(i, 1); store("city:" + c + ":log", entries); renderLog();
-    };
-    td.appendChild(b); tr.appendChild(td);
-    tbody.appendChild(tr);
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
   });
 }
-
-/* ---------- backup ---------- */
-function importBackup(input) {
-  var f = input.files[0]; if (!f) return;
-  var reader = new FileReader();
-  reader.onload = function () {
-    var dump;
-    try { dump = JSON.parse(String(reader.result)); }
-    catch (e) { alert("That file is not a valid backup. It should be the .json file this page exported."); input.value = ""; return; }
-    var keys = Object.keys(dump).filter(function (k) { return k.indexOf(NS) === 0; });
-    if (!keys.length) { alert("No workspace data found in that file. It should be the .json file this page exported."); input.value = ""; return; }
-    if (!confirm("Load " + keys.length + " saved item" + (keys.length === 1 ? "" : "s") + " from this backup? Anything in this browser with the same city will be replaced by the backup's version.")) { input.value = ""; return; }
-    keys.forEach(function (k) {
-      try { localStorage.setItem(k, JSON.stringify(dump[k])); } catch (e) {}
-    });
-    var last = dump[NS + "last-workspace"];
-    if (last && last.city) {
-      document.getElementById("city").value = last.city;
-      if (last.week) document.getElementById("week-start").value = last.week;
+window.addEventListener("DOMContentLoaded", function () {
+  // Delete-only: earlier versions of this page saved a workspace in the browser.
+  // This page saves nothing, so clear anything they left behind.
+  try {
+    for (var i = localStorage.length - 1; i >= 0; i--) {
+      var k = localStorage.key(i);
+      if (k && k.indexOf("ctcnw:") === 0) localStorage.removeItem(k);
     }
-    loadWorkspace();
-    input.value = "";
-    alert("Backup loaded. Your sources and log are back.");
-  };
-  reader.readAsText(f);
-}
-function exportAll() {
-  var dump = {};
-  for (var i = 0; i < localStorage.length; i++) {
-    var k = localStorage.key(i);
-    if (k.indexOf(NS) === 0) { try { dump[k] = JSON.parse(localStorage.getItem(k)); } catch (e) { dump[k] = localStorage.getItem(k); } }
-  }
-  downloadFile("ctc-newsletter-workspace-backup-" + new Date().toISOString().slice(0, 10) + ".json", JSON.stringify(dump, null, 2));
-}
-function downloadFile(name, content) {
-  var blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-  var a = document.createElement("a");
-  a.href = URL.createObjectURL(blob); a.download = name;
-  document.body.appendChild(a); a.click();
-  setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
-}
+  } catch (e) {}
+  document.getElementById("city").addEventListener("input", buildPrompts);
+  buildPrompts();
+  document.querySelectorAll("details.stage > summary").forEach(function (s) {
+    s.setAttribute("role", "button");
+    s.setAttribute("aria-expanded", s.parentElement.open ? "true" : "false");
+    s.parentElement.addEventListener("toggle", function () {
+      s.setAttribute("aria-expanded", s.parentElement.open ? "true" : "false");
+    });
+  });
+  fetch("version.json").then(function (r) { return r.json(); }).then(function (v) {
+    document.getElementById("version-badge").textContent = "v" + v.version + " · " + v.date;
+    document.querySelectorAll("[data-dl]").forEach(function (a) {
+      a.setAttribute("download", a.getAttribute("data-dl") + "-v" + v.version + ".zip");
+    });
+    document.getElementById("changelog").innerHTML = v.changelog.map(function (rel) {
+      return "<strong>v" + esc(rel.version) + " · " + esc(rel.date) + "</strong><ul>" +
+        rel.notes.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") + "</ul>";
+    }).join("");
+  }).catch(function () {});
+});
 </script>
 </body>
 </html>

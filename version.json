@@ -1,7 +1,18 @@
 {
-  "version": "2.1.0",
+  "version": "3.0.0",
   "date": "2026-08-01",
   "changelog": [
+    {
+      "version": "3.0.0",
+      "date": "2026-08-01",
+      "notes": [
+        "The page is now setup, workflow, and prompts only. It saves nothing: the source registry table, issue log, backup export and import, and the workspace are all gone, along with everything they stored.",
+        "The writing scaffolds were removed because the assemble skill already produces them, with the gaps marked, inside the document it hands you.",
+        "Setup is open by default and no longer collapses.",
+        "Type your city once and all three prompts fill in. Nothing is stored.",
+        "Skills unchanged from 1.0.0."
+      ]
+    },
     {
       "version": "2.1.0",
       "date": "2026-08-01",

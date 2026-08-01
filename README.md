@@ -6,37 +6,35 @@ A static companion page for the CTC Newsletter Toolkit: three Claude skills
 (`ctc-source-map`, `ctc-harvest`, `ctc-assemble`) that help a volunteer city lead
 produce a weekly climate events newsletter.
 
-The page's only job is getting a non-technical person from "I have three files"
-to "I sent my first issue." The skills do the work; the page hands out the
-prompts, holds the source registry and the issue log, and explains what happens
-on each day of the week.
+The page does three things and nothing else: it hands out the toolkit, explains
+the setup, and explains the weekly workflow with a copy-ready prompt for each
+step. **The skills do the work, inside the lead's own Claude account.** This page
+has no backend, no account connection, and stores nothing.
 
 ## Structure
 
-The page mirrors the four weekday cards rather than a long numbered pipeline.
-
 | Section | What it holds |
 |---|---|
-| **Set up** (once, ~2 hours) | Downloads, install steps, install verification, city config, source registry. Expanded on first visit; collapses to a one-line summary once a city is saved |
-| **Thursday · Collect** | Harvest prompt, pre-filled with the city, issue week, and source list |
-| **Friday · Cut** | Triage guidance as prose. Cutting happens in the spreadsheet the lead already has open |
-| **Monday · Write** | Assemble prompt, the one rule, and copy-the-scaffold buttons for the three human blocks |
-| **Tuesday · Send** | Pre-send checklist and Substack paste steps |
-| **When something breaks** | Troubleshooting, collapsed |
-| **Issue log** | Thin bar; per-city history in localStorage |
+| Hero and diagram | The one-line thesis, and a workflow diagram showing which steps are Claude's and which are the lead's |
+| Weekly rhythm | Four day cards with honest time estimates, linking to their sections |
+| **Set up once** (always open) | Downloads, install steps, install verification prompt, city config, Claude project, and the source registry prompt |
+| Your city | A single field that fills every prompt on the page. Not saved |
+| **Thursday · Collect** | Harvest prompt |
+| **Friday · Cut** | Triage guidance. No prompt: this is judgment, done in the spreadsheet |
+| **Monday · Write** | Assemble prompt, then what the three bracketed gaps need |
+| **Tuesday · Send** | Pre-send checks and Substack paste steps |
+| When something breaks | Troubleshooting, collapsed |
 
-## Governing rule
+## What this page deliberately does not do
 
-Nothing on the page is fake. Every control either does something real in the
-browser with no backend, or honestly hands off to Claude with a copy-paste
-prompt. There are no mock rows, no placeholder prompts, and no Send button.
-
-## What lives in localStorage
-
-City name, issue week, source registry rows, and issue log entries. Nothing a
-lead spends real effort on: the event sheet stays in their spreadsheet file and
-the written blocks go straight into the assembled document. Export and import
-backup buttons sit in the workspace bar for moving between computers.
+- **No saved state.** No workspace, no source registry table, no issue log, no
+  backup export or import. Earlier versions had these; they are gone, and the
+  page clears anything they left in the browser.
+- **No writing scaffolds.** `ctc-assemble` already emits the opening note, picks,
+  and opportunities scaffolds with their gaps marked, in the document it hands
+  back. Duplicating them here meant maintaining the same content twice.
+- **No fake execution.** The page cannot run a skill or reach a Claude account.
+  Every action is either a copy-ready prompt or a plain instruction.
 
 ## Contents
 
@@ -49,10 +47,11 @@ backup buttons sit in the workspace bar for moving between computers.
 - `playbook/newsletter-chapter.md` — Chapter 8 draft for the CTC Operational Playbook
 - `TODO.md` — open items: trimming START-HERE.md, and the two install screenshots
 
-## Notes
+## Design
 
-- Setup and downloads work with JavaScript disabled.
-- Stable download URLs never change across versions; the versioned filename is
-  applied via the `download` attribute from `version.json`.
-- The page is the current guide to the process. START-HERE.md is the offline
-  reference that ships in the toolkit, and is due a trim (see `TODO.md`).
+Follows the Climate Tech Cities design system: one olive green ink (`#25331a`)
+for text, borders and fills; a cream (`#f5f4e9`) paper canvas alternating with
+warm white in full-width bands; Jost Light 300 with positive letter-spacing as
+the open substitute for Halyard Display; square outlined buttons; no shadows.
+Accents are rationed to one home each, lavender on the one-rule band and pale
+blue behind the diagram.
