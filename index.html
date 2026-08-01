@@ -172,12 +172,22 @@
   .city-card input:focus { border-color: var(--accent); }
   .city-card p { font-size: 14px; color: var(--ink-soft); flex: 1 1 280px; }
 
-  /* ---------- sample issue ---------- */
+  /* ---------- workflow diagram ---------- */
+  .diagram {
+    background: var(--cream); border-radius: 12px; padding: 26px 24px 20px; margin-top: 28px;
+  }
+  .diagram-scroll { overflow-x: auto; }
+  .diagram-scroll svg { min-width: 760px; width: 100%; height: auto; display: block; }
+  .diagram-text { font-size: 14.5px; color: var(--ink-soft); margin-top: 18px; max-width: 80ch; line-height: 1.55; }
+
+  /* ---------- legends and swatches ---------- */
   .legend-row { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 20px; }
   .legend-row span { display: inline-flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 500; }
-  .swatch { width: 26px; height: 16px; border-radius: 3px; flex: 0 0 auto; }
+  .swatch { width: 26px; height: 16px; border-radius: 4px; flex: 0 0 auto; }
   .swatch.auto { background: var(--green-light); border: 1px solid #b6d9cd; }
   .swatch.human { background: #fdf3e0; border: 1px solid var(--gold); }
+  .swatch.claude { background: var(--house); }
+  .swatch.you { background: var(--white); border: 1.6px solid var(--house); }
 
   .issue {
     background: var(--white); border-radius: 12px; box-shadow: var(--card-shadow);
@@ -273,6 +283,55 @@
     <div class="eyebrow">How it works</div>
     <h2>Four sittings a week</h2>
     <p class="desc">Two are Claude doing the tedious half. Two are you doing the half that only a person can do. Everything runs inside your own Claude account.</p>
+
+    <div class="diagram">
+      <div class="legend-row">
+        <span><span class="swatch claude" aria-hidden="true"></span> Claude does this</span>
+        <span><span class="swatch you" aria-hidden="true"></span> You do this</span>
+      </div>
+      <div class="diagram-scroll">
+        <svg viewBox="0 0 980 236" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The weekly workflow in two lanes. Claude's lane: build the source map once per city, then harvest events every Thursday, then assemble the issue on Monday. Your lane: cut the sheet on Friday, then write the words and send on Tuesday. Work passes back and forth between the two lanes.">
+          <defs>
+            <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 9 5 L 0 9 z" fill="#00754A"/>
+            </marker>
+          </defs>
+
+          <text x="4" y="56" font-size="11" font-weight="600" fill="#00754A" font-family="Inter, sans-serif" letter-spacing="1.4">CLAUDE</text>
+          <text x="4" y="176" font-size="11" font-weight="600" fill="#1E3932" font-family="Inter, sans-serif" letter-spacing="1.4">YOU</text>
+          <line x1="0" y1="118" x2="980" y2="118" stroke="#e0ddd6" stroke-width="1" stroke-dasharray="3 5"/>
+
+          <path d="M 232 66 H 268" stroke="#00754A" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+          <path d="M 410 92 L 452 152" stroke="#00754A" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+          <path d="M 594 152 L 636 92" stroke="#00754A" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+          <path d="M 778 92 L 820 152" stroke="#00754A" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+
+          <g font-family="Inter, sans-serif">
+            <rect x="88" y="34" width="144" height="64" rx="12" fill="#1E3932"/>
+            <text x="160" y="61" font-size="14.5" font-weight="600" fill="#ffffff" text-anchor="middle">Source map</text>
+            <text x="160" y="80" font-size="11.5" fill="#ffffff" fill-opacity="0.7" text-anchor="middle">once per city</text>
+
+            <rect x="268" y="34" width="144" height="64" rx="12" fill="#1E3932"/>
+            <text x="340" y="61" font-size="14.5" font-weight="600" fill="#ffffff" text-anchor="middle">Harvest</text>
+            <text x="340" y="80" font-size="11.5" fill="#ffffff" fill-opacity="0.7" text-anchor="middle">Thursday</text>
+
+            <rect x="636" y="34" width="144" height="64" rx="12" fill="#1E3932"/>
+            <text x="708" y="61" font-size="14.5" font-weight="600" fill="#ffffff" text-anchor="middle">Assemble</text>
+            <text x="708" y="80" font-size="11.5" fill="#ffffff" fill-opacity="0.7" text-anchor="middle">Monday</text>
+
+            <rect x="452" y="138" width="144" height="64" rx="12" fill="#ffffff" stroke="#1E3932" stroke-width="1.6"/>
+            <text x="524" y="165" font-size="14.5" font-weight="600" fill="#1E3932" text-anchor="middle">Cut the sheet</text>
+            <text x="524" y="184" font-size="11.5" fill="rgba(0,0,0,0.58)" text-anchor="middle">Friday</text>
+
+            <rect x="820" y="138" width="144" height="64" rx="12" fill="#ffffff" stroke="#1E3932" stroke-width="1.6"/>
+            <text x="892" y="165" font-size="14.5" font-weight="600" fill="#1E3932" text-anchor="middle">Write and send</text>
+            <text x="892" y="184" font-size="11.5" fill="rgba(0,0,0,0.58)" text-anchor="middle">Mon and Tue</text>
+          </g>
+        </svg>
+      </div>
+      <p class="diagram-text">In words: Claude builds your source map once, then harvests events every Thursday. You cut the sheet on Friday. Claude assembles the issue on Monday, and you write the words and send on Tuesday.</p>
+    </div>
+
     <div class="grid grid-4" style="margin-top:28px;">
       <a class="card daycard" href="#thursday">
         <span class="step">Thursday</span>
