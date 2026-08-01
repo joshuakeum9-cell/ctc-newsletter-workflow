@@ -54,3 +54,10 @@ All toolkit releases. The site reads `version.json`; this file is the human-read
 - Added a sample finished issue with shading showing which blocks Claude builds and which the lead writes
 - Removed the changelog section, the zip line from the download list, and the third legend item
 - Rebuilt the UI on the Starbucks-inspired design system: warm cream canvas, four-tier green, pill buttons, 12px cards, layered soft shadows, sticky nav
+
+## 4.1.0 - 2026-08-01
+
+- ctc-assemble updated from the account: it now asks three questions before building (which events are the picks, any opportunities this week, anything the sheet cannot know) and waits for the answer. Picks come from the lead's answer rather than the skill's own ranking, and the opportunities block is omitted rather than padded when there are none
+- Monday section documents the three questions so leads can have answers ready
+- Friday flag guidance updated to four to six picks, and notes that marking PICK makes Monday's first question a one-line answer
+- ctc-harvest and ctc-source-map unchanged; repackaged alongside for consistency

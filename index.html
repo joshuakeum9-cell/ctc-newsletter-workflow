@@ -154,6 +154,22 @@
   }
   .note strong { font-weight: 600; }
 
+  /* the three questions assemble asks */
+  .qcard { margin-top: 20px; max-width: 76ch; border-left: 4px solid var(--accent); }
+  .qlist { counter-reset: q; list-style: none; margin-top: 16px; }
+  .qlist > li {
+    counter-increment: q; position: relative; padding-left: 40px; margin-bottom: 18px;
+  }
+  .qlist > li:last-child { margin-bottom: 0; }
+  .qlist > li::before {
+    content: counter(q); position: absolute; left: 0; top: 1px;
+    width: 26px; height: 26px; border-radius: 50%; background: var(--green-light);
+    color: var(--house); display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+  }
+  .qlist > li strong { display: block; font-size: 15.5px; font-weight: 600; margin-bottom: 3px; }
+  .qlist > li span { display: block; font-size: 14.5px; line-height: 1.55; color: var(--ink-soft); }
+
   /* ---------- downloads ---------- */
   .dl { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--hairline); flex-wrap: wrap; }
   .dl:last-child { border-bottom: none; }
@@ -490,10 +506,10 @@
       <div class="card">
         <h3>Flag</h3>
         <ul class="plain">
-          <li>Pick <strong>three to six</strong> events worth featuring</li>
+          <li>Note <strong>four to six</strong> events worth featuring, roughly one per day that has events</li>
           <li>Type <strong>PICK</strong> in a spare column next to each one</li>
           <li>Favour events that are free, easy for a newcomer, in person, or hard to find elsewhere</li>
-          <li>What is left in the file is your issue. The PICK rows are what you will write about on Monday</li>
+          <li>What is left in the file is your issue. On Monday, Claude will list this week's events numbered and ask which are the picks, so having them marked makes that a one-line answer</li>
         </ul>
       </div>
     </div>
@@ -505,12 +521,32 @@
   <div class="wrap">
     <div class="eyebrow">Monday</div>
     <h2>Assemble and write <span class="pill claude" style="vertical-align:middle;margin-left:8px;">Both</span> <span class="pill time" style="vertical-align:middle;">45 min</span></h2>
-    <p class="desc">Paste the prompt and attach your edited spreadsheet. Claude returns a Word document and an HTML page, both formatted for Substack.</p>
+    <p class="desc">Paste the prompt and attach your edited spreadsheet. Claude reads the sheet, asks you three questions, and then builds the issue as a Word document and an HTML page, both formatted for Substack.</p>
     <div class="prompt-card">
       <div class="head"><span>Assemble</span><span>weekly</span></div>
       <pre class="prompt" id="p-assemble"></pre>
       <div class="foot"><button class="btn" onclick="copyPrompt('p-assemble', this)">Copy prompt</button></div>
     </div>
+
+    <div class="card qcard">
+      <h3 style="margin-top:0;">Claude asks three questions first</h3>
+      <p class="desc" style="margin-top:6px;">It will not start building until you answer. Have these ready and Monday takes ten minutes instead of thirty.</p>
+      <ol class="qlist">
+        <li>
+          <strong>Which events are the picks?</strong>
+          <span>Claude lists this week's events numbered, in date order, and suggests four to six. You can reply with just the numbers, name your own, or say its list is fine. Four to six is the target, roughly one per day that has events.</span>
+        </li>
+        <li>
+          <strong>Any opportunities this week?</strong>
+          <span>Fellowships, grants, accelerators, calls for applications. These never appear in the events sheet, so Claude has no way to know them. Give a name, a link and a deadline and it can draft the description for you to check. If you have none, the block is left out rather than padded.</span>
+        </li>
+        <li>
+          <strong>Anything the sheet cannot know?</strong>
+          <span>Your chapter's own event, a postponement, a call for submissions, something that happened in the city this week. This is what the opening note and housekeeping get built from. If you have nothing, say so and those blocks come back as marked scaffolds.</span>
+        </li>
+      </ol>
+    </div>
+
     <div class="grid grid-2" style="margin-top:28px;">
       <div class="card" style="background:var(--green-light);box-shadow:none;">
         <span class="pill claude">Claude finishes these six</span>
@@ -530,7 +566,7 @@
           <li>The picks</li>
           <li>The opportunities</li>
         </ul>
-        <p class="desc" style="color:#5a4520;margin-bottom:0;">Claude leaves each one as a scaffold with the gap marked in [square brackets]. Those gaps are yours.</p>
+        <p class="desc" style="color:#5a4520;margin-bottom:0;">Claude builds these from your answers to the three questions and leaves what it cannot know as a scaffold with the gap marked in [square brackets]. Those gaps are yours, and the opening note is yours entirely.</p>
       </div>
     </div>
   </div>
