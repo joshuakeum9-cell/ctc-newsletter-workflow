@@ -1,6 +1,6 @@
 # CTC Newsletter Toolkit — companion site
 
-Live: **https://joshuakeum9-cell.github.io/ctc-newsletter-workflow/**
+Live: **https://github.io/ctc-newsletter-workflow/**
 
 A static companion workspace for the Climate Tech Cities newsletter toolkit —
 three Claude skills a chapter lead installs in their own Claude account
