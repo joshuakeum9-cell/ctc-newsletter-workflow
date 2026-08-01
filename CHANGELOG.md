@@ -31,3 +31,9 @@ All toolkit releases. The site reads `version.json`; this file is the human-read
 - Troubleshooting section added
 - The page is now the current guide; START-HERE.md is the offline reference
 - Accessibility and mobile pass: focus rings, aria-expanded on collapsibles, text alternative for the diagram, shape plus colour in the legend, reduced-motion support
+
+## 2.1.0 - 2026-08-01
+
+- Re-skinned to the Climate Tech Cities design system: one olive green ink (#25331a) for text, borders and fills; cream (#f5f4e9) paper canvas alternating with warm white in full-width bands; Jost Light 300 with positive letter-spacing as the substitute for Halyard Display; square outlined buttons with no radius; no shadows anywhere
+- Accents rationed to one home each: lavender on the one-rule green band, pale blue behind the workflow diagram
+- Structure, copy and behaviour unchanged from 2.0.0

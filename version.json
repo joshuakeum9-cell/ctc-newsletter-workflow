@@ -1,7 +1,15 @@
 {
-  "version": "2.0.0",
-  "date": "2026-07-31",
+  "version": "2.1.0",
+  "date": "2026-08-01",
   "changelog": [
+    {
+      "version": "2.1.0",
+      "date": "2026-08-01",
+      "notes": [
+        "The page now uses the Climate Tech Cities design system: olive green ink on a cream paper canvas, light tracked-out type, square outlined buttons, and full-width bands.",
+        "Skills unchanged from 1.0.0."
+      ]
+    },
     {
       "version": "2.0.0",
       "date": "2026-07-31",
