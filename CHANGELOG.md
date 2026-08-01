@@ -61,3 +61,8 @@ All toolkit releases. The site reads `version.json`; this file is the human-read
 - Monday section documents the three questions so leads can have answers ready
 - Friday flag guidance updated to four to six picks, and notes that marking PICK makes Monday's first question a one-line answer
 - ctc-harvest and ctc-source-map unchanged; repackaged alongside for consistency
+
+## 4.2.0 - 2026-08-01
+
+- Sample issue now shows three categories instead of two. Picks and opportunities are marked as collaborative: the lead chooses the events and adds the asides while the skill writes the framing around them, and the lead supplies each opportunity while the skill drafts the description
+- The remaining human blocks state what the skill does contribute, so no block overstates either side

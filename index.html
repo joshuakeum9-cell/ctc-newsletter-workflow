@@ -202,6 +202,10 @@
   .swatch { width: 26px; height: 16px; border-radius: 4px; flex: 0 0 auto; }
   .swatch.auto { background: var(--green-light); border: 1px solid #b6d9cd; }
   .swatch.human { background: #fdf3e0; border: 1px solid var(--gold); }
+  .swatch.both {
+    background: linear-gradient(90deg, var(--green-light) 0 50%, #fdf3e0 50% 100%);
+    border: 1px solid var(--gold);
+  }
   .swatch.claude { background: var(--house); }
   .swatch.you { background: var(--white); border: 1.6px solid var(--house); }
 
@@ -212,6 +216,9 @@
   .issue .blk { border-radius: 8px; padding: 12px 14px; margin-bottom: 12px; position: relative; }
   .issue .blk.auto { background: var(--green-light); }
   .issue .blk.human { background: #fdf3e0; }
+  .issue .blk.both { background: var(--green-light); border-left: 5px solid var(--gold); border-radius: 4px 8px 8px 4px; }
+  .issue .blk.both .tag { color: var(--house); }
+  .issue .blk .who { font-weight: 400; opacity: 0.8; }
   .issue .tag {
     font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
     display: block; margin-bottom: 7px;
@@ -589,6 +596,7 @@
     <p class="desc">A real New York issue, shortened to fit. The shading shows who wrote what.</p>
     <div class="legend-row" style="margin-top:20px;">
       <span><span class="swatch auto" aria-hidden="true"></span> Built by Claude from your spreadsheet</span>
+      <span><span class="swatch both" aria-hidden="true"></span> You choose, Claude writes around it</span>
       <span><span class="swatch human" aria-hidden="true"></span> Written by you</span>
     </div>
 
@@ -600,14 +608,14 @@
       </div>
 
       <div class="blk human">
-        <span class="tag">Yours · opening note</span>
+        <span class="tag">Yours · opening note <span class="who">Claude leaves the greeting and the closing line, the middle is yours</span></span>
         <p>Hi all,</p>
         <p>Last week we pulled out our N95s once again as wildfire smoke subsumed the summer. The brown-orange skies, torrential rain, and tornado warnings have been stark reminders that climate change is here and now.</p>
         <p>For such a global problem, we continually find hope and inspiration in local community. While the summer is a lot quieter, there's still plenty of ways to connect. Here are our picks for the week:</p>
       </div>
 
-      <div class="blk human">
-        <span class="tag">Yours · picks of the week</span>
+      <div class="blk both">
+        <span class="tag">Both · picks of the week <span class="who">you choose the events and add the asides, Claude writes the framing</span></span>
         <ul>
           <li><strong>Tomorrow</strong> embrace the tides at the <span class="lnk">🌊 2026 Offshore Wind Innovator Program</span> or make calls (and friends!) at the <span class="lnk">⏳ Manhattan Climate Changemakers Hour of Action</span></li>
           <li><strong>Thursday</strong> talk sustainable finance in Sheep's Meadow at the <span class="lnk">🧺 BASIC NY Summer Social</span> or join Climatebase in Midtown for <span class="lnk">💬 Climate Conversations NYC</span></li>
@@ -616,13 +624,13 @@
       </div>
 
       <div class="blk human">
-        <span class="tag">Yours · housekeeping and sign-off</span>
+        <span class="tag">Yours · housekeeping and sign-off <span class="who">sign-off comes from your city config</span></span>
         <p>We've postponed Wednesday's <strong>Other Intelligence</strong> summit until later this year (too many people were out of town!) but are still looking forward to it in the Fall.</p>
         <p>Til next week!<br/>Alec, Sonam, and the Climate Tech Cities team</p>
       </div>
 
-      <div class="blk human">
-        <span class="tag">Yours · opportunities</span>
+      <div class="blk both">
+        <span class="tag">Both · opportunities <span class="who">you supply the name, link and deadline, Claude drafts the description</span></span>
         <p><strong>💡 New York Climate Exchange Climate Tech Fellowship</strong><br/>A six-month hybrid program combining expert-led curriculum, mentorship, and non-dilutive funding. <strong>Applications due August 1.</strong></p>
       </div>
 
@@ -658,7 +666,7 @@
       </div>
     </div>
 
-    <div class="note" style="max-width:72ch;">In this issue about eighty words are yours and the rest is assembled. Note that the sign-off sits in the <strong>middle</strong> of the issue, not at the end: note, picks, housekeeping, "Til next week", and then the listings. That is the house format and the skill follows it.</div>
+    <div class="note" style="max-width:72ch;">The split is rarely all or nothing. The listings are entirely Claude's and the opening note is entirely yours, but the <strong>picks sit in between</strong>: you decide which events make the cut and you add the asides that make it sound like a person, while Claude writes the day, the verb and the venue around them. Across the whole issue about eighty words are truly yours. Note too that the sign-off sits in the <strong>middle</strong>, not at the end: note, picks, housekeeping, "Til next week", and then the listings.</div>
     <div class="note" style="max-width:72ch;background:var(--white);box-shadow:var(--card-shadow);color:var(--ink-soft);">Your first issue will look nothing like this, and that is correct. This newsletter launched with <strong>three events and no emoji at all</strong>. It said plainly that there was no single place to check what was happening in the city, so the author had started one. Send the small one, on the same day, every week.</div>
   </div>
 </div>
