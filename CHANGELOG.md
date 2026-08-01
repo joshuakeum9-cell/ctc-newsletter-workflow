@@ -44,3 +44,13 @@ All toolkit releases. The site reads `version.json`; this file is the human-read
 - Removed the three writing scaffolds: the assemble skill already produces them, with the gaps marked, inside the document it hands back
 - Setup is open by default and no longer collapses
 - One city field fills all three prompts. Nothing is stored
+
+## 4.0.0 - 2026-08-01
+
+- Skills updated to the latest account versions (American spelling pass across all three) and repackaged
+- Prompts now include the skill reference, e.g. /ctc-harvest Harvest this week's events for Boston
+- START-HERE is now a PDF that opens in a new tab to read on screen instead of downloading
+- city-config-template is now .docx, and setup states it must be added to the Claude project's knowledge as context
+- Added a sample finished issue with shading showing which blocks Claude builds and which the lead writes
+- Removed the changelog section, the zip line from the download list, and the third legend item
+- Rebuilt the UI on the Starbucks-inspired design system: warm cream canvas, four-tier green, pill buttons, 12px cards, layered soft shadows, sticky nav

@@ -1,60 +1,8 @@
 {
-  "version": "3.0.0",
+  "version": "4.0.0",
   "date": "2026-08-01",
-  "changelog": [
-    {
-      "version": "3.0.0",
-      "date": "2026-08-01",
-      "notes": [
-        "The page is now setup, workflow, and prompts only. It saves nothing: the source registry table, issue log, backup export and import, and the workspace are all gone, along with everything they stored.",
-        "The writing scaffolds were removed because the assemble skill already produces them, with the gaps marked, inside the document it hands you.",
-        "Setup is open by default and no longer collapses.",
-        "Type your city once and all three prompts fill in. Nothing is stored.",
-        "Skills unchanged from 1.0.0."
-      ]
-    },
-    {
-      "version": "2.1.0",
-      "date": "2026-08-01",
-      "notes": [
-        "The page now uses the Climate Tech Cities design system: olive green ink on a cream paper canvas, light tracked-out type, square outlined buttons, and full-width bands.",
-        "Skills unchanged from 1.0.0."
-      ]
-    },
-    {
-      "version": "2.0.0",
-      "date": "2026-07-31",
-      "notes": [
-        "Page restructured around the four weekdays: Thursday Collect, Friday Cut, Monday Write, Tuesday Send. Setup is front and centre on first visit and collapses to one line once your city is saved.",
-        "New install verification step: ask Claude which newsletter skills it has before Thursday ever arrives.",
-        "The browser triage table is gone; cutting happens in the spreadsheet you already have open, with the judgment guidance kept as prose.",
-        "The page now stores only your city, week, sources, and log. Writing happens in the assembled document, helped by copy-the-scaffold buttons.",
-        "Troubleshooting section for the common failure modes.",
-        "Skills unchanged from 1.0.0."
-      ]
-    },
-    {
-      "version": "1.2.0",
-      "date": "2026-07-31",
-      "notes": [
-        "Import a backup: the workspace bar can now load a previously exported .json file, restoring sources, sheets, drafts and the issue log. Export finally has its other half."
-      ]
-    },
-    {
-      "version": "1.1.0",
-      "date": "2026-07-31",
-      "notes": [
-        "Site redesign for clarity: workflow diagram showing where Claude works and where you do, weekly rhythm cards (Thursday collect, Friday cut, Monday write, Tuesday send), plainer copy, new visual system.",
-        "Skills unchanged from 1.0.0."
-      ]
-    },
-    {
-      "version": "1.0.0",
-      "date": "2026-07-31",
-      "notes": [
-        "First release: ctc-source-map, ctc-harvest, ctc-assemble skills, START-HERE guide, city config template.",
-        "Companion site: setup guide, source registry, prompt generators, event-sheet triage, writing workspace, sheet checks, send guide, issue log."
-      ]
-    }
-  ]
+  "toolkit": {
+    "skills": ["ctc-source-map", "ctc-harvest", "ctc-assemble"],
+    "updated": "2026-08-01"
+  }
 }
