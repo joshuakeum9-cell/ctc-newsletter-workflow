@@ -16,3 +16,7 @@ All toolkit releases. The site reads `version.json`; this file is the human-read
 - Site redesign for clarity: hero workflow diagram (Claude lane vs you lane), weekly rhythm cards, plainer copy, Cohere-inspired visual system (white canvas, deep green, coral accents, pill buttons, mono labels)
 - No em or en dashes anywhere in site copy
 - Skills unchanged from 1.0.0
+
+## 1.2.0 - 2026-07-31
+
+- Import a backup: load a previously exported .json file to restore sources, sheets, drafts and the issue log, e.g. after clearing browser data or moving to a new computer

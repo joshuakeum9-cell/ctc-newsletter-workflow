@@ -333,7 +333,7 @@
   <!-- City bar -->
   <section class="stage" style="border-top:none;padding-top:8px;">
     <h2>Your workspace</h2>
-    <p class="desc">Tell the page your city and which week you're producing. Everything below saves against that pair, so you can come back mid-week and pick up where you left off.</p>
+    <p class="desc">Tell the page your city and which week you're producing. Everything below saves in this browser automatically, so you can close the tab and pick up where you left off. Moving to a new browser or computer? Export on the old one, import on the new one.</p>
     <div class="city-bar">
       <div class="field">
         <label for="city">Your city</label>
@@ -345,6 +345,9 @@
       </div>
       <button class="btn" onclick="loadWorkspace()">Open workspace</button>
       <button class="btn ghost" onclick="exportAll()">Export all data</button>
+      <label class="btn ghost" style="display:inline-block;text-transform:none;letter-spacing:0;font-family:inherit;font-size:14px;">
+        Import a backup <input type="file" id="backup-file" accept=".json,application/json" hidden onchange="importBackup(this)" />
+      </label>
     </div>
   </section>
 
@@ -898,6 +901,33 @@ function renderLog() {
     document.getElementById("log-harvested").value = sheet.length;
     document.getElementById("log-published").value = sheet.filter(function (r) { return r.status !== "cut" && r.status !== "dupe"; }).length;
   }
+}
+
+/* ---------- import backup ---------- */
+function importBackup(input) {
+  var f = input.files[0]; if (!f) return;
+  var reader = new FileReader();
+  reader.onload = function () {
+    var dump;
+    try { dump = JSON.parse(String(reader.result)); }
+    catch (e) { alert("That file isn't a valid backup. It should be the .json file this page exported."); input.value = ""; return; }
+    var keys = Object.keys(dump).filter(function (k) { return k.indexOf(NS) === 0; });
+    if (!keys.length) { alert("No workspace data found in that file. It should be the .json file this page exported."); input.value = ""; return; }
+    if (!confirm("Load " + keys.length + " saved item" + (keys.length === 1 ? "" : "s") + " from this backup? Anything in this browser with the same city and week will be replaced by the backup's version.")) { input.value = ""; return; }
+    keys.forEach(function (k) {
+      try { localStorage.setItem(k, JSON.stringify(dump[k])); } catch (e) {}
+    });
+    var last = dump[NS + "last-workspace"];
+    if (last && last.city) {
+      document.getElementById("city").value = last.city;
+      if (last.week) document.getElementById("week-start").value = last.week;
+    }
+    restoreSetup();
+    loadWorkspace();
+    input.value = "";
+    alert("Backup loaded. Your sources, sheets, drafts and log are back.");
+  };
+  reader.readAsText(f);
 }
 
 /* ---------- export all ---------- */

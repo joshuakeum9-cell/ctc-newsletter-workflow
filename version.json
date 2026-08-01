@@ -1,7 +1,14 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "date": "2026-07-31",
   "changelog": [
+    {
+      "version": "1.2.0",
+      "date": "2026-07-31",
+      "notes": [
+        "Import a backup: the workspace bar can now load a previously exported .json file, restoring sources, sheets, drafts and the issue log. Export finally has its other half."
+      ]
+    },
     {
       "version": "1.1.0",
       "date": "2026-07-31",
