@@ -320,7 +320,16 @@
     <h3>4 · Create a Claude project</h3>
     <p class="desc">Make a new project (something like "Boston Newsletter") and upload your <code>city-config.md</code> to it. Everything weekly happens inside that project, so Claude always knows your city.</p>
 
-    <h3>5 · Build your source registry</h3>
+    <h3>5 · Check that it worked</h3>
+    <p class="desc">Before you leave this section, prove the install to yourself. In your Claude project, ask:</p>
+    <pre class="prompt" id="verify-prompt">Which newsletter skills do you have available?</pre>
+    <div class="btn-row">
+      <button class="btn secondary" onclick="copyText('verify-prompt', this)">Copy prompt</button>
+    </div>
+    <p class="note">Claude should name all three: <strong>ctc-source-map</strong>, <strong>ctc-harvest</strong>, and <strong>ctc-assemble</strong>. If it does, you're installed, and Thursday will work.</p>
+    <p class="note amber">If it doesn't: re-upload the three .skill files, confirm code execution is turned on in the same panel, then start a new conversation and ask again. Skills don't appear mid-conversation.</p>
+
+    <h3>6 · Build your source registry</h3>
     <p class="desc">Your standing list of everywhere events come from. This is the most important hour you'll spend: everything downstream depends on it. Aim for 20 to 30 verified sources, and redo this every three months, because calendars die quietly.</p>
     <div id="sources-empty" class="empty">
       In your Claude project, run:
@@ -342,7 +351,7 @@
     </div>
     <p class="note" id="sources-stale-note" hidden></p>
 
-    <h3>6 · Save your city here</h3>
+    <h3>7 · Save your city here</h3>
     <p class="desc">Type your city in the workspace bar just below and press Open workspace. That's what collapses this section and switches the page into weekly mode.</p>
   </details>
 
