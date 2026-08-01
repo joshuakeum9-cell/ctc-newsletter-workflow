@@ -3,183 +3,292 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>CTC Newsletter Toolkit — Workspace</title>
+<title>CTC Newsletter Toolkit</title>
 <style>
   :root {
-    --bg: #f7f6f1;
-    --ink: #1c2a24;
-    --muted: #5f6f66;
-    --card: #ffffff;
-    --border: #dcdfd6;
-    --green: #1f6f4a;
-    --green-soft: #e4efe8;
-    --amber: #b7791f;
-    --amber-soft: #f8ecd9;
-    --red: #b0432f;
-    --red-soft: #f9e3e0;
-    --radius: 14px;
+    --canvas: #ffffff;
+    --ink: #212121;
+    --primary: #17171c;
+    --green: #003c33;
+    --pale-green: #edfce9;
+    --stone: #eeece7;
+    --coral: #ff7759;
+    --coral-soft: #ffad9b;
+    --coral-pale: #fff1ed;
+    --hairline: #d9d9dd;
+    --card-border: #f2f2f2;
+    --muted: #93939f;
+    --slate: #75758a;
+    --body-muted: #616161;
+    --blue: #1863dc;
+    --error: #b30000;
+    --r-sm: 8px;
+    --r-md: 16px;
+    --r-lg: 22px;
+    --pill: 32px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
-    font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
-    background: var(--bg); color: var(--ink); line-height: 1.55;
+    font-family: "Space Grotesk", Inter, -apple-system, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+    background: var(--canvas); color: var(--ink); line-height: 1.5; font-size: 16px;
   }
-  .wrap { max-width: 1060px; margin: 0 auto; padding: 24px 16px 80px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px 80px; }
 
-  header.site { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
-  .brand { font-family: Georgia, serif; font-size: 1.45rem; font-weight: 700; }
-  .brand span { color: var(--green); }
+  .mono {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--slate);
+  }
+
+  /* hero */
+  .hero { padding: 56px 0 36px; }
+  .hero .mono { color: var(--green); margin-bottom: 14px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
   .version-badge {
-    font-size: 0.72rem; font-weight: 700; color: var(--green);
-    background: var(--green-soft); padding: 3px 10px; border-radius: 99px;
-    text-decoration: none;
+    font-family: ui-monospace, Consolas, monospace; font-size: 12px; letter-spacing: 0.03em;
+    color: var(--ink); border: 1px solid var(--hairline); border-radius: var(--pill);
+    padding: 3px 12px; text-decoration: none;
   }
-  .tagline { color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
+  h1 {
+    font-weight: 400; font-size: clamp(2.1rem, 5.5vw, 3.6rem);
+    line-height: 1.02; letter-spacing: -0.025em; max-width: 20ch;
+  }
+  h1 em { font-style: normal; color: var(--green); }
+  .hero p.lede { font-size: 18px; color: var(--body-muted); max-width: 58ch; margin-top: 18px; }
 
+  /* diagram card */
+  .diagram-card {
+    background: var(--stone); border-radius: var(--r-lg); padding: 28px 24px 20px;
+    margin: 34px 0 10px; overflow-x: auto;
+  }
+  .diagram-card svg { min-width: 860px; width: 100%; height: auto; display: block; }
+  .legend { display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 16px; }
+  .legend span { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink); }
+  .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+  .dot.claude { background: var(--green); }
+  .dot.you { background: var(--coral); }
+  .dot.page { background: #fff; border: 1.5px solid var(--slate); }
+
+  /* rhythm strip */
+  .rhythm { display: flex; gap: 8px; flex-wrap: wrap; margin: 26px 0 44px; }
+  .rhythm div {
+    flex: 1 1 180px; border: 1px solid var(--hairline); border-radius: var(--r-sm);
+    padding: 14px 16px; font-size: 14px; color: var(--body-muted); background: var(--canvas);
+  }
+  .rhythm div strong { display: block; color: var(--ink); font-size: 15px; margin-bottom: 2px; font-weight: 500; }
+  .rhythm .day { font-family: ui-monospace, Consolas, monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--green); }
+
+  /* storage note */
   .storage-note {
-    background: var(--amber-soft); color: var(--amber); border-radius: 9px;
-    padding: 10px 14px; font-size: 0.84rem; margin-bottom: 20px;
+    background: var(--coral-pale); border: 1px solid var(--coral-soft); color: var(--ink); border-radius: var(--r-sm);
+    padding: 12px 16px; font-size: 14px; margin-bottom: 28px;
     display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center;
   }
-  .storage-note button { flex: 0 0 auto; }
 
-  /* City bar */
-  .city-bar {
-    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 18px; display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 24px;
-  }
-  .city-bar .field { flex: 1 1 180px; }
-  label { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 5px; }
-  input, textarea, select {
-    width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 9px;
-    font-size: 0.95rem; background: #fff; color: var(--ink); outline: none; font-family: inherit;
-  }
-  input:focus, textarea:focus { border-color: var(--green); }
+  /* buttons */
   .btn {
-    padding: 10px 16px; border: none; border-radius: 9px; cursor: pointer;
-    font-size: 0.9rem; font-weight: 600; background: var(--green); color: #fff; transition: filter .15s;
-    font-family: inherit;
+    padding: 10px 22px; border: none; border-radius: var(--pill); cursor: pointer;
+    font-size: 14px; font-weight: 500; background: var(--primary); color: #fff;
+    font-family: inherit; transition: opacity .15s;
   }
-  .btn:hover { filter: brightness(1.1); }
-  .btn.secondary { background: var(--green-soft); color: var(--green); }
-  .btn.ghost { background: transparent; border: 1px solid var(--border); color: var(--muted); }
-  .btn.danger { background: var(--red-soft); color: var(--red); }
-  .btn.small { padding: 5px 10px; font-size: 0.78rem; }
+  .btn:hover { opacity: 0.85; }
+  .btn.secondary { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+  .btn.ghost { background: transparent; color: var(--slate); border: 1px solid var(--hairline); }
+  .btn.danger { background: transparent; color: var(--error); border: 1px solid var(--coral-soft); }
+  .btn.small { padding: 5px 13px; font-size: 12.5px; }
 
-  /* Pipeline stepper */
-  .pipeline { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 30px; }
-  .step {
-    flex: 1 1 96px; background: var(--card); border: 1px solid var(--border); border-radius: 10px;
-    padding: 9px 6px; text-align: center; font-size: 0.76rem; color: var(--muted); position: relative; cursor: pointer;
+  /* chips / badges */
+  .badge {
+    font-family: ui-monospace, Consolas, monospace; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 12px; border-radius: var(--pill);
   }
-  .step:hover { border-color: var(--green); }
-  .step .num { display: block; font-family: Georgia, serif; font-size: 1rem; color: var(--green); font-weight: 700; }
-  .step.skill::after, .step.human::after {
-    position: absolute; top: -8px; right: -4px; font-size: 0.6rem; padding: 1px 7px;
-    border-radius: 99px; font-weight: 700;
-  }
-  .step.skill::after { content: "skill"; background: var(--amber-soft); color: var(--amber); }
-  .step.human::after { content: "human"; background: var(--green-soft); color: var(--green); }
+  .badge.claude { background: var(--green); color: #fff; }
+  .badge.you { background: transparent; color: var(--coral); border: 1.5px solid var(--coral); }
+  .badge.page { background: transparent; color: var(--slate); border: 1px solid var(--hairline); }
+  .badge.day { background: var(--pale-green); color: var(--green); border: none; }
 
-  /* Stage cards */
+  /* sections */
   section.stage, details.stage {
-    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 24px; margin-bottom: 20px;
+    border-top: 1px solid var(--hairline); padding: 40px 0 44px;
   }
   details.stage summary { cursor: pointer; list-style: none; }
   details.stage summary::-webkit-details-marker { display: none; }
+  details.stage summary::after { content: "＋ expand"; font-size: 13px; color: var(--slate); }
+  details.stage[open] summary::after { content: "－ collapse"; }
   .stage h2 {
-    font-family: Georgia, serif; font-size: 1.2rem; margin-bottom: 4px;
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    font-weight: 400; font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px;
   }
-  .stage h2 .badge, .badge {
-    font-family: -apple-system, "Segoe UI", sans-serif; font-size: 0.63rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: .06em; padding: 3px 9px; border-radius: 99px;
-  }
-  .badge.skill { background: var(--amber-soft); color: var(--amber); }
-  .badge.human { background: var(--green-soft); color: var(--green); }
-  .badge.auto { background: #e8e9f5; color: #4a4f8c; }
-  .stage .desc { color: var(--muted); font-size: 0.9rem; margin: 4px 0 16px; max-width: 70ch; }
-  .stage h3 { font-size: 0.95rem; margin: 18px 0 8px; }
+  .stage h2 .stepnum { color: var(--muted); }
+  .stage .desc { color: var(--body-muted); font-size: 15.5px; margin: 6px 0 20px; max-width: 66ch; }
+  .stage h3 { font-size: 17px; font-weight: 500; margin: 26px 0 10px; }
 
-  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-  th, td { text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
-  th { font-size: 0.68rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); white-space: nowrap; }
+  /* inputs */
+  label { display: block; font-family: ui-monospace, Consolas, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--slate); margin-bottom: 6px; }
+  input, textarea, select {
+    width: 100%; padding: 11px 13px; border: 1px solid var(--hairline); border-radius: var(--r-sm);
+    font-size: 15px; background: #fff; color: var(--ink); outline: none; font-family: inherit;
+  }
+  input:focus, textarea:focus { border-color: #9b60aa; }
+  textarea { resize: vertical; min-height: 96px; }
+
+  .city-bar {
+    background: var(--canvas); border: 1px solid var(--hairline); border-radius: var(--r-md);
+    padding: 20px; display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; margin: 0 0 8px;
+  }
+  .city-bar .field { flex: 1 1 200px; }
+
+  /* tables */
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--card-border); vertical-align: top; }
+  th { font-family: ui-monospace, Consolas, monospace; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); white-space: nowrap; font-weight: 500; }
   .table-scroll { overflow-x: auto; }
-  td input { padding: 6px 8px; font-size: 0.85rem; }
+  td input { padding: 7px 9px; font-size: 14px; }
+  td a { color: var(--blue); }
 
   .tag-btn {
-    font-size: 0.68rem; padding: 3px 9px; border-radius: 99px; font-weight: 700; cursor: pointer;
-    border: 1px solid var(--border); background: #fff; color: var(--muted); font-family: inherit;
+    font-family: ui-monospace, Consolas, monospace; font-size: 11px; padding: 4px 11px; border-radius: var(--pill);
+    font-weight: 500; cursor: pointer; border: 1.5px solid var(--hairline); background: #fff; color: var(--slate);
+    letter-spacing: 0.04em;
   }
-  .tag-btn.on-pick { background: var(--green-soft); color: var(--green); border-color: var(--green); }
-  .tag-btn.on-dupe { background: var(--amber-soft); color: var(--amber); border-color: var(--amber); }
-  .tag-btn.on-cut { background: var(--red-soft); color: var(--red); border-color: var(--red); }
-  tr.row-cut td, tr.row-dupe td { opacity: 0.45; text-decoration: line-through; }
-  tr.row-pick td { background: #f3faf6; }
+  .tag-btn.on-pick { background: var(--pale-green); color: var(--green); border-color: var(--green); }
+  .tag-btn.on-dupe { background: var(--stone); color: var(--slate); border-color: var(--slate); }
+  .tag-btn.on-cut { background: var(--coral-pale); color: var(--error); border-color: var(--coral-soft); }
+  tr.row-cut td, tr.row-dupe td { opacity: 0.4; text-decoration: line-through; }
+  tr.row-pick td { background: var(--pale-green); }
 
-  .note { background: var(--green-soft); border-radius: 9px; padding: 11px 14px; font-size: 0.84rem; color: var(--green); margin-top: 12px; max-width: 75ch; }
-  .note.amber { background: var(--amber-soft); color: var(--amber); }
-  .note.red { background: var(--red-soft); color: var(--red); }
-
-  .empty { color: var(--muted); font-size: 0.88rem; font-style: italic; padding: 14px 0; }
+  .note { background: var(--pale-green); border-radius: var(--r-sm); padding: 12px 16px; font-size: 14px; color: var(--green); margin-top: 14px; max-width: 75ch; }
+  .note.amber { background: var(--coral-pale); color: #a04a2e; }
+  .empty { color: var(--slate); font-size: 14.5px; padding: 8px 0; }
 
   pre.prompt {
-    background: #f2f1ea; border: 1px solid var(--border); border-radius: 9px;
-    padding: 14px; font-size: 0.82rem; white-space: pre-wrap; word-break: break-word;
-    font-family: ui-monospace, Consolas, monospace; max-height: 260px; overflow-y: auto; margin: 10px 0;
+    background: var(--stone); border-radius: var(--r-sm);
+    padding: 16px; font-size: 13px; white-space: pre-wrap; word-break: break-word;
+    font-family: ui-monospace, Consolas, monospace; max-height: 260px; overflow-y: auto; margin: 12px 0 4px;
+    line-height: 1.6;
   }
-  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; align-items: center; }
 
-  .write-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  /* dark thesis band (step 5) */
+  .dark-band {
+    background: var(--green); color: #fff; border-radius: var(--r-lg);
+    padding: 36px 32px; margin: 4px 0 24px;
+  }
+  .dark-band .mono { color: var(--coral-soft); margin-bottom: 10px; }
+  .dark-band p { font-size: clamp(1.15rem, 2.4vw, 1.5rem); line-height: 1.35; letter-spacing: -0.01em; max-width: 34ch; }
+
+  .write-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .write-grid .full { grid-column: 1 / -1; }
-  textarea { resize: vertical; min-height: 90px; }
-  .wc { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
-  .stays-human {
-    font-family: Georgia, serif; font-size: 1.02rem; color: var(--green);
-    border-left: 4px solid var(--green); padding: 8px 14px; margin: 4px 0 16px; background: var(--green-soft);
-    border-radius: 0 9px 9px 0; max-width: 70ch;
-  }
+  .wc { font-size: 12.5px; color: var(--muted); margin-top: 5px; }
 
-  ul.defects { list-style: none; margin-top: 10px; }
-  ul.defects li { padding: 7px 10px; border-left: 3px solid var(--red); background: var(--red-soft); color: var(--red); border-radius: 0 7px 7px 0; margin-bottom: 6px; font-size: 0.85rem; }
-  ul.defects li.warn { border-color: var(--amber); background: var(--amber-soft); color: var(--amber); }
-  ul.defects li.clean { border-color: var(--green); background: var(--green-soft); color: var(--green); }
+  ul.defects { list-style: none; margin-top: 14px; max-width: 75ch; }
+  ul.defects li { padding: 9px 14px; border-left: 3px solid var(--error); background: #fdf3f2; color: var(--error); border-radius: 0 var(--r-sm) var(--r-sm) 0; margin-bottom: 7px; font-size: 14px; }
+  ul.defects li.warn { border-color: var(--coral); background: var(--coral-pale); color: #a04a2e; }
+  ul.defects li.clean { border-color: var(--green); background: var(--pale-green); color: var(--green); }
 
-  ol.steps { margin: 10px 0 0 20px; font-size: 0.92rem; }
-  ol.steps li { margin-bottom: 8px; }
+  ol.steps { margin: 12px 0 0 20px; font-size: 15px; max-width: 66ch; }
+  ol.steps li { margin-bottom: 10px; }
 
-  .dl-list { list-style: none; margin-top: 10px; }
-  .dl-list li { padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 0.9rem; }
-  .dl-list a { color: var(--green); font-weight: 600; }
-  .setup-check { list-style: none; margin-top: 8px; }
-  .setup-check li { padding: 5px 0; font-size: 0.92rem; }
-  .setup-check input { width: auto; margin-right: 9px; }
+  .dl-list { list-style: none; margin-top: 12px; max-width: 75ch; }
+  .dl-list li { padding: 12px 0; border-bottom: 1px solid var(--card-border); display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 14.5px; align-items: center; }
+  .dl-list a { color: var(--blue); font-weight: 500; text-decoration: none; }
+  .dl-list a:hover { text-decoration: underline; }
+  .setup-check { list-style: none; margin-top: 10px; }
+  .setup-check li { padding: 6px 0; }
+  .setup-check label { text-transform: none; letter-spacing: 0; font-family: inherit; font-size: 15px; color: var(--ink); display: flex; align-items: center; }
+  .setup-check input { width: auto; margin-right: 10px; }
 
-  .cl-list { font-size: 0.85rem; color: var(--muted); margin-top: 8px; }
-  .cl-list ul { margin: 4px 0 10px 20px; }
+  .cl-list { font-size: 14px; color: var(--body-muted); margin-top: 10px; }
+  .cl-list ul { margin: 4px 0 12px 20px; }
 
-  footer { text-align: center; color: var(--muted); font-size: 0.78rem; margin-top: 40px; line-height: 1.7; }
+  footer { border-top: 1px solid var(--hairline); text-align: left; color: var(--muted); font-size: 12.5px; margin-top: 30px; padding-top: 24px; line-height: 1.8; }
+  footer a { color: var(--slate); }
+
   @media (max-width: 640px) {
     .write-grid { grid-template-columns: 1fr; }
-    .stage h2 { font-size: 1.05rem; }
-    section.stage, details.stage { padding: 16px; }
+    .hero { padding: 36px 0 24px; }
+    .dark-band { padding: 26px 20px; }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <header class="site">
-    <div class="brand">Climate Tech <span>Cities</span> · Newsletter Toolkit</div>
-    <a class="version-badge" id="version-badge" href="CHANGELOG.md">v1</a>
-  </header>
-  <p class="tagline">Three Claude skills do the lists. You write the words. This page holds everything in between.</p>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="mono">CTC Newsletter Toolkit <a class="version-badge" id="version-badge" href="CHANGELOG.md">v1</a></div>
+    <h1>Claude does the lists.<br/><em>You write the words.</em></h1>
+    <p class="lede">A weekly climate events newsletter for your city, without the data entry. Three Claude skills collect and format everything. You cut the list, write a short note, and send. About two hours a week.</p>
+  </div>
+
+  <!-- WORKFLOW DIAGRAM -->
+  <div class="diagram-card">
+    <div class="legend">
+      <span><span class="dot claude"></span> Claude does this</span>
+      <span><span class="dot you"></span> You do this</span>
+      <span><span class="dot page"></span> This page helps</span>
+    </div>
+    <svg viewBox="0 0 1060 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Workflow diagram: Claude builds the source map and harvests events, you cut the sheet, Claude assembles the issue, you write the words, this page checks the sheet, you send on Substack, this page keeps the log.">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#93939f"/>
+        </marker>
+      </defs>
+      <!-- lane labels -->
+      <text x="8" y="66" font-size="11" fill="#003c33" font-family="ui-monospace, Consolas, monospace" letter-spacing="1">CLAUDE</text>
+      <text x="8" y="186" font-size="11" fill="#ff7759" font-family="ui-monospace, Consolas, monospace" letter-spacing="1">YOU</text>
+      <!-- connectors -->
+      <path d="M 190 70 H 230" stroke="#93939f" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+      <path d="M 360 85 L 400 165" stroke="#93939f" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+      <path d="M 530 165 L 570 85" stroke="#93939f" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+      <path d="M 700 85 L 740 165" stroke="#93939f" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+      <path d="M 870 190 H 902" stroke="#93939f" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+      <!-- Claude lane nodes -->
+      <g>
+        <rect x="70" y="40" width="120" height="60" rx="10" fill="#003c33"/>
+        <text x="130" y="66" font-size="14" fill="#ffffff" text-anchor="middle">Source map</text>
+        <text x="130" y="84" font-size="11" fill="#9fbdb6" text-anchor="middle">once per city</text>
+        <rect x="240" y="40" width="120" height="60" rx="10" fill="#003c33"/>
+        <text x="300" y="66" font-size="14" fill="#ffffff" text-anchor="middle">Harvest</text>
+        <text x="300" y="84" font-size="11" fill="#9fbdb6" text-anchor="middle">Thursday</text>
+        <rect x="580" y="40" width="120" height="60" rx="10" fill="#003c33"/>
+        <text x="640" y="66" font-size="14" fill="#ffffff" text-anchor="middle">Assemble</text>
+        <text x="640" y="84" font-size="11" fill="#9fbdb6" text-anchor="middle">Monday</text>
+      </g>
+      <!-- You lane nodes -->
+      <g>
+        <rect x="410" y="150" width="120" height="60" rx="10" fill="#ffffff" stroke="#ff7759" stroke-width="2"/>
+        <text x="470" y="176" font-size="14" fill="#212121" text-anchor="middle">Cut the sheet</text>
+        <text x="470" y="194" font-size="11" fill="#93939f" text-anchor="middle">Friday</text>
+        <rect x="750" y="150" width="120" height="60" rx="10" fill="#ffffff" stroke="#ff7759" stroke-width="2"/>
+        <text x="810" y="170" font-size="14" fill="#212121" text-anchor="middle">Write + send</text>
+        <text x="810" y="188" font-size="11" fill="#93939f" text-anchor="middle">Mon + Tue</text>
+      </g>
+      <!-- page node -->
+      <g>
+        <rect x="910" y="150" width="120" height="60" rx="10" fill="#ffffff" stroke="#93939f" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="970" y="176" font-size="14" fill="#212121" text-anchor="middle">Log it</text>
+        <text x="970" y="194" font-size="11" fill="#93939f" text-anchor="middle">this page</text>
+      </g>
+      <!-- checks hint under assemble/write -->
+      <rect x="750" y="40" width="120" height="60" rx="10" fill="#ffffff" stroke="#93939f" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="810" y="66" font-size="14" fill="#212121" text-anchor="middle">Checks</text>
+      <text x="810" y="84" font-size="11" fill="#93939f" text-anchor="middle">this page</text>
+      <path d="M 810 100 V 142" stroke="#93939f" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+    </svg>
+  </div>
+
+  <!-- weekly rhythm -->
+  <div class="rhythm">
+    <div><span class="day">Thursday</span><strong>Collect</strong>Ask Claude to harvest. 15 minutes of your attention.</div>
+    <div><span class="day">Friday</span><strong>Cut</strong>Open the sheet, delete rows. 30 minutes. This decides the issue.</div>
+    <div><span class="day">Monday</span><strong>Write</strong>Claude assembles, you write the three human blocks. 45 minutes.</div>
+    <div><span class="day">Tuesday</span><strong>Send</strong>Paste into Substack, read it once, send. 15 minutes.</div>
+  </div>
 
   <div class="storage-note" id="storage-note" hidden>
-    <span>Everything you enter here is saved in <strong>this browser only</strong> — nothing is uploaded anywhere. Clearing browser data clears your workspace, so export a backup now and then.</span>
-    <span class="btn-row">
-      <button class="btn small secondary" onclick="exportAll()">Export all my data</button>
+    <span>Everything you type here is saved in <strong>this browser only</strong>. Nothing is uploaded anywhere. Clearing browser data clears your workspace, so export a backup now and then.</span>
+    <span class="btn-row" style="margin:0;">
+      <button class="btn small secondary" onclick="exportAll()">Export my data</button>
       <button class="btn small ghost" onclick="dismissStorageNote()">Got it</button>
     </span>
   </div>
@@ -187,76 +296,69 @@
   <!-- 0. SETUP -->
   <details class="stage" id="setup" open>
     <summary>
-      <h2>0. Setup — do this once <span class="badge auto">~2 hours</span></h2>
-      <p class="desc">The toolkit is three Claude skills you install in your own Claude account. You need a paid Claude plan and no coding at all. Click to expand or collapse.</p>
+      <h2><span class="stepnum">0</span> Set up once <span class="badge day">about 2 hours</span></h2>
+      <p class="desc">The toolkit is three Claude skills you install in your own Claude account. You need a paid Claude plan. You don't need to know how to code.</p>
     </summary>
 
     <h3>Get the toolkit</h3>
     <ul class="dl-list">
-      <li><span><a href="downloads/CTC-Newsletter-Toolkit.zip" download="CTC-Newsletter-Toolkit-v1.zip" data-dl="CTC-Newsletter-Toolkit">📦 CTC-Newsletter-Toolkit.zip</a> — everything below, one file</span><span class="badge auto">start here</span></li>
-      <li><span><a href="downloads/ctc-source-map.skill" download="ctc-source-map.skill">ctc-source-map.skill</a> — finds your city's event sources. Run once, refresh quarterly</span></li>
-      <li><span><a href="downloads/ctc-harvest.skill" download="ctc-harvest.skill">ctc-harvest.skill</a> — collects the week's events into a spreadsheet. Weekly</span></li>
-      <li><span><a href="downloads/ctc-assemble.skill" download="ctc-assemble.skill">ctc-assemble.skill</a> — builds the issue. Weekly</span></li>
-      <li><span><a href="downloads/START-HERE.md" download="START-HERE.md">START-HERE.md</a> — the full setup and weekly guide. If this page ever disagrees with it, trust the guide</span></li>
-      <li><span><a href="downloads/city-config-template.md" download="city-config-template.md">city-config-template.md</a> — fill in once, upload to your Claude project</span></li>
+      <li><span><a href="downloads/CTC-Newsletter-Toolkit.zip" download="CTC-Newsletter-Toolkit-v1.zip" data-dl="CTC-Newsletter-Toolkit">📦 CTC-Newsletter-Toolkit.zip</a> · everything below in one file</span><span class="badge page">start here</span></li>
+      <li><span><a href="downloads/ctc-source-map.skill" download="ctc-source-map.skill">ctc-source-map.skill</a> · finds your city's event sources. Run once, refresh quarterly</span><span class="badge claude">claude</span></li>
+      <li><span><a href="downloads/ctc-harvest.skill" download="ctc-harvest.skill">ctc-harvest.skill</a> · collects the week's events into a spreadsheet</span><span class="badge claude">claude</span></li>
+      <li><span><a href="downloads/ctc-assemble.skill" download="ctc-assemble.skill">ctc-assemble.skill</a> · builds the issue</span><span class="badge claude">claude</span></li>
+      <li><span><a href="downloads/START-HERE.md" download="START-HERE.md">START-HERE.md</a> · the full guide. If this page ever disagrees with it, trust the guide</span></li>
+      <li><span><a href="downloads/city-config-template.md" download="city-config-template.md">city-config-template.md</a> · fill in once, upload to your Claude project</span><span class="badge you">you</span></li>
     </ul>
 
-    <h3>Install (from START-HERE.md)</h3>
+    <h3>Install, step by step</h3>
     <ol class="steps">
-      <li>In Claude, go to <strong>Settings → Capabilities → Skills</strong> and upload the three <code>.skill</code> files.</li>
-      <li>Turn on <strong>code execution</strong> in the same settings area — the skills need it to build your spreadsheet and document.</li>
-      <li>Install the <strong>Claude for Chrome</strong> extension and sign in with the same account. Some event sites (Eventbrite especially) hide their data from simple requests; Claude reads those pages in your browser.</li>
-      <li>Fill in <code>city-config-template.md</code> — chapter name, timezone, geographic scope, sign-off, footer. Save it as <code>city-config.md</code>. Takes ten minutes.</li>
-      <li>Create a Claude project (e.g. "Boston Newsletter") and upload your <code>city-config.md</code> to it. Everything weekly happens inside that project.</li>
+      <li>In Claude, open <strong>Settings, then Capabilities, then Skills</strong>, and upload the three .skill files.</li>
+      <li>Turn on <strong>code execution</strong> in the same settings area. The skills need it to build your spreadsheet and document.</li>
+      <li>Install the <strong>Claude for Chrome</strong> extension and sign in with the same account. Some event sites hide their data from simple requests, so Claude reads those pages in your browser.</li>
+      <li>Fill in <code>city-config-template.md</code>: chapter name, timezone, what counts as local, who signs the newsletter, your footer. Save it as <code>city-config.md</code>. Ten minutes.</li>
+      <li>Create a Claude project (something like "Boston Newsletter") and upload your <code>city-config.md</code> to it. Everything weekly happens inside that project, so Claude always knows your city.</li>
     </ol>
 
-    <h3>You're set up when…</h3>
+    <h3>You're set up when</h3>
     <ul class="setup-check" id="setup-check">
-      <li><label style="text-transform:none;letter-spacing:0;font-size:0.92rem;color:var(--ink);display:flex;align-items:center;"><input type="checkbox" data-chk="skills"> All three skills show under Settings → Capabilities → Skills</label></li>
-      <li><label style="text-transform:none;letter-spacing:0;font-size:0.92rem;color:var(--ink);display:flex;align-items:center;"><input type="checkbox" data-chk="code"> Code execution is on</label></li>
-      <li><label style="text-transform:none;letter-spacing:0;font-size:0.92rem;color:var(--ink);display:flex;align-items:center;"><input type="checkbox" data-chk="chrome"> Claude for Chrome is installed and signed in</label></li>
-      <li><label style="text-transform:none;letter-spacing:0;font-size:0.92rem;color:var(--ink);display:flex;align-items:center;"><input type="checkbox" data-chk="config"> Your project exists with city-config.md uploaded</label></li>
-      <li><label style="text-transform:none;letter-spacing:0;font-size:0.92rem;color:var(--ink);display:flex;align-items:center;"><input type="checkbox" data-chk="sources"> Source map built (step 1 below) and sources.csv uploaded to the project</label></li>
+      <li><label><input type="checkbox" data-chk="skills"> All three skills show under Settings, Capabilities, Skills</label></li>
+      <li><label><input type="checkbox" data-chk="code"> Code execution is on</label></li>
+      <li><label><input type="checkbox" data-chk="chrome"> Claude for Chrome is installed and signed in</label></li>
+      <li><label><input type="checkbox" data-chk="config"> Your project exists with city-config.md uploaded</label></li>
+      <li><label><input type="checkbox" data-chk="sources"> Source map built (step 1 below) and sources.csv uploaded to the project</label></li>
     </ul>
-    <p class="note" id="setup-done-note" hidden>All checked — you're set up. This section will start collapsed from now on.</p>
+    <p class="note" id="setup-done-note" hidden>All checked. You're set up, and this section will start collapsed from now on.</p>
   </details>
 
   <!-- City bar -->
-  <div class="city-bar">
-    <div class="field">
-      <label for="city">Your city</label>
-      <input type="text" id="city" placeholder="e.g. Boston" />
+  <section class="stage" style="border-top:none;padding-top:8px;">
+    <h2>Your workspace</h2>
+    <p class="desc">Tell the page your city and which week you're producing. Everything below saves against that pair, so you can come back mid-week and pick up where you left off.</p>
+    <div class="city-bar">
+      <div class="field">
+        <label for="city">Your city</label>
+        <input type="text" id="city" placeholder="e.g. Boston" />
+      </div>
+      <div class="field">
+        <label for="week-start">Issue week starts</label>
+        <input type="date" id="week-start" />
+      </div>
+      <button class="btn" onclick="loadWorkspace()">Open workspace</button>
+      <button class="btn ghost" onclick="exportAll()">Export all data</button>
     </div>
-    <div class="field">
-      <label for="week-start">Issue week starts</label>
-      <input type="date" id="week-start" />
-    </div>
-    <button class="btn" onclick="loadWorkspace()">Open workspace</button>
-    <button class="btn ghost" onclick="exportAll()">Export all data</button>
-  </div>
-
-  <nav class="pipeline">
-    <div class="step skill" onclick="jump('sources')"><span class="num">1</span>Source map</div>
-    <div class="step skill" onclick="jump('harvest')"><span class="num">2</span>Harvest</div>
-    <div class="step human" onclick="jump('sheet')"><span class="num">3</span>Cut</div>
-    <div class="step skill" onclick="jump('assemble')"><span class="num">4</span>Assemble</div>
-    <div class="step human" onclick="jump('write')"><span class="num">5</span>You write</div>
-    <div class="step" onclick="jump('checks')"><span class="num">6</span>Checks</div>
-    <div class="step" onclick="jump('send')"><span class="num">7</span>Send</div>
-    <div class="step" onclick="jump('log')"><span class="num">8</span>Log</div>
-  </nav>
+  </section>
 
   <!-- 1. SOURCE MAP -->
   <section class="stage" id="sources">
-    <h2>1. Source registry <span class="badge skill">ctc-source-map</span></h2>
-    <p class="desc">Your standing list of everywhere events come from. Build it once with the source-map skill, keep the working copy here, refresh it every three months — calendars die quietly. Aim for 20–30 verified sources.</p>
+    <h2><span class="stepnum">1</span> Source registry <span class="badge claude">claude does this</span> <span class="badge day">once, refresh quarterly</span></h2>
+    <p class="desc">Your standing list of everywhere events come from. Claude builds it; you keep the working copy here. This is the most important hour you'll spend: everything downstream depends on it. Aim for 20 to 30 verified sources, and redo it every three months, because calendars die quietly.</p>
     <div id="sources-empty" class="empty">
       No sources yet for this city. In your Claude project, run:
       <pre class="prompt" id="sourcemap-prompt">Build the source map for [your city].</pre>
       <div class="btn-row">
         <button class="btn secondary" onclick="copyText('sourcemap-prompt', this)">Copy prompt</button>
       </div>
-      Then add the sources it verifies below (or keep them only in sources.csv in your project — this table is optional but handy for the harvest prompt).
+      Read what Claude gives you. You live there and Claude doesn't; if it missed the obvious weekly meetup, say so and have it add them. Then list the verified sources below (or keep them only in sources.csv in your project; this table is optional but it makes the harvest prompt better).
     </div>
     <div class="table-scroll" id="sources-table-wrap" hidden>
       <table>
@@ -273,28 +375,28 @@
 
   <!-- 2. HARVEST -->
   <section class="stage" id="harvest">
-    <h2>2. Harvest <span class="badge skill">ctc-harvest</span></h2>
-    <p class="desc">Thursday, about 15 minutes of your attention. This page can't run Claude for you — copy the prompt below, paste it into your Claude project, and say yes if it asks to use your Chrome browser (it's reading pages, not clicking anything). It collects <em>everything</em>, no filtering — that's on purpose.</p>
+    <h2><span class="stepnum">2</span> Harvest <span class="badge claude">claude does this</span> <span class="badge day">Thursday</span></h2>
+    <p class="desc">Copy the prompt below and paste it into your Claude project. Claude sweeps every source on your list and hands you a spreadsheet. It collects everything with no filtering; that's on purpose, because collecting and judging are different jobs. If it asks to use your Chrome browser, say yes. It's reading pages, not clicking anything.</p>
     <pre class="prompt" id="harvest-prompt">Harvest this week's events for [your city].</pre>
     <div class="btn-row">
       <button class="btn" onclick="copyText('harvest-prompt', this)">Copy prompt</button>
     </div>
-    <p class="note">Claude hands you a spreadsheet. Save it — Friday's job is cutting it down, either in Excel (per START-HERE) or in step 3 below, whichever you prefer.</p>
+    <p class="note">Save the spreadsheet Claude gives you. Friday's job is cutting it down, in Excel or in step 3 below, whichever you prefer.</p>
   </section>
 
-  <!-- 3. EVENT SHEET / TRIAGE -->
+  <!-- 3. CUT -->
   <section class="stage" id="sheet">
-    <h2>3. Cut the sheet <span class="badge human">you curate</span></h2>
-    <p class="desc">Friday, about 30 minutes. This is your job and nobody can do it for you — how many events end up in the newsletter is decided right here. There's no target: a good week is however many good events your city has. Work in Excel if you like it better; this table does the same job in the browser. To use it, export your sheet as CSV (File → Save As → CSV) and load it here.</p>
+    <h2><span class="stepnum">3</span> Cut the sheet <span class="badge you">you do this</span> <span class="badge day">Friday</span></h2>
+    <p class="desc">This is your job and nobody can do it for you. How many events end up in the newsletter is decided right here, and there's no target: a good week is however many good events your city has. Cut anything outside your scope rule, anything not really climate, anything with a dead link. Work in Excel if you like it better; this table does the same job in the browser. To use it, save your sheet as CSV and load it here.</p>
     <div class="btn-row">
-      <label class="btn secondary" style="display:inline-block;text-transform:none;letter-spacing:0;font-size:0.9rem;color:var(--green);">
+      <label class="btn secondary" style="display:inline-block;text-transform:none;letter-spacing:0;font-family:inherit;font-size:14px;color:var(--ink);">
         Import CSV file <input type="file" id="csv-file" accept=".csv,text/csv" hidden onchange="importCsvFile(this)" />
       </label>
       <button class="btn ghost" onclick="toggleEl('csv-paste-wrap')">Paste CSV instead</button>
       <button class="btn danger small" id="clear-sheet-btn" hidden onclick="clearSheet()">Clear this week's sheet</button>
     </div>
-    <div id="csv-paste-wrap" hidden style="margin-top:10px;">
-      <textarea id="csv-paste" placeholder="Paste the CSV contents here…"></textarea>
+    <div id="csv-paste-wrap" hidden style="margin-top:12px;">
+      <textarea id="csv-paste" placeholder="Paste the CSV contents here"></textarea>
       <div class="btn-row"><button class="btn secondary" onclick="importCsvPaste()">Load pasted CSV</button></div>
     </div>
     <p class="empty" id="sheet-empty">Nothing loaded for this city and week yet.</p>
@@ -305,67 +407,70 @@
         <tbody id="sheet-tbody"></tbody>
       </table>
     </div>
-    <p class="note amber" style="margin-top:12px;">Tap a status to cycle: keep → <strong>PICK</strong> (featured) → <strong>DUPE</strong> → <strong>CUT</strong> → keep. DUPE and CUT rows are dropped from the issue.</p>
+    <p class="note amber" style="margin-top:14px;">Tap a status to cycle: keep, then <strong>PICK</strong> (featured), then <strong>DUPE</strong>, then <strong>CUT</strong>, back to keep. DUPE and CUT rows are dropped from the issue. If two rows are the same event from different calendars, keep the better one.</p>
   </section>
 
   <!-- 4. ASSEMBLE -->
   <section class="stage" id="assemble">
-    <h2>4. Assemble <span class="badge skill">ctc-assemble</span></h2>
-    <p class="desc">Monday. Copy the prompt, paste it into your Claude project, and attach your edited spreadsheet (or let the prompt carry the surviving rows from step 3). Claude returns a Word document and an HTML page formatted for Substack — listings, links, emoji, day headers, and footer done; the three human blocks left as [placeholders].</p>
+    <h2><span class="stepnum">4</span> Assemble <span class="badge claude">claude does this</span> <span class="badge day">Monday</span></h2>
+    <p class="desc">Copy the prompt, paste it into your Claude project, and attach your edited spreadsheet (or use the second button to carry the surviving rows inside the prompt). Claude returns a Word document and an HTML page formatted for Substack. The listings, links, emoji, day headers and footer are finished. Three parts come back in [square brackets], because Claude can't know them. Those are yours.</p>
     <pre class="prompt" id="assemble-prompt">Assemble the [your city] issue from this sheet.</pre>
     <div class="btn-row">
       <button class="btn" onclick="copyText('assemble-prompt', this)">Copy prompt</button>
-      <button class="btn ghost" id="assemble-with-rows" onclick="buildAssemblePrompt(true); copyText('assemble-prompt', this)" hidden>Copy with surviving events included</button>
+      <button class="btn secondary" id="assemble-with-rows" onclick="buildAssemblePrompt(true); copyText('assemble-prompt', this)" hidden>Copy with surviving events included</button>
     </div>
   </section>
 
   <!-- 5. YOU WRITE -->
   <section class="stage" id="write">
-    <h2>5. You write <span class="badge human">stays human</span></h2>
-    <p class="stays-human">Automate the lists. Write the words yourself. A 3,000-word issue contains roughly 80 words of human prose — and those 80 words are why anyone subscribes. Don't let Claude write them; generated prose reads like generated prose, and readers can tell.</p>
-    <p class="desc">Draft the three placeholder blocks here — autosaved in this browser as you type. When you're done, export and paste them over the [placeholders] in the assembled issue.</p>
+    <h2><span class="stepnum">5</span> Write the words <span class="badge you">you do this</span> <span class="badge day">Monday</span></h2>
+    <div class="dark-band">
+      <div class="mono">The one rule</div>
+      <p>Automate the lists. Write the words yourself. A 3,000 word issue has about 80 words of human prose, and those 80 words are why anyone subscribes.</p>
+    </div>
+    <p class="desc">Draft the three bracket blocks here; the page saves as you type. Don't let Claude write them. Generated prose reads like generated prose, and readers can tell. When you're done, export and paste them over the [placeholders] in the assembled issue.</p>
     <div class="write-grid">
       <div class="full">
-        <label for="w-note">Opening note — the weather, something in the news, how your last event went</label>
+        <label for="w-note">Opening note · the weather, something in the news, how your last event went</label>
         <textarea id="w-note" data-write="note" placeholder="Hi all,"></textarea>
         <div class="wc" id="w-note-wc">0 words</div>
       </div>
       <div>
-        <label for="w-picks">Picks — Claude drafts the structure, you add the personality</label>
-        <textarea id="w-picks" data-write="picks" placeholder="Bold day → verb → place or reason. Join two events with 'or', never 'and'."></textarea>
+        <label for="w-picks">Picks · Claude drafts the structure, you add the personality</label>
+        <textarea id="w-picks" data-write="picks" placeholder="Bold day, verb, place or reason. Join two events with 'or', never 'and'."></textarea>
       </div>
       <div>
-        <label for="w-opps">Opportunities — fellowships, grants, deadlines (keep a running list)</label>
-        <textarea id="w-opps" data-write="opps" placeholder="Most stay open for weeks — carry them over."></textarea>
+        <label for="w-opps">Opportunities · fellowships, grants, deadlines</label>
+        <textarea id="w-opps" data-write="opps" placeholder="Keep a running list. Most stay open for weeks."></textarea>
       </div>
     </div>
     <div class="btn-row">
       <button class="btn secondary" onclick="exportWriteMd()">Export as markdown</button>
-      <span class="wc" id="autosave-flash" style="align-self:center;"></span>
+      <span class="wc" id="autosave-flash"></span>
     </div>
   </section>
 
   <!-- 6. CHECKS -->
   <section class="stage" id="checks">
-    <h2>6. Checks <span class="badge auto">runs right here</span></h2>
-    <p class="desc">A linter over your event sheet (step 3). It reports; it never auto-fixes — the human decides. Link-checking and emoji live in the skills and in your final read, since this page doesn't fetch anything.</p>
+    <h2><span class="stepnum">6</span> Checks <span class="badge page">this page</span></h2>
+    <p class="desc">A once-over of your event sheet, run right here in the browser. It reports problems; it never fixes them, because the human decides. Links and emoji get checked by the skills and by your final read.</p>
     <div class="btn-row"><button class="btn" onclick="runChecks()">Run checks on this week's sheet</button></div>
     <ul class="defects" id="defects"></ul>
   </section>
 
   <!-- 7. SEND -->
   <section class="stage" id="send">
-    <h2>7. Send <span class="badge human">Substack</span></h2>
-    <p class="desc">Tuesday, about 15 minutes. This page can't send anything — Substack is where sending happens.</p>
+    <h2><span class="stepnum">7</span> Send <span class="badge you">you do this</span> <span class="badge day">Tuesday</span></h2>
+    <p class="desc">This page can't send anything. Substack is where sending happens, and it takes about 15 minutes.</p>
     <ol class="steps">
       <li>Open the HTML file (or Word document) Claude assembled.</li>
-      <li>Make sure your three written blocks have replaced every [placeholder] — nothing in square brackets ships.</li>
+      <li>Make sure your three written blocks have replaced every [placeholder]. Nothing in square brackets ships.</li>
       <li>Select all, copy, paste into a new Substack post. Formatting and links come across.</li>
       <li><strong>Read the whole issue once, top to bottom.</strong> You're checking voice and picks, not links.</li>
-      <li>Send. Then log it below so future-you knows what this week cost.</li>
+      <li>Send. Then log it below, so future you knows what this week cost.</li>
     </ol>
     <h3>Mark this issue sent</h3>
-    <div class="city-bar" style="margin:10px 0 0;padding:14px;">
+    <div class="city-bar" style="margin:10px 0 0;padding:16px;">
       <div class="field"><label for="log-harvested">Events harvested</label><input type="number" id="log-harvested" min="0" /></div>
       <div class="field"><label for="log-published">Events published</label><input type="number" id="log-published" min="0" /></div>
       <div class="field"><label for="log-minutes">Minutes spent (total)</label><input type="number" id="log-minutes" min="0" /></div>
@@ -375,9 +480,9 @@
 
   <!-- 8. LOG -->
   <section class="stage" id="log">
-    <h2>8. Log <span class="badge auto">history</span></h2>
-    <p class="desc">Every issue for this city, logged when you mark it sent. After four weeks, look back: what took longest? Fix that before adding anything new.</p>
-    <p class="empty" id="log-empty">No issues logged yet for this city. The first one will be small — send it anyway.</p>
+    <h2><span class="stepnum">8</span> Log <span class="badge page">this page</span></h2>
+    <p class="desc">Every issue for this city. After four weeks, look back: what took longest? What did you skip? Fix that before adding anything new. And if you miss a week, just send the next one. No apology, no explanation. A thin issue that arrives beats a good issue that doesn't.</p>
+    <p class="empty" id="log-empty">No issues logged yet for this city. The first one will be small, maybe five or eight events. That's what every newsletter looks like at the start. Send anyway.</p>
     <div class="table-scroll" id="log-table-wrap" hidden>
       <table>
         <thead><tr><th>Date sent</th><th>Week of</th><th>Harvested</th><th>Published</th><th>Minutes</th><th></th></tr></thead>
@@ -392,17 +497,17 @@
   </details>
 
   <footer>
-    Climate Tech Cities · Newsletter Toolkit companion — static page, no backend, no analytics, no cookies.<br/>
+    Climate Tech Cities · Newsletter Toolkit companion. Static page, no backend, no analytics, no cookies.<br/>
     Your data lives in this browser's localStorage only. Source of truth for the process: <a href="downloads/START-HERE.md" download>START-HERE.md</a>.
   </footer>
 </div>
 
 <noscript>
-  <style>.city-bar, .pipeline, #sources, #harvest, #sheet, #assemble, #write, #checks, #send, #log { display: none; }</style>
-  <div style="max-width:1060px;margin:0 auto;padding:0 16px;">
-    <p style="background:#f8ecd9;color:#b7791f;padding:12px 14px;border-radius:9px;font-size:0.9rem;">
-      JavaScript is off, so the workspace tools are hidden — but everything you need to get started is above:
-      the downloads all work, and START-HERE.md has the complete setup and weekly guide.
+  <style>.city-bar, #sources, #harvest, #sheet, #assemble, #write, #checks, #send, #log { display: none; }</style>
+  <div style="max-width:1080px;margin:0 auto;padding:0 20px;">
+    <p style="background:#fff1ed;color:#a04a2e;padding:12px 16px;border-radius:8px;font-size:14px;">
+      JavaScript is off, so the workspace tools are hidden. Everything you need to get started still works:
+      the downloads above, and START-HERE.md has the complete setup and weekly guide.
     </p>
   </div>
 </noscript>
@@ -420,8 +525,8 @@ function load(k, fallback) {
 }
 function del(k) { try { localStorage.removeItem(NS + k); } catch (e) {} }
 
-var sources = [];   // [{name,type,url,refreshed}]
-var sheet = [];     // [{cols:{...}, status:"keep"|"pick"|"dupe"|"cut"}]
+var sources = [];
+var sheet = [];
 var SHEET_COLS = ["Event Name","Date","Start Time","End Time","Registration Link","Event Type","Access","Location","City / Neighborhood","Google Maps","Format","Host Organization(s)","Description","Categories","Block"];
 
 /* ---------- boot ---------- */
@@ -452,7 +557,7 @@ function renderVersion(v) {
   });
   var cl = document.getElementById("changelog");
   cl.innerHTML = v.changelog.map(function (rel) {
-    return "<strong>v" + esc(rel.version) + " — " + esc(rel.date) + "</strong><ul>" +
+    return "<strong>v" + esc(rel.version) + " · " + esc(rel.date) + "</strong><ul>" +
       rel.notes.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") + "</ul>";
   }).join("");
 }
@@ -504,7 +609,7 @@ function renderSources() {
       var td = document.createElement("td");
       var inp = document.createElement("input");
       inp.value = s[f] || "";
-      inp.placeholder = { name: "Source name", type: "Luma / Eventbrite / org / …", url: "https://…", refreshed: "YYYY-MM" }[f];
+      inp.placeholder = { name: "Source name", type: "Luma / Eventbrite / org", url: "https://", refreshed: "YYYY-MM" }[f];
       inp.addEventListener("input", function () { sources[i][f] = inp.value; saveSources(false); });
       inp.addEventListener("blur", function () { saveSources(true); });
       td.appendChild(inp); tr.appendChild(td);
@@ -535,13 +640,13 @@ function staleNote() {
   var newest = Math.max.apply(null, dates);
   var months = (Date.now() - newest) / (1000 * 60 * 60 * 24 * 30);
   if (months > 3) {
-    note.textContent = "Your newest refresh date is over three months old. Calendars die quietly — re-run the source map.";
+    note.textContent = "Your newest refresh date is over three months old. Calendars die quietly. Re-run the source map.";
     note.className = "note amber"; note.hidden = false;
   } else { note.hidden = true; }
 }
 function exportSourcesMd() {
   if (!sources.length) { alert("No sources to export yet."); return; }
-  var md = "## Event sources — " + cityName() + "\n\n| Source | Type | URL | Last refreshed |\n|---|---|---|---|\n" +
+  var md = "## Event sources: " + cityName() + "\n\n| Source | Type | URL | Last refreshed |\n|---|---|---|---|\n" +
     sources.map(function (s) { return "| " + [s.name, s.type, s.url, s.refreshed].map(function (x) { return (x || "").replace(/\|/g, "\\|"); }).join(" | ") + " |"; }).join("\n") + "\n";
   downloadFile(cityKey() + "-sources.md", md);
 }
@@ -549,12 +654,12 @@ function exportSourcesMd() {
 /* ---------- prompts ---------- */
 function buildPrompts() {
   var c = cityName(), w = weekKey();
-  var weekTxt = w ? " The issue week starts " + w + " (this_week = the 7 days from then; upcoming = days 8–56)." : "";
+  var weekTxt = w ? " The issue week starts " + w + " (this_week covers the 7 days from then; upcoming covers days 8 to 56)." : "";
   var p = "Harvest this week's events for " + c + "." + weekTxt;
   if (sources.length) {
     p += "\n\nSweep these sources (my current registry):\n" +
       sources.filter(function (s) { return s.name || s.url; })
-             .map(function (s) { return "- " + (s.name || s.url) + (s.url ? " — " + s.url : ""); }).join("\n");
+             .map(function (s) { return "- " + (s.name || s.url) + (s.url ? " (" + s.url + ")" : ""); }).join("\n");
   }
   document.getElementById("harvest-prompt").textContent = p;
   buildAssemblePrompt(false);
@@ -572,7 +677,7 @@ function buildAssemblePrompt(withRows) {
         return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
       }).join(",");
     })).join("\n");
-    base += " The sheet contents (CSV, already triaged — rows marked Pick are my picks):\n\n" + csv;
+    base += " The sheet contents (CSV, already triaged; rows marked Pick are my picks):\n\n" + csv;
   }
   document.getElementById("assemble-prompt").textContent = base;
 }
@@ -586,7 +691,7 @@ function copyText(id, btn) {
 function fallbackCopy(text, done) {
   var ta = document.createElement("textarea");
   ta.value = text; document.body.appendChild(ta); ta.select();
-  try { document.execCommand("copy"); done(); } catch (e) { alert("Copy failed — select the prompt text and copy manually."); }
+  try { document.execCommand("copy"); done(); } catch (e) { alert("Copy failed. Select the prompt text and copy it manually."); }
   document.body.removeChild(ta);
 }
 
@@ -676,7 +781,7 @@ function renderSheet() {
     var tdL = document.createElement("td");
     if (r.cols["Registration Link"]) {
       var a = document.createElement("a"); a.href = r.cols["Registration Link"]; a.target = "_blank"; a.rel = "noopener";
-      a.textContent = "link"; a.style.color = "var(--green)"; tdL.appendChild(a);
+      a.textContent = "link"; tdL.appendChild(a);
     }
     tr.appendChild(tdL); tbody.appendChild(tr);
   });
@@ -705,7 +810,7 @@ function updateWc() {
   var t = document.getElementById("w-note").value.trim();
   var n = t ? t.split(/\s+/).length : 0;
   document.getElementById("w-note-wc").textContent = n + " word" + (n === 1 ? "" : "s") +
-    (n > 0 && n <= 120 ? " — about right; the archive's opening notes run short" : n > 120 ? " — longer than the house style usually runs" : "");
+    (n > 0 && n <= 120 ? ", about right; the archive's opening notes run short" : n > 120 ? ", longer than the house style usually runs" : "");
 }
 var flashTimer;
 function flashSave() {
@@ -715,7 +820,7 @@ function flashSave() {
 }
 function exportWriteMd() {
   var d = load("city:" + cityKey() + ":week:" + weekKey() + ":write", {});
-  var md = "# " + cityName() + " — week of " + (weekKey() || "?") + "\n\n" +
+  var md = "# " + cityName() + ": week of " + (weekKey() || "?") + "\n\n" +
     "## Opening note\n\n" + (d.note || "") + "\n\n## Picks\n\n" + (d.picks || "") + "\n\n## Opportunities\n\n" + (d.opps || "") + "\n";
   downloadFile(cityKey() + "-" + weekKey() + "-editorial.md", md);
 }
@@ -724,13 +829,13 @@ function exportWriteMd() {
 function runChecks() {
   var out = document.getElementById("defects"); out.innerHTML = "";
   function add(msg, cls) { var li = document.createElement("li"); li.textContent = msg; if (cls) li.className = cls; out.appendChild(li); }
-  if (!sheet.length) { add("No sheet loaded for this city and week — import it in step 3 first.", "warn"); return; }
+  if (!sheet.length) { add("No sheet loaded for this city and week. Import it in step 3 first.", "warn"); return; }
   var live = sheet.filter(function (r) { return r.status !== "cut" && r.status !== "dupe"; });
   var issues = 0;
   var seen = {};
   live.forEach(function (r) {
     var key = r.cols["Event Name"].toLowerCase().replace(/\s+/g, " ").trim();
-    if (seen[key]) { add("Duplicate title still in the issue: “" + r.cols["Event Name"] + "” — mark one DUPE."); issues++; }
+    if (seen[key]) { add("Duplicate title still in the issue: “" + r.cols["Event Name"] + "”. Mark one of them DUPE."); issues++; }
     seen[key] = true;
   });
   var start = weekKey() ? new Date(weekKey() + "T00:00:00") : null;
@@ -739,18 +844,18 @@ function runChecks() {
     var name = r.cols["Event Name"];
     if (!r.cols["Date"]) { add("Missing date: “" + name + "”"); issues++; return; }
     var d = new Date(r.cols["Date"]);
-    if (isNaN(d.getTime())) { add("Unreadable date “" + r.cols["Date"] + "” on: " + name + " — fix it or cut the row.", "warn"); issues++; return; }
+    if (isNaN(d.getTime())) { add("Unreadable date “" + r.cols["Date"] + "” on: " + name + ". Fix it or cut the row.", "warn"); issues++; return; }
     if (d < today) { add("Past date: “" + name + "” is dated " + r.cols["Date"] + "."); issues++; }
     if (start) {
       var days = Math.round((d - start) / 86400000);
       var block = (r.cols["Block"] || "").toLowerCase();
       if (block.indexOf("this") === 0 && (days < 0 || days > 6)) { add("“" + name + "” is marked this_week but falls " + days + " days from the issue start."); issues++; }
-      if (block.indexOf("up") === 0 && (days < 7 || days > 56)) { add("“" + name + "” is marked upcoming but falls " + days + " days from the issue start (window is 8–56)."); issues++; }
-      if (!block) { add("No block on: “" + name + "” — should be this_week or upcoming.", "warn"); issues++; }
+      if (block.indexOf("up") === 0 && (days < 7 || days > 56)) { add("“" + name + "” is marked upcoming but falls " + days + " days from the issue start (the window is 8 to 56)."); issues++; }
+      if (!block) { add("No block on: “" + name + "”. Should be this_week or upcoming.", "warn"); issues++; }
     }
-    if (!r.cols["Registration Link"]) { add("Missing link: “" + name + "” — an event nobody can register for isn't a listing."); issues++; }
+    if (!r.cols["Registration Link"]) { add("Missing link: “" + name + "”. An event nobody can register for isn't a listing."); issues++; }
   });
-  if (!issues) add("Clean — " + live.length + " surviving events, no defects found. Still do the final human read before sending.", "clean");
+  if (!issues) add("Clean. " + live.length + " surviving events, no defects found. Still do the final human read before sending.", "clean");
 }
 
 /* ---------- 7/8. send & log ---------- */
@@ -789,7 +894,6 @@ function renderLog() {
     td.appendChild(b); tr.appendChild(td);
     tbody.appendChild(tr);
   });
-  // prefill send counters from current sheet
   if (sheet.length) {
     document.getElementById("log-harvested").value = sheet.length;
     document.getElementById("log-published").value = sheet.filter(function (r) { return r.status !== "cut" && r.status !== "dupe"; }).length;

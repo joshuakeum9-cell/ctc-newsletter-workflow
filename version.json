@@ -1,7 +1,15 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "date": "2026-07-31",
   "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-07-31",
+      "notes": [
+        "Site redesign for clarity: workflow diagram showing where Claude works and where you do, weekly rhythm cards (Thursday collect, Friday cut, Monday write, Tuesday send), plainer copy, new visual system.",
+        "Skills unchanged from 1.0.0."
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "2026-07-31",
