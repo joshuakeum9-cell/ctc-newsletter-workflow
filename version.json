@@ -1,7 +1,19 @@
 {
-  "version": "1.2.0",
+  "version": "2.0.0",
   "date": "2026-07-31",
   "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "2026-07-31",
+      "notes": [
+        "Page restructured around the four weekdays: Thursday Collect, Friday Cut, Monday Write, Tuesday Send. Setup is front and centre on first visit and collapses to one line once your city is saved.",
+        "New install verification step: ask Claude which newsletter skills it has before Thursday ever arrives.",
+        "The browser triage table is gone; cutting happens in the spreadsheet you already have open, with the judgment guidance kept as prose.",
+        "The page now stores only your city, week, sources, and log. Writing happens in the assembled document, helped by copy-the-scaffold buttons.",
+        "Troubleshooting section for the common failure modes.",
+        "Skills unchanged from 1.0.0."
+      ]
+    },
     {
       "version": "1.2.0",
       "date": "2026-07-31",

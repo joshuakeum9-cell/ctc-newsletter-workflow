@@ -170,15 +170,6 @@
   .dark-band .mono { color: var(--coral-soft); margin-bottom: 10px; }
   .dark-band p { font-size: clamp(1.15rem, 2.4vw, 1.5rem); line-height: 1.35; letter-spacing: -0.01em; max-width: 34ch; }
 
-  .write-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .write-grid .full { grid-column: 1 / -1; }
-  .wc { font-size: 12.5px; color: var(--muted); margin-top: 5px; }
-
-  ul.defects { list-style: none; margin-top: 14px; max-width: 75ch; }
-  ul.defects li { padding: 9px 14px; border-left: 3px solid var(--error); background: #fdf3f2; color: var(--error); border-radius: 0 var(--r-sm) var(--r-sm) 0; margin-bottom: 7px; font-size: 14px; }
-  ul.defects li.warn { border-color: var(--coral); background: var(--coral-pale); color: #a04a2e; }
-  ul.defects li.clean { border-color: var(--green); background: var(--pale-green); color: var(--green); }
-
   ol.steps { margin: 12px 0 0 20px; font-size: 15px; max-width: 66ch; }
   ol.steps li { margin-bottom: 10px; }
   ul.plain { margin: 10px 0 0 20px; font-size: 15px; max-width: 66ch; }
@@ -206,7 +197,6 @@
   footer a { color: var(--slate); }
 
   @media (max-width: 640px) {
-    .write-grid { grid-template-columns: 1fr; }
     .hero { padding: 34px 0 22px; }
     .dark-band { padding: 26px 20px; }
     .stage h2 { font-size: 1.2rem; }
@@ -452,7 +442,7 @@ Here are our picks for the week:</pre>
     <h3>First: the pre-send checks</h3>
     <p class="desc">Two minutes with the assembled issue open. Nothing here is automatic, and that's fine; you're the last gate.</p>
     <ul class="plain">
-      <li>Search the document for <strong>[</strong> — nothing in square brackets ships</li>
+      <li>Search the document for a square bracket. Nothing in brackets ships.</li>
       <li>Scan the dates: nothing in the past, this week's events actually this week</li>
       <li>Click two or three links at random; if one is dead, check its neighbours from the same source</li>
       <li>Scan for the same event listed twice</li>
@@ -516,7 +506,8 @@ Here are our picks for the week:</pre>
 
   <footer>
     Climate Tech Cities · Newsletter Toolkit companion. Static page, no backend, no analytics, no cookies.<br/>
-    Your city, sources, and log live in this browser's localStorage only. Offline reference: <a href="downloads/START-HERE.md" download>START-HERE.md</a>.
+    Your city, sources, and log live in this browser's localStorage only.<br/>
+    This page is the current guide to the process. <a href="downloads/START-HERE.md" download>START-HERE.md</a> is the offline reference that ships in the toolkit.
   </footer>
 </div>
 
@@ -525,7 +516,7 @@ Here are our picks for the week:</pre>
   <div style="max-width:1080px;margin:0 auto;padding:0 20px;">
     <p style="background:#fff1ed;color:#a04a2e;padding:12px 16px;border-radius:8px;font-size:14px;">
       JavaScript is off, so the workspace tools are hidden. Everything you need to get started still works:
-      the downloads in the setup section, and START-HERE.md has the offline guide.
+      the downloads in the setup section, and START-HERE.md is the offline reference.
     </p>
   </div>
 </noscript>
@@ -796,4 +787,3 @@ function downloadFile(name, content) {
 </script>
 </body>
 </html>
-
