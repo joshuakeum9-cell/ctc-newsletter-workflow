@@ -418,26 +418,30 @@
       <div class="mono">The one rule</div>
       <p>Automate the lists. Write the words yourself. A 3,000 word issue has about 80 words of human prose, and those 80 words are why anyone subscribes.</p>
     </div>
-    <p class="desc">Draft the three bracket blocks here; the page saves as you type. Don't let Claude write them. Generated prose reads like generated prose, and readers can tell. When you're done, export and paste them over the [placeholders] in the assembled issue.</p>
-    <div class="write-grid">
-      <div class="full">
-        <label for="w-note">Opening note · the weather, something in the news, how your last event went</label>
-        <textarea id="w-note" data-write="note" placeholder="Hi all,"></textarea>
-        <div class="wc" id="w-note-wc">0 words</div>
-      </div>
-      <div>
-        <label for="w-picks">Picks · Claude drafts the structure, you add the personality</label>
-        <textarea id="w-picks" data-write="picks" placeholder="Bold day, verb, place or reason. Join two events with 'or', never 'and'."></textarea>
-      </div>
-      <div>
-        <label for="w-opps">Opportunities · fellowships, grants, deadlines</label>
-        <textarea id="w-opps" data-write="opps" placeholder="Keep a running list. Most stay open for weeks."></textarea>
-      </div>
-    </div>
-    <div class="btn-row">
-      <button class="btn secondary" onclick="exportWriteMd()">Export as markdown</button>
-      <span class="wc" id="autosave-flash"></span>
-    </div>
+    <p class="desc">Write these directly in the assembled document, replacing the [placeholders]. Don't let Claude write them; generated prose reads like generated prose, and readers can tell. Each scaffold below copies a starting structure so you never face a blank page.</p>
+
+    <h3>Opening note</h3>
+    <p class="desc">Two or three sentences about your city this week: the weather, something in the news, how your last event went. The archive's opening notes run short.</p>
+    <pre class="prompt" id="scaffold-note">Hi all,
+
+[Two or three sentences about your city this week. The weather, something in the news, how your last event went.]
+
+Here are our picks for the week:</pre>
+    <div class="btn-row"><button class="btn secondary" onclick="copyText('scaffold-note', this)">Copy scaffold</button></div>
+
+    <h3>Picks</h3>
+    <p class="desc">Bold day, verb, place or reason, then the linked title with its emoji. Join two events with "or", never "and". Real ones read like "make calls (and friends!)" and "an infrastructure tour on wheels". That's the difference between a newsletter and a list.</p>
+    <pre class="prompt" id="scaffold-picks">**[Day]**, [verb, place or reason]: [emoji] [linked event title]
+
+**[Day]**, [verb, place or reason]: [emoji] [event] or [emoji] [event]</pre>
+    <div class="btn-row"><button class="btn secondary" onclick="copyText('scaffold-picks', this)">Copy scaffold</button></div>
+
+    <h3>Opportunities</h3>
+    <p class="desc">Fellowships, grants, deadlines. Keep a running list somewhere you'll find it; most stay open for weeks, so carry them over issue to issue.</p>
+    <pre class="prompt" id="scaffold-opps">[Fellowship or grant]: applications close [date]. [link]
+
+[Job or program worth a look]: [link]</pre>
+    <div class="btn-row"><button class="btn secondary" onclick="copyText('scaffold-opps', this)">Copy scaffold</button></div>
   </section>
 
   <!-- TUESDAY -->
@@ -523,6 +527,15 @@ var sources = [];
 
 /* ---------- boot ---------- */
 window.addEventListener("DOMContentLoaded", function () {
+  // one-time cleanup: this page no longer stores sheets or drafts
+  try {
+    for (var i = localStorage.length - 1; i >= 0; i--) {
+      var k = localStorage.key(i);
+      if (k.indexOf(NS) === 0 && (k.indexOf(":sheet") > -1 || k.indexOf(":write") > -1 || k === NS + "storage-warned" || k === NS + "setup")) {
+        localStorage.removeItem(k);
+      }
+    }
+  } catch (e) {}
   var last = load("last-workspace", null);
   if (last) {
     document.getElementById("city").value = last.city || "";
@@ -585,7 +598,7 @@ function loadWorkspace() {
   var c = cityKey(), w = weekKey();
   store("last-workspace", { city: document.getElementById("city").value.trim(), week: w });
   sources = c ? load("city:" + c + ":sources", []) : [];
-  renderSources(); renderWrite(); renderLog(); buildPrompts();
+  renderSources(); renderLog(); buildPrompts();
   reflectSetupState();
 }
 function cityName() { return document.getElementById("city").value.trim() || "[your city]"; }
@@ -679,40 +692,6 @@ function fallbackCopy(text, done) {
   document.body.removeChild(ta);
 }
 
-/* ---------- monday write ---------- */
-function renderWrite() {
-  var c = cityKey(), w = weekKey();
-  var data = (c && w) ? load("city:" + c + ":week:" + w + ":write", {}) : {};
-  document.querySelectorAll("[data-write]").forEach(function (ta) {
-    ta.value = data[ta.dataset.write] || "";
-    ta.oninput = function () {
-      var d = load("city:" + cityKey() + ":week:" + weekKey() + ":write", {});
-      d[ta.dataset.write] = ta.value;
-      store("city:" + cityKey() + ":week:" + weekKey() + ":write", d);
-      flashSave(); updateWc();
-    };
-  });
-  updateWc();
-}
-function updateWc() {
-  var t = document.getElementById("w-note").value.trim();
-  var n = t ? t.split(/\s+/).length : 0;
-  document.getElementById("w-note-wc").textContent = n + " word" + (n === 1 ? "" : "s") +
-    (n > 0 && n <= 120 ? ", about right; the archive's opening notes run short" : n > 120 ? ", longer than the house style usually runs" : "");
-}
-var flashTimer;
-function flashSave() {
-  var el = document.getElementById("autosave-flash");
-  el.textContent = "Saved ✓";
-  clearTimeout(flashTimer); flashTimer = setTimeout(function () { el.textContent = ""; }, 1200);
-}
-function exportWriteMd() {
-  var d = load("city:" + cityKey() + ":week:" + weekKey() + ":write", {});
-  var md = "# " + cityName() + ": week of " + (weekKey() || "?") + "\n\n" +
-    "## Opening note\n\n" + (d.note || "") + "\n\n## Picks\n\n" + (d.picks || "") + "\n\n## Opportunities\n\n" + (d.opps || "") + "\n";
-  downloadFile(cityKey() + "-" + weekKey() + "-editorial.md", md);
-}
-
 /* ---------- send & log ---------- */
 function markSent() {
   var c = cityKey();
@@ -797,3 +776,4 @@ function downloadFile(name, content) {
 </script>
 </body>
 </html>
+
