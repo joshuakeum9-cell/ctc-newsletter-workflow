@@ -390,26 +390,15 @@
   <section class="stage weekly" id="friday">
     <h2><span class="dayname">Friday</span> Cut <span class="badge you">you do this</span></h2>
     <p class="desc">Open yesterday's spreadsheet and delete rows. This is your job and nobody can do it for you: how many events end up in the newsletter is decided right here, and there's no target number. A good week is however many good events your city has. About 30 minutes.</p>
-    <div class="btn-row">
-      <label class="btn secondary" style="display:inline-block;text-transform:none;letter-spacing:0;font-family:inherit;font-size:14px;color:var(--ink);">
-        Import CSV file <input type="file" id="csv-file" accept=".csv,text/csv" hidden onchange="importCsvFile(this)" />
-      </label>
-      <button class="btn ghost" onclick="toggleEl('csv-paste-wrap')">Paste CSV instead</button>
-      <button class="btn danger small" id="clear-sheet-btn" hidden onclick="clearSheet()">Clear this week's sheet</button>
-    </div>
-    <div id="csv-paste-wrap" hidden style="margin-top:12px;">
-      <textarea id="csv-paste" placeholder="Paste the CSV contents here" aria-label="Paste CSV contents"></textarea>
-      <div class="btn-row"><button class="btn secondary" onclick="importCsvPaste()">Load pasted CSV</button></div>
-    </div>
-    <p class="empty" id="sheet-empty">Nothing loaded for this city and week yet.</p>
-    <p class="note" id="survive-count" hidden></p>
-    <div class="table-scroll" id="sheet-table-wrap" hidden>
-      <table>
-        <thead><tr><th>Status</th><th>Event</th><th>Date</th><th>Time</th><th>Block</th><th>Link</th></tr></thead>
-        <tbody id="sheet-tbody"></tbody>
-      </table>
-    </div>
-    <p class="note amber" style="margin-top:14px;">Tap a status to cycle: keep, then PICK (featured), then DUPE, then CUT, back to keep. DUPE and CUT rows are dropped from the issue.</p>
+    <h3>What to cut</h3>
+    <ul class="plain">
+      <li>Anything outside your scope rule (it's written in your city config for exactly this moment)</li>
+      <li>Anything not really climate</li>
+      <li>Anything with a dead link or no date</li>
+      <li>If two rows are the same event from different calendars, keep the one with the better registration link and delete the other</li>
+    </ul>
+    <h3>What to flag</h3>
+    <p class="desc">Mark three to six candidates for the picks. A convention that works: type <strong>PICK</strong> in a spare column for candidates, and just delete the rows you're cutting. What's left in the file is the issue; the PICK rows are what you'll write about on Monday.</p>
   </section>
 
   <!-- MONDAY -->
@@ -422,7 +411,6 @@
     <pre class="prompt" id="assemble-prompt">Assemble the [your city] issue from this sheet.</pre>
     <div class="btn-row">
       <button class="btn" onclick="copyText('assemble-prompt', this)">Copy prompt</button>
-      <button class="btn secondary" id="assemble-with-rows" onclick="buildAssemblePrompt(true); copyText('assemble-prompt', this)" hidden>Copy with surviving events included</button>
     </div>
 
     <h3>Then: write the words</h3>
@@ -457,10 +445,14 @@
     <h2><span class="dayname">Tuesday</span> Send <span class="badge you">you do this</span> <span class="badge page">checks run here</span></h2>
     <p class="desc">Check, paste, read, send. About 15 minutes.</p>
 
-    <h3>First: run the checks</h3>
-    <p class="desc">A once-over of your event sheet, run right here in the browser. It reports problems; it never fixes them, because the human decides.</p>
-    <div class="btn-row"><button class="btn" onclick="runChecks()">Run checks on this week's sheet</button></div>
-    <ul class="defects" id="defects"></ul>
+    <h3>First: the pre-send checks</h3>
+    <p class="desc">Two minutes with the assembled issue open. Nothing here is automatic, and that's fine; you're the last gate.</p>
+    <ul class="plain">
+      <li>Search the document for <strong>[</strong> — nothing in square brackets ships</li>
+      <li>Scan the dates: nothing in the past, this week's events actually this week</li>
+      <li>Click two or three links at random; if one is dead, check its neighbours from the same source</li>
+      <li>Scan for the same event listed twice</li>
+    </ul>
 
     <h3>Then: paste into Substack</h3>
     <ol class="steps">
@@ -528,8 +520,6 @@ function load(k, fallback) {
 function del(k) { try { localStorage.removeItem(NS + k); } catch (e) {} }
 
 var sources = [];
-var sheet = [];
-var SHEET_COLS = ["Event Name","Date","Start Time","End Time","Registration Link","Event Type","Access","Location","City / Neighborhood","Google Maps","Format","Host Organization(s)","Description","Categories","Block"];
 
 /* ---------- boot ---------- */
 window.addEventListener("DOMContentLoaded", function () {
@@ -595,9 +585,7 @@ function loadWorkspace() {
   var c = cityKey(), w = weekKey();
   store("last-workspace", { city: document.getElementById("city").value.trim(), week: w });
   sources = c ? load("city:" + c + ":sources", []) : [];
-  sheet = (c && w) ? load("city:" + c + ":week:" + w + ":sheet", []) : [];
-  renderSources(); renderSheet(); renderWrite(); renderLog(); buildPrompts();
-  document.getElementById("defects").innerHTML = "";
+  renderSources(); renderWrite(); renderLog(); buildPrompts();
   reflectSetupState();
 }
 function cityName() { return document.getElementById("city").value.trim() || "[your city]"; }
@@ -671,24 +659,11 @@ function buildPrompts() {
              .map(function (s) { return "- " + (s.name || s.url) + (s.url ? " (" + s.url + ")" : ""); }).join("\n");
   }
   document.getElementById("harvest-prompt").textContent = p;
-  buildAssemblePrompt(false);
+  buildAssemblePrompt();
 }
-function buildAssemblePrompt(withRows) {
-  var c = cityName();
-  var base = "Assemble the " + c + " issue from this sheet.";
-  var surviving = sheet.filter(function (r) { return r.status !== "cut" && r.status !== "dupe"; });
-  document.getElementById("assemble-with-rows").hidden = surviving.length === 0;
-  if (withRows && surviving.length) {
-    var cols = SHEET_COLS.concat(["Pick"]);
-    var csv = [cols.join(",")].concat(surviving.map(function (r) {
-      return cols.map(function (col) {
-        var v = col === "Pick" ? (r.status === "pick" ? "yes" : "") : (r.cols[col] || "");
-        return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
-      }).join(",");
-    })).join("\n");
-    base += " The sheet contents (CSV, already triaged; rows marked Pick are my picks):\n\n" + csv;
-  }
-  document.getElementById("assemble-prompt").textContent = base;
+function buildAssemblePrompt() {
+  document.getElementById("assemble-prompt").textContent =
+    "Assemble the " + cityName() + " issue from this sheet. Rows marked PICK are my picks.";
 }
 function copyText(id, btn) {
   var text = document.getElementById(id).textContent;
@@ -702,102 +677,6 @@ function fallbackCopy(text, done) {
   ta.value = text; document.body.appendChild(ta); ta.select();
   try { document.execCommand("copy"); done(); } catch (e) { alert("Copy failed. Select the prompt text and copy it manually."); }
   document.body.removeChild(ta);
-}
-
-/* ---------- friday sheet / triage ---------- */
-function parseCsv(text) {
-  var rows = [], row = [], cur = "", inQ = false;
-  for (var i = 0; i < text.length; i++) {
-    var ch = text[i];
-    if (inQ) {
-      if (ch === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else inQ = false; }
-      else cur += ch;
-    } else if (ch === '"') inQ = true;
-    else if (ch === ",") { row.push(cur); cur = ""; }
-    else if (ch === "\n" || ch === "\r") {
-      if (ch === "\r" && text[i + 1] === "\n") i++;
-      row.push(cur); cur = "";
-      if (row.length > 1 || row[0] !== "") rows.push(row);
-      row = [];
-    } else cur += ch;
-  }
-  row.push(cur);
-  if (row.length > 1 || row[0] !== "") rows.push(row);
-  return rows;
-}
-function importCsvFile(input) {
-  var f = input.files[0]; if (!f) return;
-  var reader = new FileReader();
-  reader.onload = function () { loadCsvText(String(reader.result)); input.value = ""; };
-  reader.readAsText(f);
-}
-function importCsvPaste() { loadCsvText(document.getElementById("csv-paste").value); }
-function loadCsvText(text) {
-  if (!cityKey() || !weekKey()) { alert("Set your city and issue week first, then press Open workspace."); return; }
-  var rows = parseCsv(text.trim());
-  if (rows.length < 2) { alert("That doesn't look like a CSV with a header row plus events."); return; }
-  var header = rows[0].map(function (h) { return h.trim(); });
-  function idx(name) {
-    for (var i = 0; i < header.length; i++) {
-      if (header[i].toLowerCase().indexOf(name.toLowerCase()) === 0) return i;
-    }
-    return -1;
-  }
-  sheet = rows.slice(1).map(function (r) {
-    var cols = {};
-    SHEET_COLS.forEach(function (col) { var j = idx(col); cols[col] = j >= 0 ? (r[j] || "").trim() : ""; });
-    if (!cols["Event Name"]) cols["Event Name"] = (r[0] || "").trim();
-    return { cols: cols, status: "keep" };
-  }).filter(function (r) { return r.cols["Event Name"]; });
-  saveSheet();
-  document.getElementById("csv-paste").value = "";
-  document.getElementById("csv-paste-wrap").hidden = true;
-}
-function saveSheet() {
-  var c = cityKey(), w = weekKey();
-  if (c && w) store("city:" + c + ":week:" + w + ":sheet", sheet);
-  renderSheet(); buildAssemblePrompt(false);
-}
-function clearSheet() {
-  if (!confirm("Clear this week's sheet from the browser? (Your original CSV file is untouched.)")) return;
-  sheet = []; var c = cityKey(), w = weekKey();
-  if (c && w) del("city:" + c + ":week:" + w + ":sheet");
-  renderSheet(); buildAssemblePrompt(false);
-}
-var STATUS_CYCLE = { keep: "pick", pick: "dupe", dupe: "cut", cut: "keep" };
-function renderSheet() {
-  var has = sheet.length > 0;
-  document.getElementById("sheet-empty").hidden = has;
-  document.getElementById("sheet-table-wrap").hidden = !has;
-  document.getElementById("clear-sheet-btn").hidden = !has;
-  document.getElementById("survive-count").hidden = !has;
-  var tbody = document.getElementById("sheet-tbody"); tbody.innerHTML = "";
-  var surviving = 0, picks = 0;
-  sheet.forEach(function (r, i) {
-    if (r.status !== "cut" && r.status !== "dupe") surviving++;
-    if (r.status === "pick") picks++;
-    var tr = document.createElement("tr");
-    tr.className = "row-" + r.status;
-    var tdS = document.createElement("td");
-    var b = document.createElement("button");
-    b.className = "tag-btn on-" + r.status;
-    b.textContent = { keep: "KEEP", pick: "PICK ★", dupe: "DUPE", cut: "CUT" }[r.status];
-    b.onclick = function () { r.status = STATUS_CYCLE[r.status]; saveSheet(); };
-    tdS.appendChild(b); tr.appendChild(tdS);
-    [r.cols["Event Name"], r.cols["Date"], r.cols["Start Time"], r.cols["Block"]].forEach(function (v) {
-      var td = document.createElement("td"); td.textContent = v || ""; tr.appendChild(td);
-    });
-    var tdL = document.createElement("td");
-    if (r.cols["Registration Link"]) {
-      var a = document.createElement("a"); a.href = r.cols["Registration Link"]; a.target = "_blank"; a.rel = "noopener";
-      a.textContent = "link"; tdL.appendChild(a);
-    }
-    tr.appendChild(tdL); tbody.appendChild(tr);
-  });
-  if (has) {
-    document.getElementById("survive-count").textContent =
-      surviving + " of " + sheet.length + " events survive the cut (" + picks + " pick" + (picks === 1 ? "" : "s") + "). That's your issue.";
-  }
 }
 
 /* ---------- monday write ---------- */
@@ -834,39 +713,6 @@ function exportWriteMd() {
   downloadFile(cityKey() + "-" + weekKey() + "-editorial.md", md);
 }
 
-/* ---------- tuesday checks ---------- */
-function runChecks() {
-  var out = document.getElementById("defects"); out.innerHTML = "";
-  function add(msg, cls) { var li = document.createElement("li"); li.textContent = msg; if (cls) li.className = cls; out.appendChild(li); }
-  if (!sheet.length) { add("No sheet loaded for this city and week. Import it in the Friday step first.", "warn"); return; }
-  var live = sheet.filter(function (r) { return r.status !== "cut" && r.status !== "dupe"; });
-  var issues = 0;
-  var seen = {};
-  live.forEach(function (r) {
-    var key = r.cols["Event Name"].toLowerCase().replace(/\s+/g, " ").trim();
-    if (seen[key]) { add("Duplicate title still in the issue: “" + r.cols["Event Name"] + "”. Mark one of them DUPE."); issues++; }
-    seen[key] = true;
-  });
-  var start = weekKey() ? new Date(weekKey() + "T00:00:00") : null;
-  var today = new Date(); today.setHours(0, 0, 0, 0);
-  live.forEach(function (r) {
-    var name = r.cols["Event Name"];
-    if (!r.cols["Date"]) { add("Missing date: “" + name + "”"); issues++; return; }
-    var d = new Date(r.cols["Date"]);
-    if (isNaN(d.getTime())) { add("Unreadable date “" + r.cols["Date"] + "” on: " + name + ". Fix it or cut the row.", "warn"); issues++; return; }
-    if (d < today) { add("Past date: “" + name + "” is dated " + r.cols["Date"] + "."); issues++; }
-    if (start) {
-      var days = Math.round((d - start) / 86400000);
-      var block = (r.cols["Block"] || "").toLowerCase();
-      if (block.indexOf("this") === 0 && (days < 0 || days > 6)) { add("“" + name + "” is marked this_week but falls " + days + " days from the issue start."); issues++; }
-      if (block.indexOf("up") === 0 && (days < 7 || days > 56)) { add("“" + name + "” is marked upcoming but falls " + days + " days from the issue start (the window is 8 to 56)."); issues++; }
-      if (!block) { add("No block on: “" + name + "”. Should be this_week or upcoming.", "warn"); issues++; }
-    }
-    if (!r.cols["Registration Link"]) { add("Missing link: “" + name + "”. An event nobody can register for isn't a listing."); issues++; }
-  });
-  if (!issues) add("Clean. " + live.length + " surviving events, no defects found. Still do the final human read before sending.", "clean");
-}
-
 /* ---------- send & log ---------- */
 function markSent() {
   var c = cityKey();
@@ -875,8 +721,8 @@ function markSent() {
   entries.unshift({
     sent: new Date().toISOString().slice(0, 10),
     week: weekKey() || "",
-    harvested: document.getElementById("log-harvested").value || (sheet.length || ""),
-    published: document.getElementById("log-published").value || (sheet.filter(function (r) { return r.status !== "cut" && r.status !== "dupe"; }).length || ""),
+    harvested: document.getElementById("log-harvested").value || "",
+    published: document.getElementById("log-published").value || "",
     minutes: document.getElementById("log-minutes").value || ""
   });
   store("city:" + c + ":log", entries);
@@ -904,10 +750,6 @@ function renderLog() {
     td.appendChild(b); tr.appendChild(td);
     tbody.appendChild(tr);
   });
-  if (sheet.length) {
-    document.getElementById("log-harvested").value = sheet.length;
-    document.getElementById("log-published").value = sheet.filter(function (r) { return r.status !== "cut" && r.status !== "dupe"; }).length;
-  }
 }
 
 /* ---------- import backup ---------- */
