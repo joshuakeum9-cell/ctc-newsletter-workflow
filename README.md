@@ -1,31 +1,45 @@
-# Climate Tech Cities — Newsletter Workflow
+# CTC Newsletter Toolkit — companion site
 
-A mock website for the CTC newsletter production pipeline:
+Live: **https://joshuakeum9-cell.github.io/ctc-newsletter-workflow/**
 
-**Sources → Harvest → Event sheet → Assemble → You write → QA → Send → Log**
+A static companion workspace for the Climate Tech Cities newsletter toolkit —
+three Claude skills a chapter lead installs in their own Claude account
+(`ctc-source-map`, `ctc-harvest`, `ctc-assemble`). **The skills do the work.**
+This site holds the lead's config, event sheet, draft, and log between runs,
+and generates the prompts they paste into Claude.
 
-| Stage | Who runs it | Status in this mock |
-|---|---|---|
-| 1. Sources | Standing per-city registry, refreshed quarterly | Mock table, swaps with city |
-| 2. Harvest | **Claude skill** — sweeps sources, fills the sheet | Placeholder prompt, opens in the editor's own claude.ai |
-| 3. Event sheet | Human — dedupe, cut, flag picks | Mock table with PICK / CUT / DUPE tags |
-| 4. Assemble | **Claude skill** — builds This Week's Events, Upcoming Events, Events in Detail | Placeholder prompt |
-| 5. You write | Human — opening note, picks, opportunities, sign-off | Text areas |
-| 6. QA | **Small Claude skill** — dead links, duplicates, past dates | Placeholder prompt |
-| 7. Send | Email platform integration | Mock button |
-| 8. Log | Issue history per city | Mock list |
+## Governing rule
 
-## How the "runs in your Claude" part works
+Nothing on the page is fake. Every control either does something real in the
+browser with no backend, or honestly hands off to Claude with a copy-paste
+prompt.
 
-No API keys and no account access. Each skill button builds a prompt for the
-selected city and opens `claude.ai/new?q=<prompt>` in a new tab — the editor's
-own Claude account, their web search, their usage. They review the pre-filled
-prompt and hit send.
+| Step | What it really does |
+|---|---|
+| 0. Setup | Downloads (zip + individual files), install steps from START-HERE.md, persistent readiness checklist |
+| 1. Source registry | Editable per-city table in localStorage; markdown export; quarterly-staleness warning |
+| 2. Harvest | Generates the harvest prompt (city, week window, source list) with a copy button |
+| 3. Cut | Import/paste the harvest CSV; KEEP→PICK→DUPE→CUT toggles; live surviving count |
+| 4. Assemble | Generates the assemble prompt, optionally carrying the surviving rows as CSV |
+| 5. You write | Three autosaving editorial blocks (stays human — the thesis of the toolkit), word count, markdown export |
+| 6. Checks | Browser-side linter: duplicates, past dates, block/window mismatches, missing links/dates. Reports, never fixes |
+| 7. Send | Numbered Substack paste steps + "mark as sent" which writes the log |
+| 8. Log | Per-city issue history in localStorage |
 
-The three prompts live in `SKILL_PROMPTS` inside `index.html` and are
-**placeholders** — replace them with the real packaged skill instructions.
+## Contents
 
-## Run it
+- `index.html` — the whole site; no framework, no build step, no analytics
+- `downloads/` — the toolkit: skills, START-HERE.md (**source of truth** for the
+  process), city-config-template.md, and the zip under a stable filename
+- `version.json` — version, date, changelog; the page renders its badge and
+  changelog from this file, so shipping a new version = editing this JSON
+  (plus `CHANGELOG.md` for the human-readable record)
+- `playbook/newsletter-chapter.md` — Chapter 8 draft for the CTC Operational Playbook
 
-It's a single static page — open `index.html` in a browser, or deploy the
-folder to Vercel/GitHub Pages as-is.
+## Notes
+
+- All workspace data is browser-local (localStorage). The page warns once and
+  offers an export-all backup button.
+- Setup and downloads work with JavaScript disabled.
+- Stable download URLs never change across versions; the versioned filename is
+  applied via the `download` attribute from `version.json`.

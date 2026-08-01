@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "date": "2026-07-31",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-31",
+      "notes": [
+        "First release: ctc-source-map, ctc-harvest, ctc-assemble skills, START-HERE guide, city config template.",
+        "Companion site: setup guide, source registry, prompt generators, event-sheet triage, writing workspace, sheet checks, send guide, issue log."
+      ]
+    }
+  ]
+}

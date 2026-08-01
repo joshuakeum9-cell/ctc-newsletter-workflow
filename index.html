@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Climate Tech Cities — Newsletter Workflow</title>
+<title>CTC Newsletter Toolkit — Workspace</title>
 <style>
   :root {
     --bg: #f7f6f1;
@@ -15,298 +15,803 @@
     --green-soft: #e4efe8;
     --amber: #b7791f;
     --amber-soft: #f8ecd9;
-    --red-soft: #f9e3e0;
     --red: #b0432f;
+    --red-soft: #f9e3e0;
     --radius: 14px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    line-height: 1.55;
+    background: var(--bg); color: var(--ink); line-height: 1.55;
   }
-  .wrap { max-width: 1060px; margin: 0 auto; padding: 32px 20px 80px; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 24px 16px 80px; }
 
-  header.site {
-    display: flex; align-items: baseline; justify-content: space-between;
-    flex-wrap: wrap; gap: 8px; margin-bottom: 28px;
-  }
-  .brand { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 700; }
+  header.site { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+  .brand { font-family: Georgia, serif; font-size: 1.45rem; font-weight: 700; }
   .brand span { color: var(--green); }
-  .tagline { color: var(--muted); font-size: 0.9rem; }
+  .version-badge {
+    font-size: 0.72rem; font-weight: 700; color: var(--green);
+    background: var(--green-soft); padding: 3px 10px; border-radius: 99px;
+    text-decoration: none;
+  }
+  .tagline { color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
+
+  .storage-note {
+    background: var(--amber-soft); color: var(--amber); border-radius: 9px;
+    padding: 10px 14px; font-size: 0.84rem; margin-bottom: 20px;
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center;
+  }
+  .storage-note button { flex: 0 0 auto; }
 
   /* City bar */
   .city-bar {
     background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 22px; display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end;
-    margin-bottom: 30px;
+    padding: 18px; display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 24px;
   }
-  .city-bar .field { flex: 1 1 220px; }
-  label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 6px; }
-  input[type=text], textarea, select {
-    width: 100%; padding: 11px 12px; border: 1px solid var(--border); border-radius: 9px;
+  .city-bar .field { flex: 1 1 180px; }
+  label { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 5px; }
+  input, textarea, select {
+    width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 9px;
     font-size: 0.95rem; background: #fff; color: var(--ink); outline: none; font-family: inherit;
   }
   input:focus, textarea:focus { border-color: var(--green); }
   .btn {
-    padding: 11px 18px; border: none; border-radius: 9px; cursor: pointer;
-    font-size: 0.93rem; font-weight: 600; background: var(--green); color: #fff;
-    transition: filter .15s;
+    padding: 10px 16px; border: none; border-radius: 9px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600; background: var(--green); color: #fff; transition: filter .15s;
+    font-family: inherit;
   }
   .btn:hover { filter: brightness(1.1); }
   .btn.secondary { background: var(--green-soft); color: var(--green); }
   .btn.ghost { background: transparent; border: 1px solid var(--border); color: var(--muted); }
-  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn.danger { background: var(--red-soft); color: var(--red); }
+  .btn.small { padding: 5px 10px; font-size: 0.78rem; }
 
   /* Pipeline stepper */
-  .pipeline {
-    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 34px;
-  }
+  .pipeline { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 30px; }
   .step {
-    flex: 1 1 100px; background: var(--card); border: 1px solid var(--border);
-    border-radius: 10px; padding: 10px 8px; text-align: center; font-size: 0.78rem;
-    color: var(--muted); position: relative; cursor: pointer;
+    flex: 1 1 96px; background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 9px 6px; text-align: center; font-size: 0.76rem; color: var(--muted); position: relative; cursor: pointer;
   }
   .step:hover { border-color: var(--green); }
-  .step .num { display: block; font-family: Georgia, serif; font-size: 1.05rem; color: var(--green); font-weight: 700; }
-  .step.skill::after {
-    content: "skill"; position: absolute; top: -8px; right: -4px;
-    background: var(--amber-soft); color: var(--amber); font-size: 0.62rem;
-    padding: 1px 7px; border-radius: 99px; font-weight: 700;
+  .step .num { display: block; font-family: Georgia, serif; font-size: 1rem; color: var(--green); font-weight: 700; }
+  .step.skill::after, .step.human::after {
+    position: absolute; top: -8px; right: -4px; font-size: 0.6rem; padding: 1px 7px;
+    border-radius: 99px; font-weight: 700;
   }
-  .step.human::after {
-    content: "human"; position: absolute; top: -8px; right: -4px;
-    background: var(--green-soft); color: var(--green); font-size: 0.62rem;
-    padding: 1px 7px; border-radius: 99px; font-weight: 700;
-  }
+  .step.skill::after { content: "skill"; background: var(--amber-soft); color: var(--amber); }
+  .step.human::after { content: "human"; background: var(--green-soft); color: var(--green); }
 
   /* Stage cards */
-  section.stage {
+  section.stage, details.stage {
     background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 26px; margin-bottom: 22px;
+    padding: 24px; margin-bottom: 20px;
   }
+  details.stage summary { cursor: pointer; list-style: none; }
+  details.stage summary::-webkit-details-marker { display: none; }
   .stage h2 {
-    font-family: Georgia, serif; font-size: 1.25rem; margin-bottom: 4px;
-    display: flex; align-items: center; gap: 10px;
+    font-family: Georgia, serif; font-size: 1.2rem; margin-bottom: 4px;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
   }
-  .stage h2 .badge {
-    font-family: inherit; font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .06em; padding: 3px 9px; border-radius: 99px;
+  .stage h2 .badge, .badge {
+    font-family: -apple-system, "Segoe UI", sans-serif; font-size: 0.63rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em; padding: 3px 9px; border-radius: 99px;
   }
   .badge.skill { background: var(--amber-soft); color: var(--amber); }
   .badge.human { background: var(--green-soft); color: var(--green); }
   .badge.auto { background: #e8e9f5; color: #4a4f8c; }
-  .stage .desc { color: var(--muted); font-size: 0.92rem; margin-bottom: 16px; }
+  .stage .desc { color: var(--muted); font-size: 0.9rem; margin: 4px 0 16px; max-width: 70ch; }
+  .stage h3 { font-size: 0.95rem; margin: 18px 0 8px; }
 
-  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); }
-  th { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th, td { text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-size: 0.68rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); white-space: nowrap; }
   .table-scroll { overflow-x: auto; }
-  .tag { font-size: 0.7rem; padding: 2px 8px; border-radius: 99px; font-weight: 600; }
-  .tag.pick { background: var(--green-soft); color: var(--green); }
-  .tag.cut { background: var(--red-soft); color: var(--red); }
-  .tag.dupe { background: var(--amber-soft); color: var(--amber); }
+  td input { padding: 6px 8px; font-size: 0.85rem; }
 
-  .note {
-    background: var(--green-soft); border-radius: 9px; padding: 12px 14px;
-    font-size: 0.85rem; color: var(--green); margin-top: 14px;
+  .tag-btn {
+    font-size: 0.68rem; padding: 3px 9px; border-radius: 99px; font-weight: 700; cursor: pointer;
+    border: 1px solid var(--border); background: #fff; color: var(--muted); font-family: inherit;
   }
+  .tag-btn.on-pick { background: var(--green-soft); color: var(--green); border-color: var(--green); }
+  .tag-btn.on-dupe { background: var(--amber-soft); color: var(--amber); border-color: var(--amber); }
+  .tag-btn.on-cut { background: var(--red-soft); color: var(--red); border-color: var(--red); }
+  tr.row-cut td, tr.row-dupe td { opacity: 0.45; text-decoration: line-through; }
+  tr.row-pick td { background: #f3faf6; }
+
+  .note { background: var(--green-soft); border-radius: 9px; padding: 11px 14px; font-size: 0.84rem; color: var(--green); margin-top: 12px; max-width: 75ch; }
   .note.amber { background: var(--amber-soft); color: var(--amber); }
+  .note.red { background: var(--red-soft); color: var(--red); }
+
+  .empty { color: var(--muted); font-size: 0.88rem; font-style: italic; padding: 14px 0; }
+
+  pre.prompt {
+    background: #f2f1ea; border: 1px solid var(--border); border-radius: 9px;
+    padding: 14px; font-size: 0.82rem; white-space: pre-wrap; word-break: break-word;
+    font-family: ui-monospace, Consolas, monospace; max-height: 260px; overflow-y: auto; margin: 10px 0;
+  }
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
 
   .write-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .write-grid .full { grid-column: 1 / -1; }
-  textarea { resize: vertical; min-height: 84px; }
-  @media (max-width: 640px) { .write-grid { grid-template-columns: 1fr; } }
-
-  .log-item {
-    display: flex; justify-content: space-between; gap: 10px; padding: 10px 0;
-    border-bottom: 1px solid var(--border); font-size: 0.88rem; flex-wrap: wrap;
+  textarea { resize: vertical; min-height: 90px; }
+  .wc { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+  .stays-human {
+    font-family: Georgia, serif; font-size: 1.02rem; color: var(--green);
+    border-left: 4px solid var(--green); padding: 8px 14px; margin: 4px 0 16px; background: var(--green-soft);
+    border-radius: 0 9px 9px 0; max-width: 70ch;
   }
-  .log-item .when { color: var(--muted); }
 
-  footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 40px; }
+  ul.defects { list-style: none; margin-top: 10px; }
+  ul.defects li { padding: 7px 10px; border-left: 3px solid var(--red); background: var(--red-soft); color: var(--red); border-radius: 0 7px 7px 0; margin-bottom: 6px; font-size: 0.85rem; }
+  ul.defects li.warn { border-color: var(--amber); background: var(--amber-soft); color: var(--amber); }
+  ul.defects li.clean { border-color: var(--green); background: var(--green-soft); color: var(--green); }
+
+  ol.steps { margin: 10px 0 0 20px; font-size: 0.92rem; }
+  ol.steps li { margin-bottom: 8px; }
+
+  .dl-list { list-style: none; margin-top: 10px; }
+  .dl-list li { padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 0.9rem; }
+  .dl-list a { color: var(--green); font-weight: 600; }
+  .setup-check { list-style: none; margin-top: 8px; }
+  .setup-check li { padding: 5px 0; font-size: 0.92rem; }
+  .setup-check input { width: auto; margin-right: 9px; }
+
+  .cl-list { font-size: 0.85rem; color: var(--muted); margin-top: 8px; }
+  .cl-list ul { margin: 4px 0 10px 20px; }
+
+  footer { text-align: center; color: var(--muted); font-size: 0.78rem; margin-top: 40px; line-height: 1.7; }
+  @media (max-width: 640px) {
+    .write-grid { grid-template-columns: 1fr; }
+    .stage h2 { font-size: 1.05rem; }
+    section.stage, details.stage { padding: 16px; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <header class="site">
-    <div class="brand">Climate Tech <span>Cities</span> · Newsletter Workflow</div>
-    <div class="tagline">Source map → Harvest → Triage → Assemble → Write → Send → Log</div>
+    <div class="brand">Climate Tech <span>Cities</span> · Newsletter Toolkit</div>
+    <a class="version-badge" id="version-badge" href="CHANGELOG.md">v1</a>
   </header>
+  <p class="tagline">Three Claude skills do the lists. You write the words. This page holds everything in between.</p>
 
-  <!-- City selector -->
-  <div class="city-bar">
-    <div class="field">
-      <label for="city">City</label>
-      <input type="text" id="city" placeholder="e.g. Seattle" value="Seattle" />
-    </div>
-    <div class="field">
-      <label for="issue-week">Issue week</label>
-      <input type="text" id="issue-week" placeholder="e.g. Aug 3–9" />
-    </div>
-    <button class="btn" onclick="loadCity()">Load city workspace</button>
+  <div class="storage-note" id="storage-note" hidden>
+    <span>Everything you enter here is saved in <strong>this browser only</strong> — nothing is uploaded anywhere. Clearing browser data clears your workspace, so export a backup now and then.</span>
+    <span class="btn-row">
+      <button class="btn small secondary" onclick="exportAll()">Export all my data</button>
+      <button class="btn small ghost" onclick="dismissStorageNote()">Got it</button>
+    </span>
   </div>
 
-  <!-- Pipeline stepper -->
+  <!-- 0. SETUP -->
+  <details class="stage" id="setup" open>
+    <summary>
+      <h2>0. Setup — do this once <span class="badge auto">~2 hours</span></h2>
+      <p class="desc">The toolkit is three Claude skills you install in your own Claude account. You need a paid Claude plan and no coding at all. Click to expand or collapse.</p>
+    </summary>
+
+    <h3>Get the toolkit</h3>
+    <ul class="dl-list">
+      <li><span><a href="downloads/CTC-Newsletter-Toolkit.zip" download="CTC-Newsletter-Toolkit-v1.zip" data-dl="CTC-Newsletter-Toolkit">📦 CTC-Newsletter-Toolkit.zip</a> — everything below, one file</span><span class="badge auto">start here</span></li>
+      <li><span><a href="downloads/ctc-source-map.skill" download="ctc-source-map.skill">ctc-source-map.skill</a> — finds your city's event sources. Run once, refresh quarterly</span></li>
+      <li><span><a href="downloads/ctc-harvest.skill" download="ctc-harvest.skill">ctc-harvest.skill</a> — collects the week's events into a spreadsheet. Weekly</span></li>
+      <li><span><a href="downloads/ctc-assemble.skill" download="ctc-assemble.skill">ctc-assemble.skill</a> — builds the issue. Weekly</span></li>
+      <li><span><a href="downloads/START-HERE.md" download="START-HERE.md">START-HERE.md</a> — the full setup and weekly guide. If this page ever disagrees with it, trust the guide</span></li>
+      <li><span><a href="downloads/city-config-template.md" download="city-config-template.md">city-config-template.md</a> — fill in once, upload to your Claude project</span></li>
+    </ul>
+
+    <h3>Install (from START-HERE.md)</h3>
+    <ol class="steps">
+      <li>In Claude, go to <strong>Settings → Capabilities → Skills</strong> and upload the three <code>.skill</code> files.</li>
+      <li>Turn on <strong>code execution</strong> in the same settings area — the skills need it to build your spreadsheet and document.</li>
+      <li>Install the <strong>Claude for Chrome</strong> extension and sign in with the same account. Some event sites (Eventbrite especially) hide their data from simple requests; Claude reads those pages in your browser.</li>
+      <li>Fill in <code>city-config-template.md</code> — chapter name, timezone, geographic scope, sign-off, footer. Save it as <code>city-config.md</code>. Takes ten minutes.</li>
+      <li>Create a Claude project (e.g. "Boston Newsletter") and upload your <code>city-config.md</code> to it. Everything weekly happens inside that project.</li>
+    </ol>
+
+    <h3>You're set up when…</h3>
+    <ul class="setup-check" id="setup-check">
+      <li><label style="text-transform:none;letter-spacing:0;font-size:0.92rem;color:var(--ink);display:flex;align-items:center;"><input type="checkbox" data-chk="skills"> All three skills show under Settings → Capabilities → Skills</label></li>
+      <li><label style="text-transform:none;letter-spacing:0;font-size:0.92rem;color:var(--ink);display:flex;align-items:center;"><input type="checkbox" data-chk="code"> Code execution is on</label></li>
+      <li><label style="text-transform:none;letter-spacing:0;font-size:0.92rem;color:var(--ink);display:flex;align-items:center;"><input type="checkbox" data-chk="chrome"> Claude for Chrome is installed and signed in</label></li>
+      <li><label style="text-transform:none;letter-spacing:0;font-size:0.92rem;color:var(--ink);display:flex;align-items:center;"><input type="checkbox" data-chk="config"> Your project exists with city-config.md uploaded</label></li>
+      <li><label style="text-transform:none;letter-spacing:0;font-size:0.92rem;color:var(--ink);display:flex;align-items:center;"><input type="checkbox" data-chk="sources"> Source map built (step 1 below) and sources.csv uploaded to the project</label></li>
+    </ul>
+    <p class="note" id="setup-done-note" hidden>All checked — you're set up. This section will start collapsed from now on.</p>
+  </details>
+
+  <!-- City bar -->
+  <div class="city-bar">
+    <div class="field">
+      <label for="city">Your city</label>
+      <input type="text" id="city" placeholder="e.g. Boston" />
+    </div>
+    <div class="field">
+      <label for="week-start">Issue week starts</label>
+      <input type="date" id="week-start" />
+    </div>
+    <button class="btn" onclick="loadWorkspace()">Open workspace</button>
+    <button class="btn ghost" onclick="exportAll()">Export all data</button>
+  </div>
+
   <nav class="pipeline">
     <div class="step skill" onclick="jump('sources')"><span class="num">1</span>Source map</div>
     <div class="step skill" onclick="jump('harvest')"><span class="num">2</span>Harvest</div>
-    <div class="step" onclick="jump('sheet')"><span class="num">3</span>Event sheet</div>
+    <div class="step human" onclick="jump('sheet')"><span class="num">3</span>Cut</div>
     <div class="step skill" onclick="jump('assemble')"><span class="num">4</span>Assemble</div>
     <div class="step human" onclick="jump('write')"><span class="num">5</span>You write</div>
-    <div class="step" onclick="jump('qa')"><span class="num">6</span>Checks</div>
+    <div class="step" onclick="jump('checks')"><span class="num">6</span>Checks</div>
     <div class="step" onclick="jump('send')"><span class="num">7</span>Send</div>
     <div class="step" onclick="jump('log')"><span class="num">8</span>Log</div>
   </nav>
 
-  <!-- 1. SOURCES -->
+  <!-- 1. SOURCE MAP -->
   <section class="stage" id="sources">
-    <h2>1. Source map <span class="badge skill">ctc-source-map</span></h2>
-    <p class="desc">A per-city registry of event sources — built once by the <strong>ctc-source-map</strong> skill, refreshed quarterly. Nine source categories, Luma first; five verification gates per source. Harvest sweeps exactly this list — nothing else. The registry sets the issue-size ceiling: thin issues mean a weak registry, not a reason to pad.</p>
-    <div class="table-scroll">
-      <table id="sources-table">
-        <thead><tr><th>Source</th><th>Type</th><th>URL</th><th>Last refreshed</th></tr></thead>
-        <tbody>
-          <tr><td>Luma — <span class="city-name">Seattle</span> climate calendar</td><td>Calendar</td><td>lu.ma/…</td><td>Q3 2026</td></tr>
-          <tr><td><span class="city-name">Seattle</span> CleanTech Alliance</td><td>Org events page</td><td>example.org/events</td><td>Q3 2026</td></tr>
-          <tr><td>Eventbrite — climate + <span class="city-name">Seattle</span></td><td>Search feed</td><td>eventbrite.com/…</td><td>Q3 2026</td></tr>
-          <tr><td>University public lectures</td><td>Institution</td><td>example.edu/calendar</td><td>Q2 2026</td></tr>
-          <tr><td>Meetup — climate tech groups</td><td>Community</td><td>meetup.com/…</td><td>Q3 2026</td></tr>
-        </tbody>
+    <h2>1. Source registry <span class="badge skill">ctc-source-map</span></h2>
+    <p class="desc">Your standing list of everywhere events come from. Build it once with the source-map skill, keep the working copy here, refresh it every three months — calendars die quietly. Aim for 20–30 verified sources.</p>
+    <div id="sources-empty" class="empty">
+      No sources yet for this city. In your Claude project, run:
+      <pre class="prompt" id="sourcemap-prompt">Build the source map for [your city].</pre>
+      <div class="btn-row">
+        <button class="btn secondary" onclick="copyText('sourcemap-prompt', this)">Copy prompt</button>
+      </div>
+      Then add the sources it verifies below (or keep them only in sources.csv in your project — this table is optional but handy for the harvest prompt).
+    </div>
+    <div class="table-scroll" id="sources-table-wrap" hidden>
+      <table>
+        <thead><tr><th>Source</th><th>Type</th><th>URL</th><th>Last refreshed</th><th></th></tr></thead>
+        <tbody id="sources-tbody"></tbody>
       </table>
     </div>
-    <p class="note">Mock data — the live version reads the registry for whichever city is loaded.</p>
+    <div class="btn-row">
+      <button class="btn secondary" onclick="addSourceRow()">+ Add source</button>
+      <button class="btn ghost" onclick="exportSourcesMd()">Export as markdown</button>
+    </div>
+    <p class="note" id="sources-stale-note" hidden></p>
   </section>
 
   <!-- 2. HARVEST -->
   <section class="stage" id="harvest">
-    <h2>2. Harvest <span class="badge skill">Claude skill</span></h2>
-    <p class="desc">Sweeps the source registry and fills the event sheet. Runs in <strong>your own Claude account</strong> — the button opens claude.ai with the Harvest skill prompt pre-loaded for the selected city. You review and hit send.</p>
-    <button class="btn" onclick="runSkill('harvest')">Run Harvest in my Claude →</button>
-    <button class="btn ghost" onclick="alert('Skill file placeholder — the packaged Harvest skill gets added here later.')">View skill definition</button>
-    <p class="note amber">Placeholder prompt for now — swap in the real Harvest skill instructions when ready.</p>
+    <h2>2. Harvest <span class="badge skill">ctc-harvest</span></h2>
+    <p class="desc">Thursday, about 15 minutes of your attention. This page can't run Claude for you — copy the prompt below, paste it into your Claude project, and say yes if it asks to use your Chrome browser (it's reading pages, not clicking anything). It collects <em>everything</em>, no filtering — that's on purpose.</p>
+    <pre class="prompt" id="harvest-prompt">Harvest this week's events for [your city].</pre>
+    <div class="btn-row">
+      <button class="btn" onclick="copyText('harvest-prompt', this)">Copy prompt</button>
+    </div>
+    <p class="note">Claude hands you a spreadsheet. Save it — Friday's job is cutting it down, either in Excel (per START-HERE) or in step 3 below, whichever you prefer.</p>
   </section>
 
-  <!-- 3. EVENT SHEET -->
+  <!-- 3. EVENT SHEET / TRIAGE -->
   <section class="stage" id="sheet">
-    <h2>3. Event sheet <span class="badge human">you curate</span></h2>
-    <p class="desc">Where you dedupe, cut, and flag picks. Paste Harvest's output here (live version: synced sheet).</p>
-    <div class="table-scroll">
+    <h2>3. Cut the sheet <span class="badge human">you curate</span></h2>
+    <p class="desc">Friday, about 30 minutes. This is your job and nobody can do it for you — how many events end up in the newsletter is decided right here. There's no target: a good week is however many good events your city has. Work in Excel if you like it better; this table does the same job in the browser. To use it, export your sheet as CSV (File → Save As → CSV) and load it here.</p>
+    <div class="btn-row">
+      <label class="btn secondary" style="display:inline-block;text-transform:none;letter-spacing:0;font-size:0.9rem;color:var(--green);">
+        Import CSV file <input type="file" id="csv-file" accept=".csv,text/csv" hidden onchange="importCsvFile(this)" />
+      </label>
+      <button class="btn ghost" onclick="toggleEl('csv-paste-wrap')">Paste CSV instead</button>
+      <button class="btn danger small" id="clear-sheet-btn" hidden onclick="clearSheet()">Clear this week's sheet</button>
+    </div>
+    <div id="csv-paste-wrap" hidden style="margin-top:10px;">
+      <textarea id="csv-paste" placeholder="Paste the CSV contents here…"></textarea>
+      <div class="btn-row"><button class="btn secondary" onclick="importCsvPaste()">Load pasted CSV</button></div>
+    </div>
+    <p class="empty" id="sheet-empty">Nothing loaded for this city and week yet.</p>
+    <p class="note" id="survive-count" hidden></p>
+    <div class="table-scroll" id="sheet-table-wrap" hidden>
       <table>
-        <thead><tr><th>Event</th><th>Date</th><th>Venue</th><th>Source</th><th>Status</th></tr></thead>
-        <tbody>
-          <tr><td>Climate Founders Happy Hour</td><td>Aug 5</td><td>Fremont Brewing</td><td>Luma</td><td><span class="tag pick">PICK</span></td></tr>
-          <tr><td>Grid Decarbonization Panel</td><td>Aug 6</td><td>UW Kane Hall</td><td>University</td><td><span class="tag pick">PICK</span></td></tr>
-          <tr><td>Cleantech Networking Night</td><td>Aug 6</td><td>Startup Hall</td><td>Eventbrite</td><td><span class="tag dupe">DUPE</span></td></tr>
-          <tr><td>Intro to Carbon Markets (webinar)</td><td>Aug 8</td><td>Online</td><td>Meetup</td><td><span class="tag cut">CUT</span></td></tr>
-          <tr><td>Hydrogen Storage Deep Dive</td><td>Aug 12</td><td>CleanTech Alliance</td><td>Org page</td><td><span class="tag pick">PICK</span></td></tr>
-        </tbody>
+        <thead><tr><th>Status</th><th>Event</th><th>Date</th><th>Time</th><th>Block</th><th>Link</th></tr></thead>
+        <tbody id="sheet-tbody"></tbody>
       </table>
     </div>
+    <p class="note amber" style="margin-top:12px;">Tap a status to cycle: keep → <strong>PICK</strong> (featured) → <strong>DUPE</strong> → <strong>CUT</strong> → keep. DUPE and CUT rows are dropped from the issue.</p>
   </section>
 
   <!-- 4. ASSEMBLE -->
   <section class="stage" id="assemble">
     <h2>4. Assemble <span class="badge skill">ctc-assemble</span></h2>
-    <p class="desc">Turns the edited sheet into Substack-ready markdown — nine blocks in publication order. Six built by the skill (title, subtitle, <strong>This Week's Events</strong>, <strong>Upcoming Events</strong>, <strong>Events in Detail</strong>, footer); three scaffolded for the human (opening note, picks, opportunities). The sign-off sits mid-document, after housekeeping.</p>
-    <button class="btn" onclick="runSkill('assemble')">Run Assemble in my Claude →</button>
-    <p class="note amber">Placeholder prompt — the real Assemble skill (block formats, house style) gets embedded here.</p>
+    <p class="desc">Monday. Copy the prompt, paste it into your Claude project, and attach your edited spreadsheet (or let the prompt carry the surviving rows from step 3). Claude returns a Word document and an HTML page formatted for Substack — listings, links, emoji, day headers, and footer done; the three human blocks left as [placeholders].</p>
+    <pre class="prompt" id="assemble-prompt">Assemble the [your city] issue from this sheet.</pre>
+    <div class="btn-row">
+      <button class="btn" onclick="copyText('assemble-prompt', this)">Copy prompt</button>
+      <button class="btn ghost" id="assemble-with-rows" onclick="buildAssemblePrompt(true); copyText('assemble-prompt', this)" hidden>Copy with surviving events included</button>
+    </div>
   </section>
 
   <!-- 5. YOU WRITE -->
   <section class="stage" id="write">
     <h2>5. You write <span class="badge human">stays human</span></h2>
-    <p class="desc">Opening note, picks commentary, opportunities, sign-off. No AI here — this is the voice of the newsletter.</p>
+    <p class="stays-human">Automate the lists. Write the words yourself. A 3,000-word issue contains roughly 80 words of human prose — and those 80 words are why anyone subscribes. Don't let Claude write them; generated prose reads like generated prose, and readers can tell.</p>
+    <p class="desc">Draft the three placeholder blocks here — autosaved in this browser as you type. When you're done, export and paste them over the [placeholders] in the assembled issue.</p>
     <div class="write-grid">
-      <div class="full"><label>Opening note</label><textarea placeholder="What's on your mind this week…"></textarea></div>
-      <div><label>Picks — why these</label><textarea placeholder="One or two lines on each flagged pick…"></textarea></div>
-      <div><label>Opportunities</label><textarea placeholder="Jobs, grants, calls for speakers…"></textarea></div>
-      <div class="full"><label>Sign-off</label><textarea placeholder="See you out there —"></textarea></div>
+      <div class="full">
+        <label for="w-note">Opening note — the weather, something in the news, how your last event went</label>
+        <textarea id="w-note" data-write="note" placeholder="Hi all,"></textarea>
+        <div class="wc" id="w-note-wc">0 words</div>
+      </div>
+      <div>
+        <label for="w-picks">Picks — Claude drafts the structure, you add the personality</label>
+        <textarea id="w-picks" data-write="picks" placeholder="Bold day → verb → place or reason. Join two events with 'or', never 'and'."></textarea>
+      </div>
+      <div>
+        <label for="w-opps">Opportunities — fellowships, grants, deadlines (keep a running list)</label>
+        <textarea id="w-opps" data-write="opps" placeholder="Most stay open for weeks — carry them over."></textarea>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn secondary" onclick="exportWriteMd()">Export as markdown</button>
+      <span class="wc" id="autosave-flash" style="align-self:center;"></span>
     </div>
   </section>
 
-  <!-- 6. QA -->
-  <section class="stage" id="qa">
-    <h2>6. Checks <span class="badge auto">built into the skills</span></h2>
-    <p class="desc">There is no separate QA tool. Link checks, duplicate detection, past-date filtering, and block-mismatch checks live inside harvest and assemble. Before sending: one human read top-to-bottom in the Substack preview — checking voice and picks, not links.</p>
+  <!-- 6. CHECKS -->
+  <section class="stage" id="checks">
+    <h2>6. Checks <span class="badge auto">runs right here</span></h2>
+    <p class="desc">A linter over your event sheet (step 3). It reports; it never auto-fixes — the human decides. Link-checking and emoji live in the skills and in your final read, since this page doesn't fetch anything.</p>
+    <div class="btn-row"><button class="btn" onclick="runChecks()">Run checks on this week's sheet</button></div>
+    <ul class="defects" id="defects"></ul>
   </section>
 
   <!-- 7. SEND -->
   <section class="stage" id="send">
-    <h2>7. Send <span class="badge auto">mock</span></h2>
-    <p class="desc">Live version connects to your email platform (Substack / Beehiiv / Mailchimp). Mock only for now.</p>
-    <button class="btn" onclick="mockSend()">Send newsletter</button>
+    <h2>7. Send <span class="badge human">Substack</span></h2>
+    <p class="desc">Tuesday, about 15 minutes. This page can't send anything — Substack is where sending happens.</p>
+    <ol class="steps">
+      <li>Open the HTML file (or Word document) Claude assembled.</li>
+      <li>Make sure your three written blocks have replaced every [placeholder] — nothing in square brackets ships.</li>
+      <li>Select all, copy, paste into a new Substack post. Formatting and links come across.</li>
+      <li><strong>Read the whole issue once, top to bottom.</strong> You're checking voice and picks, not links.</li>
+      <li>Send. Then log it below so future-you knows what this week cost.</li>
+    </ol>
+    <h3>Mark this issue sent</h3>
+    <div class="city-bar" style="margin:10px 0 0;padding:14px;">
+      <div class="field"><label for="log-harvested">Events harvested</label><input type="number" id="log-harvested" min="0" /></div>
+      <div class="field"><label for="log-published">Events published</label><input type="number" id="log-published" min="0" /></div>
+      <div class="field"><label for="log-minutes">Minutes spent (total)</label><input type="number" id="log-minutes" min="0" /></div>
+      <button class="btn" onclick="markSent()">Log it</button>
+    </div>
   </section>
 
   <!-- 8. LOG -->
   <section class="stage" id="log">
     <h2>8. Log <span class="badge auto">history</span></h2>
-    <p class="desc">Every issue, per city, with what ran and when.</p>
-    <div id="log-list">
-      <div class="log-item"><span>Seattle — Issue #12 · 14 events harvested, 6 published</span><span class="when">Jul 24, 2026</span></div>
-      <div class="log-item"><span>Seattle — Issue #11 · 11 events harvested, 5 published</span><span class="when">Jul 17, 2026</span></div>
-      <div class="log-item"><span>Portland — Issue #8 · 9 events harvested, 4 published</span><span class="when">Jul 15, 2026</span></div>
+    <p class="desc">Every issue for this city, logged when you mark it sent. After four weeks, look back: what took longest? Fix that before adding anything new.</p>
+    <p class="empty" id="log-empty">No issues logged yet for this city. The first one will be small — send it anyway.</p>
+    <div class="table-scroll" id="log-table-wrap" hidden>
+      <table>
+        <thead><tr><th>Date sent</th><th>Week of</th><th>Harvested</th><th>Published</th><th>Minutes</th><th></th></tr></thead>
+        <tbody id="log-tbody"></tbody>
+      </table>
     </div>
   </section>
 
-  <footer>Climate Tech Cities — newsletter workflow mock · skills run in the editor's own Claude account via pre-filled prompts</footer>
+  <details class="stage">
+    <summary><h2>Changelog</h2></summary>
+    <div class="cl-list" id="changelog">See <a href="CHANGELOG.md" download>CHANGELOG.md</a>.</div>
+  </details>
+
+  <footer>
+    Climate Tech Cities · Newsletter Toolkit companion — static page, no backend, no analytics, no cookies.<br/>
+    Your data lives in this browser's localStorage only. Source of truth for the process: <a href="downloads/START-HERE.md" download>START-HERE.md</a>.
+  </footer>
 </div>
 
+<noscript>
+  <style>.city-bar, .pipeline, #sources, #harvest, #sheet, #assemble, #write, #checks, #send, #log { display: none; }</style>
+  <div style="max-width:1060px;margin:0 auto;padding:0 16px;">
+    <p style="background:#f8ecd9;color:#b7791f;padding:12px 14px;border-radius:9px;font-size:0.9rem;">
+      JavaScript is off, so the workspace tools are hidden — but everything you need to get started is above:
+      the downloads all work, and START-HERE.md has the complete setup and weekly guide.
+    </p>
+  </div>
+</noscript>
+
 <script>
-  function cityVal() {
-    return (document.getElementById('city').value.trim() || 'Seattle');
-  }
+"use strict";
+/* ---------- state & storage ---------- */
+var NS = "ctcnw:";
+function cityKey() { return (document.getElementById("city").value.trim() || "").toLowerCase(); }
+function weekKey() { return document.getElementById("week-start").value || ""; }
+function store(k, v) { try { localStorage.setItem(NS + k, JSON.stringify(v)); } catch (e) {} }
+function load(k, fallback) {
+  try { var v = localStorage.getItem(NS + k); return v === null ? fallback : JSON.parse(v); }
+  catch (e) { return fallback; }
+}
+function del(k) { try { localStorage.removeItem(NS + k); } catch (e) {} }
 
-  function loadCity() {
-    var c = cityVal();
-    document.querySelectorAll('.city-name').forEach(function (el) { el.textContent = c; });
-    jump('sources');
-  }
+var sources = [];   // [{name,type,url,refreshed}]
+var sheet = [];     // [{cols:{...}, status:"keep"|"pick"|"dupe"|"cut"}]
+var SHEET_COLS = ["Event Name","Date","Start Time","End Time","Registration Link","Event Type","Access","Location","City / Neighborhood","Google Maps","Format","Host Organization(s)","Description","Categories","Block"];
 
-  function jump(id) {
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+/* ---------- boot ---------- */
+window.addEventListener("DOMContentLoaded", function () {
+  if (!load("storage-warned", false)) document.getElementById("storage-note").hidden = false;
+  var last = load("last-workspace", null);
+  if (last) {
+    document.getElementById("city").value = last.city || "";
+    document.getElementById("week-start").value = last.week || "";
   }
+  if (!document.getElementById("week-start").value) {
+    var d = new Date(); document.getElementById("week-start").value = d.toISOString().slice(0, 10);
+  }
+  restoreSetup();
+  loadWorkspace();
+  fetch("version.json").then(function (r) { return r.json(); }).then(renderVersion).catch(function () {});
+});
 
-  // ---- Claude skill hand-off -------------------------------------------
-  // Each skill opens claude.ai in the USER'S OWN account with a pre-filled
-  // prompt. These are PLACEHOLDER prompts — replace the strings below with
-  // the real packaged skill instructions when they're ready.
-  var SKILL_PROMPTS = {
-    harvest: function (city) {
-      return 'You are the HARVEST skill for the Climate Tech Cities newsletter. ' +
-        'Search the web and sweep event sources for ' + city + ' — Luma climate calendars, ' +
-        'Eventbrite, Meetup climate-tech groups, university public lectures, and local cleantech org event pages. ' +
-        'Collect every climate/cleantech-relevant event in the next 3 weeks. ' +
-        'Output a table with columns: Event | Date | Time | Venue | Organizer | Link | Free/Paid | One-line description. ' +
-        'Flag likely duplicates. Do not editorialize — this feeds a curation sheet.';
-    },
-    assemble: function (city) {
-      return 'You are the ASSEMBLE skill for the Climate Tech Cities newsletter (' + city + ' edition). ' +
-        'I will paste a curated event sheet below. Turn it into exactly three newsletter blocks: ' +
-        '(1) THIS WEEK\'S EVENTS — events in the next 7 days, short punchy entries; ' +
-        '(2) UPCOMING EVENTS — days 8–21, one line each; ' +
-        '(3) EVENTS IN DETAIL — expanded write-ups of only the rows marked PICK. ' +
-        'Keep house style: tight, factual, no hype words. Here is the sheet: [PASTE SHEET HERE]';
+function dismissStorageNote() { store("storage-warned", true); document.getElementById("storage-note").hidden = true; }
+function jump(id) { var el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }
+function toggleEl(id) { var el = document.getElementById(id); el.hidden = !el.hidden; }
+
+function renderVersion(v) {
+  var b = document.getElementById("version-badge");
+  b.textContent = "v" + v.version + " · " + v.date;
+  document.querySelectorAll("[data-dl]").forEach(function (a) {
+    a.setAttribute("download", a.getAttribute("data-dl") + "-v" + v.version + ".zip");
+  });
+  var cl = document.getElementById("changelog");
+  cl.innerHTML = v.changelog.map(function (rel) {
+    return "<strong>v" + esc(rel.version) + " — " + esc(rel.date) + "</strong><ul>" +
+      rel.notes.map(function (n) { return "<li>" + esc(n) + "</li>"; }).join("") + "</ul>";
+  }).join("");
+}
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+/* ---------- setup checklist ---------- */
+function restoreSetup() {
+  var st = load("setup", {});
+  document.querySelectorAll("#setup-check input").forEach(function (cb) {
+    cb.checked = !!st[cb.dataset.chk];
+    cb.addEventListener("change", saveSetup);
+  });
+  reflectSetup(st);
+}
+function saveSetup() {
+  var st = {};
+  document.querySelectorAll("#setup-check input").forEach(function (cb) { st[cb.dataset.chk] = cb.checked; });
+  store("setup", st);
+  reflectSetup(st);
+}
+function reflectSetup(st) {
+  var all = ["skills","code","chrome","config","sources"].every(function (k) { return st[k]; });
+  document.getElementById("setup-done-note").hidden = !all;
+  if (all) document.getElementById("setup").open = false;
+}
+
+/* ---------- workspace ---------- */
+function loadWorkspace() {
+  var c = cityKey(), w = weekKey();
+  store("last-workspace", { city: document.getElementById("city").value.trim(), week: w });
+  sources = c ? load("city:" + c + ":sources", []) : [];
+  sheet = (c && w) ? load("city:" + c + ":week:" + w + ":sheet", []) : [];
+  renderSources(); renderSheet(); renderWrite(); renderLog(); buildPrompts();
+  document.getElementById("defects").innerHTML = "";
+}
+function cityName() { return document.getElementById("city").value.trim() || "[your city]"; }
+
+/* ---------- 1. sources ---------- */
+function renderSources() {
+  var tbody = document.getElementById("sources-tbody");
+  tbody.innerHTML = "";
+  var has = sources.length > 0;
+  document.getElementById("sources-empty").hidden = has;
+  document.getElementById("sources-table-wrap").hidden = !has;
+  document.getElementById("sourcemap-prompt").textContent = "Build the source map for " + cityName() + ".";
+  sources.forEach(function (s, i) {
+    var tr = document.createElement("tr");
+    ["name","type","url","refreshed"].forEach(function (f) {
+      var td = document.createElement("td");
+      var inp = document.createElement("input");
+      inp.value = s[f] || "";
+      inp.placeholder = { name: "Source name", type: "Luma / Eventbrite / org / …", url: "https://…", refreshed: "YYYY-MM" }[f];
+      inp.addEventListener("input", function () { sources[i][f] = inp.value; saveSources(false); });
+      inp.addEventListener("blur", function () { saveSources(true); });
+      td.appendChild(inp); tr.appendChild(td);
+    });
+    var tdDel = document.createElement("td");
+    var btn = document.createElement("button");
+    btn.className = "btn danger small"; btn.textContent = "✕";
+    btn.onclick = function () { sources.splice(i, 1); saveSources(true); };
+    tdDel.appendChild(btn); tr.appendChild(tdDel);
+    tbody.appendChild(tr);
+  });
+  staleNote();
+}
+function addSourceRow() {
+  if (!cityKey()) { alert("Enter your city first, then open the workspace."); return; }
+  sources.push({ name: "", type: "", url: "", refreshed: "" });
+  saveSources(true);
+}
+function saveSources(rerender) {
+  var c = cityKey(); if (!c) return;
+  store("city:" + c + ":sources", sources);
+  if (rerender) renderSources(); else { staleNote(); buildPrompts(); }
+}
+function staleNote() {
+  var note = document.getElementById("sources-stale-note");
+  var dates = sources.map(function (s) { return Date.parse(s.refreshed); }).filter(function (t) { return !isNaN(t); });
+  if (!dates.length) { note.hidden = true; return; }
+  var newest = Math.max.apply(null, dates);
+  var months = (Date.now() - newest) / (1000 * 60 * 60 * 24 * 30);
+  if (months > 3) {
+    note.textContent = "Your newest refresh date is over three months old. Calendars die quietly — re-run the source map.";
+    note.className = "note amber"; note.hidden = false;
+  } else { note.hidden = true; }
+}
+function exportSourcesMd() {
+  if (!sources.length) { alert("No sources to export yet."); return; }
+  var md = "## Event sources — " + cityName() + "\n\n| Source | Type | URL | Last refreshed |\n|---|---|---|---|\n" +
+    sources.map(function (s) { return "| " + [s.name, s.type, s.url, s.refreshed].map(function (x) { return (x || "").replace(/\|/g, "\\|"); }).join(" | ") + " |"; }).join("\n") + "\n";
+  downloadFile(cityKey() + "-sources.md", md);
+}
+
+/* ---------- prompts ---------- */
+function buildPrompts() {
+  var c = cityName(), w = weekKey();
+  var weekTxt = w ? " The issue week starts " + w + " (this_week = the 7 days from then; upcoming = days 8–56)." : "";
+  var p = "Harvest this week's events for " + c + "." + weekTxt;
+  if (sources.length) {
+    p += "\n\nSweep these sources (my current registry):\n" +
+      sources.filter(function (s) { return s.name || s.url; })
+             .map(function (s) { return "- " + (s.name || s.url) + (s.url ? " — " + s.url : ""); }).join("\n");
+  }
+  document.getElementById("harvest-prompt").textContent = p;
+  buildAssemblePrompt(false);
+}
+function buildAssemblePrompt(withRows) {
+  var c = cityName();
+  var base = "Assemble the " + c + " issue from this sheet.";
+  var surviving = sheet.filter(function (r) { return r.status !== "cut" && r.status !== "dupe"; });
+  document.getElementById("assemble-with-rows").hidden = surviving.length === 0;
+  if (withRows && surviving.length) {
+    var cols = SHEET_COLS.concat(["Pick"]);
+    var csv = [cols.join(",")].concat(surviving.map(function (r) {
+      return cols.map(function (col) {
+        var v = col === "Pick" ? (r.status === "pick" ? "yes" : "") : (r.cols[col] || "");
+        return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+      }).join(",");
+    })).join("\n");
+    base += " The sheet contents (CSV, already triaged — rows marked Pick are my picks):\n\n" + csv;
+  }
+  document.getElementById("assemble-prompt").textContent = base;
+}
+function copyText(id, btn) {
+  var text = document.getElementById(id).textContent;
+  function done() { if (btn) { var t = btn.textContent; btn.textContent = "Copied ✓"; setTimeout(function () { btn.textContent = t; }, 1500); } }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text, done); });
+  } else fallbackCopy(text, done);
+}
+function fallbackCopy(text, done) {
+  var ta = document.createElement("textarea");
+  ta.value = text; document.body.appendChild(ta); ta.select();
+  try { document.execCommand("copy"); done(); } catch (e) { alert("Copy failed — select the prompt text and copy manually."); }
+  document.body.removeChild(ta);
+}
+
+/* ---------- 3. sheet / triage ---------- */
+function parseCsv(text) {
+  var rows = [], row = [], cur = "", inQ = false;
+  for (var i = 0; i < text.length; i++) {
+    var ch = text[i];
+    if (inQ) {
+      if (ch === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else inQ = false; }
+      else cur += ch;
+    } else if (ch === '"') inQ = true;
+    else if (ch === ",") { row.push(cur); cur = ""; }
+    else if (ch === "\n" || ch === "\r") {
+      if (ch === "\r" && text[i + 1] === "\n") i++;
+      row.push(cur); cur = "";
+      if (row.length > 1 || row[0] !== "") rows.push(row);
+      row = [];
+    } else cur += ch;
+  }
+  row.push(cur);
+  if (row.length > 1 || row[0] !== "") rows.push(row);
+  return rows;
+}
+function importCsvFile(input) {
+  var f = input.files[0]; if (!f) return;
+  var reader = new FileReader();
+  reader.onload = function () { loadCsvText(String(reader.result)); input.value = ""; };
+  reader.readAsText(f);
+}
+function importCsvPaste() { loadCsvText(document.getElementById("csv-paste").value); }
+function loadCsvText(text) {
+  if (!cityKey() || !weekKey()) { alert("Set your city and issue week first, then open the workspace."); return; }
+  var rows = parseCsv(text.trim());
+  if (rows.length < 2) { alert("That doesn't look like a CSV with a header row plus events."); return; }
+  var header = rows[0].map(function (h) { return h.trim(); });
+  function idx(name) {
+    for (var i = 0; i < header.length; i++) {
+      if (header[i].toLowerCase().indexOf(name.toLowerCase()) === 0) return i;
     }
-  };
-
-  function runSkill(name) {
-    var prompt = SKILL_PROMPTS[name](cityVal());
-    window.open('https://claude.ai/new?q=' + encodeURIComponent(prompt), '_blank', 'noopener');
+    return -1;
   }
-
-  function mockSend() {
-    var c = cityVal();
-    var list = document.getElementById('log-list');
-    var row = document.createElement('div');
-    row.className = 'log-item';
-    var today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    row.innerHTML = '<span>' + c + ' — new issue · sent (mock)</span><span class="when">' + today + '</span>';
-    list.prepend(row);
-    jump('log');
+  sheet = rows.slice(1).map(function (r) {
+    var cols = {};
+    SHEET_COLS.forEach(function (col) { var j = idx(col); cols[col] = j >= 0 ? (r[j] || "").trim() : ""; });
+    if (!cols["Event Name"]) cols["Event Name"] = (r[0] || "").trim();
+    return { cols: cols, status: "keep" };
+  }).filter(function (r) { return r.cols["Event Name"]; });
+  saveSheet();
+  document.getElementById("csv-paste").value = "";
+  document.getElementById("csv-paste-wrap").hidden = true;
+}
+function saveSheet() {
+  var c = cityKey(), w = weekKey();
+  if (c && w) store("city:" + c + ":week:" + w + ":sheet", sheet);
+  renderSheet(); buildAssemblePrompt(false);
+}
+function clearSheet() {
+  if (!confirm("Clear this week's sheet from the browser? (Your original CSV file is untouched.)")) return;
+  sheet = []; var c = cityKey(), w = weekKey();
+  if (c && w) del("city:" + c + ":week:" + w + ":sheet");
+  renderSheet(); buildAssemblePrompt(false);
+}
+var STATUS_CYCLE = { keep: "pick", pick: "dupe", dupe: "cut", cut: "keep" };
+function renderSheet() {
+  var has = sheet.length > 0;
+  document.getElementById("sheet-empty").hidden = has;
+  document.getElementById("sheet-table-wrap").hidden = !has;
+  document.getElementById("clear-sheet-btn").hidden = !has;
+  document.getElementById("survive-count").hidden = !has;
+  var tbody = document.getElementById("sheet-tbody"); tbody.innerHTML = "";
+  var surviving = 0, picks = 0;
+  sheet.forEach(function (r, i) {
+    if (r.status !== "cut" && r.status !== "dupe") surviving++;
+    if (r.status === "pick") picks++;
+    var tr = document.createElement("tr");
+    tr.className = "row-" + r.status;
+    var tdS = document.createElement("td");
+    var b = document.createElement("button");
+    b.className = "tag-btn on-" + r.status;
+    b.textContent = { keep: "KEEP", pick: "PICK ★", dupe: "DUPE", cut: "CUT" }[r.status];
+    b.onclick = function () { r.status = STATUS_CYCLE[r.status]; saveSheet(); };
+    tdS.appendChild(b); tr.appendChild(tdS);
+    [r.cols["Event Name"], r.cols["Date"], r.cols["Start Time"], r.cols["Block"]].forEach(function (v) {
+      var td = document.createElement("td"); td.textContent = v || ""; tr.appendChild(td);
+    });
+    var tdL = document.createElement("td");
+    if (r.cols["Registration Link"]) {
+      var a = document.createElement("a"); a.href = r.cols["Registration Link"]; a.target = "_blank"; a.rel = "noopener";
+      a.textContent = "link"; a.style.color = "var(--green)"; tdL.appendChild(a);
+    }
+    tr.appendChild(tdL); tbody.appendChild(tr);
+  });
+  if (has) {
+    document.getElementById("survive-count").textContent =
+      surviving + " of " + sheet.length + " events survive the cut (" + picks + " pick" + (picks === 1 ? "" : "s") + "). That's your issue.";
   }
+}
+
+/* ---------- 5. write ---------- */
+function renderWrite() {
+  var c = cityKey(), w = weekKey();
+  var data = (c && w) ? load("city:" + c + ":week:" + w + ":write", {}) : {};
+  document.querySelectorAll("[data-write]").forEach(function (ta) {
+    ta.value = data[ta.dataset.write] || "";
+    ta.oninput = function () {
+      var d = load("city:" + cityKey() + ":week:" + weekKey() + ":write", {});
+      d[ta.dataset.write] = ta.value;
+      store("city:" + cityKey() + ":week:" + weekKey() + ":write", d);
+      flashSave(); updateWc();
+    };
+  });
+  updateWc();
+}
+function updateWc() {
+  var t = document.getElementById("w-note").value.trim();
+  var n = t ? t.split(/\s+/).length : 0;
+  document.getElementById("w-note-wc").textContent = n + " word" + (n === 1 ? "" : "s") +
+    (n > 0 && n <= 120 ? " — about right; the archive's opening notes run short" : n > 120 ? " — longer than the house style usually runs" : "");
+}
+var flashTimer;
+function flashSave() {
+  var el = document.getElementById("autosave-flash");
+  el.textContent = "Saved ✓";
+  clearTimeout(flashTimer); flashTimer = setTimeout(function () { el.textContent = ""; }, 1200);
+}
+function exportWriteMd() {
+  var d = load("city:" + cityKey() + ":week:" + weekKey() + ":write", {});
+  var md = "# " + cityName() + " — week of " + (weekKey() || "?") + "\n\n" +
+    "## Opening note\n\n" + (d.note || "") + "\n\n## Picks\n\n" + (d.picks || "") + "\n\n## Opportunities\n\n" + (d.opps || "") + "\n";
+  downloadFile(cityKey() + "-" + weekKey() + "-editorial.md", md);
+}
+
+/* ---------- 6. checks ---------- */
+function runChecks() {
+  var out = document.getElementById("defects"); out.innerHTML = "";
+  function add(msg, cls) { var li = document.createElement("li"); li.textContent = msg; if (cls) li.className = cls; out.appendChild(li); }
+  if (!sheet.length) { add("No sheet loaded for this city and week — import it in step 3 first.", "warn"); return; }
+  var live = sheet.filter(function (r) { return r.status !== "cut" && r.status !== "dupe"; });
+  var issues = 0;
+  var seen = {};
+  live.forEach(function (r) {
+    var key = r.cols["Event Name"].toLowerCase().replace(/\s+/g, " ").trim();
+    if (seen[key]) { add("Duplicate title still in the issue: “" + r.cols["Event Name"] + "” — mark one DUPE."); issues++; }
+    seen[key] = true;
+  });
+  var start = weekKey() ? new Date(weekKey() + "T00:00:00") : null;
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  live.forEach(function (r) {
+    var name = r.cols["Event Name"];
+    if (!r.cols["Date"]) { add("Missing date: “" + name + "”"); issues++; return; }
+    var d = new Date(r.cols["Date"]);
+    if (isNaN(d.getTime())) { add("Unreadable date “" + r.cols["Date"] + "” on: " + name + " — fix it or cut the row.", "warn"); issues++; return; }
+    if (d < today) { add("Past date: “" + name + "” is dated " + r.cols["Date"] + "."); issues++; }
+    if (start) {
+      var days = Math.round((d - start) / 86400000);
+      var block = (r.cols["Block"] || "").toLowerCase();
+      if (block.indexOf("this") === 0 && (days < 0 || days > 6)) { add("“" + name + "” is marked this_week but falls " + days + " days from the issue start."); issues++; }
+      if (block.indexOf("up") === 0 && (days < 7 || days > 56)) { add("“" + name + "” is marked upcoming but falls " + days + " days from the issue start (window is 8–56)."); issues++; }
+      if (!block) { add("No block on: “" + name + "” — should be this_week or upcoming.", "warn"); issues++; }
+    }
+    if (!r.cols["Registration Link"]) { add("Missing link: “" + name + "” — an event nobody can register for isn't a listing."); issues++; }
+  });
+  if (!issues) add("Clean — " + live.length + " surviving events, no defects found. Still do the final human read before sending.", "clean");
+}
+
+/* ---------- 7/8. send & log ---------- */
+function markSent() {
+  var c = cityKey();
+  if (!c) { alert("Enter your city first."); return; }
+  var entries = load("city:" + c + ":log", []);
+  entries.unshift({
+    sent: new Date().toISOString().slice(0, 10),
+    week: weekKey() || "",
+    harvested: document.getElementById("log-harvested").value || (sheet.length || ""),
+    published: document.getElementById("log-published").value || (sheet.filter(function (r) { return r.status !== "cut" && r.status !== "dupe"; }).length || ""),
+    minutes: document.getElementById("log-minutes").value || ""
+  });
+  store("city:" + c + ":log", entries);
+  renderLog(); jump("log");
+}
+function renderLog() {
+  var c = cityKey();
+  var entries = c ? load("city:" + c + ":log", []) : [];
+  var has = entries.length > 0;
+  document.getElementById("log-empty").hidden = has;
+  document.getElementById("log-table-wrap").hidden = !has;
+  var tbody = document.getElementById("log-tbody"); tbody.innerHTML = "";
+  entries.forEach(function (e, i) {
+    var tr = document.createElement("tr");
+    [e.sent, e.week, e.harvested, e.published, e.minutes].forEach(function (v) {
+      var td = document.createElement("td"); td.textContent = v; tr.appendChild(td);
+    });
+    var td = document.createElement("td");
+    var b = document.createElement("button"); b.className = "btn danger small"; b.textContent = "✕";
+    b.onclick = function () {
+      if (!confirm("Remove this log entry?")) return;
+      entries.splice(i, 1); store("city:" + c + ":log", entries); renderLog();
+    };
+    td.appendChild(b); tr.appendChild(td);
+    tbody.appendChild(tr);
+  });
+  // prefill send counters from current sheet
+  if (sheet.length) {
+    document.getElementById("log-harvested").value = sheet.length;
+    document.getElementById("log-published").value = sheet.filter(function (r) { return r.status !== "cut" && r.status !== "dupe"; }).length;
+  }
+}
+
+/* ---------- export all ---------- */
+function exportAll() {
+  var dump = {};
+  for (var i = 0; i < localStorage.length; i++) {
+    var k = localStorage.key(i);
+    if (k.indexOf(NS) === 0) { try { dump[k] = JSON.parse(localStorage.getItem(k)); } catch (e) { dump[k] = localStorage.getItem(k); } }
+  }
+  downloadFile("ctc-newsletter-workspace-backup-" + new Date().toISOString().slice(0, 10) + ".json", JSON.stringify(dump, null, 2));
+}
+function downloadFile(name, content) {
+  var blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click();
+  setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
 </script>
 </body>
 </html>
