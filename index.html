@@ -169,6 +169,10 @@
   }
   .qlist > li strong { display: block; font-size: 15.5px; font-weight: 600; margin-bottom: 3px; }
   .qlist > li span { display: block; font-size: 14.5px; line-height: 1.55; color: var(--ink-soft); }
+  /* lettered options rather than numbered questions */
+  .optlist { counter-reset: o; }
+  .optlist > li { counter-increment: o; }
+  .optlist > li::before { content: counter(o, upper-alpha); }
 
   /* ---------- downloads ---------- */
   .dl { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--hairline); flex-wrap: wrap; }
@@ -459,7 +463,18 @@
           <pre class="prompt" id="p-sourcemap"></pre>
           <div class="foot"><button class="btn small" onclick="copyPrompt('p-sourcemap', this)">Copy prompt</button></div>
         </div>
-        <p class="desc">Claude researches Luma calendars, Eventbrite organizers, universities, incubators, city government, professional groups and arts venues, checks each one is real and active, and hands you a registry. Read what it gives you: you live there and Claude does not, so if it missed the meetup everyone goes to, say so and have it added.</p>
+        <div class="card qcard">
+          <h3 style="margin-top:0;">Claude asks first whether you have your own links</h3>
+          <p class="desc" style="margin-top:6px;">You probably already check five or ten calendars by hand. Those are the best rows in the registry, because a real person has already vouched for them. Claude lays out three ways to go and waits for your answer.</p>
+          <ol class="qlist optlist">
+            <li><strong>Paste your links, then Claude researches too</strong><span>It verifies yours, follows their cross-links, and works the full nine-category search on top. Best coverage, and the recommended option for a new chapter.</span></li>
+            <li><strong>Paste your links only</strong><span>It verifies what you give it and stops. Fastest, and a fair choice if you already know your city's scene and just want the registry file built.</span></li>
+            <li><strong>Claude researches from scratch</strong><span>No links needed. It goes and finds them, then brings back a verified list for you to review.</span></li>
+          </ol>
+          <p class="desc" style="margin-bottom:0;">Paste links straight into your first message and Claude takes that as your answer rather than making you pick from a menu.</p>
+        </div>
+        <p class="desc">Whichever route you take, Claude researches Luma calendars, Eventbrite organizers, universities, incubators, city government, professional groups and arts venues, and puts every source through the same five checks: it loads, it has run something in the last 90 days, it repeats on a pattern, it is a real and genuinely climate-relevant organization, and its URL is stable. <strong>Your own links get checked too.</strong> If one fails, Claude names the check it failed instead of dropping it quietly, so you can decide whether to keep it anyway.</p>
+        <p class="desc">Read what it gives you. You live there and Claude does not, so if it missed the meetup everyone goes to, say so and have it added. The registry notes whether each row came from you or from research, which is what makes the quarterly refresh easy: a row you added that has gone quiet is worth asking about, a researched one can just go.</p>
         <div class="note"><strong>Save the registry as sources.csv and upload it to your project too</strong>, alongside your city config. That is setup finished. From here it is four short sittings a week.</div>
       </li>
     </ol>

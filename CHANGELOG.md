@@ -66,3 +66,11 @@ All toolkit releases. The site reads `version.json`; this file is the human-read
 
 - Sample issue now shows three categories instead of two. Picks and opportunities are marked as collaborative: the lead chooses the events and adds the asides while the skill writes the framing around them, and the lead supplies each opportunity while the skill drafts the description
 - The remaining human blocks state what the skill does contribute, so no block overstates either side
+
+## 4.3.0 - 2026-08-03
+
+- ctc-source-map updated from the account: a new Step 0 asks whether the lead already has calendar links before any searching, and presents all three routes in full rather than a yes or no question. Paste and research on top, paste only, or research from scratch
+- User-supplied links are candidates, not registered sources: they go through the same five verification gates, and a failure names the gate rather than dropping the link quietly
+- The registry gains an origin column recording whether each row came from the user or from research, which makes the quarterly refresh easier to judge
+- Setup step 6 documents the three options, the checks applying to your own links, and the origin column
+- ctc-harvest and ctc-assemble unchanged; repackaged alongside
