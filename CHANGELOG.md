@@ -74,3 +74,9 @@ All toolkit releases. The site reads `version.json`; this file is the human-read
 - The registry gains an origin column recording whether each row came from the user or from research, which makes the quarterly refresh easier to judge
 - Setup step 6 documents the three options, the checks applying to your own links, and the origin column
 - ctc-harvest and ctc-assemble unchanged; repackaged alongside
+
+## 4.3.1 - 2026-08-03
+
+- City config template now says to create a new Claude project and upload the file to it as a context file, with context file bolded. It previously said project file, which is the wrong term and did not say which project
+- Site aligned to the same wording in setup step 4, the download list, and troubleshooting
+- Both the document and the site warn against attaching it to a single chat, where it is forgotten on the next conversation

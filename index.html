@@ -418,7 +418,7 @@
       </div>
       <div class="dl">
         <a class="name" href="downloads/city-config-template.docx" download>city-config-template.docx</a>
-        <span class="what">Your city's settings. Fill in once, then upload it to your Claude project as a context file.</span>
+        <span class="what">Your city's settings. Fill in once, then upload it to your new Claude project as a context file.</span>
         <span class="pill you">You fill in</span>
       </div>
       <div class="dl">
@@ -442,8 +442,9 @@
         <p class="desc">Open <a href="downloads/city-config-template.docx" download style="color:var(--accent);font-weight:600;">city-config-template.docx</a> and fill it in: chapter name, timezone, what counts as local, who signs the newsletter, and your footer. Ten minutes. Save it as <strong>city-config.docx</strong>.</p>
       </li>
       <li>
-        <h3>Create a Claude project and add the config as context</h3>
-        <p class="desc">Make a new project, something like "Boston Newsletter". Then <strong>upload your city-config.docx into the project's knowledge, so it becomes context for every conversation</strong> in that project. This is the step that matters: all three skills read your city settings from there, so you never have to re-explain your timezone, your scope rule, or your sign-off. Every week from now on happens inside this project.</p>
+        <h3>Create a Claude project and add the config as a context file</h3>
+        <p class="desc">Make a new project, something like "Boston Newsletter". Then <strong>upload your city-config.docx to that project as a context file</strong>, so every conversation inside it can see the file. This is the step that matters: all three skills read your city settings from there, so you never have to re-explain your timezone, your scope rule, or your sign-off. Every week from now on happens inside this project.</p>
+        <div class="note">Attach it to the <strong>project</strong>, not to a single chat. A file attached to one conversation is forgotten the next time you start a new one.</div>
       </li>
       <li>
         <h3>Check the install worked</h3>
@@ -727,7 +728,7 @@
       <details class="faq"><summary>A page is asking me to prove I am human</summary><div class="body">Claude will stop and tell you. Open the page yourself and paste what you see. Claude will not solve these.</div></details>
       <details class="faq"><summary>The finished issue sounds like a robot</summary><div class="body">The three bracketed blocks were skipped. They are the whole point, and they are the only part readers remember.</div></details>
       <details class="faq"><summary>Formatting broke when I pasted into Substack</summary><div class="body">Try the HTML file rather than the Word document, or the other way round.</div></details>
-      <details class="faq"><summary>Claude does not seem to know my city settings</summary><div class="body">Your city-config file is probably attached to a single conversation instead of the project. Add it to the project's knowledge so every conversation in that project can see it.</div></details>
+      <details class="faq"><summary>Claude does not seem to know my city settings</summary><div class="body">Your city-config file is probably attached to a single conversation instead of the project. Add it to the project itself as a context file, so every conversation in that project can see it.</div></details>
     </div>
   </div>
 </div>
