@@ -1,6 +1,6 @@
 # CTC Newsletter Toolkit — companion site
 
-Live: **https://joshuakeum9-cell.github.io/ctc-newsletter-workflow/**
+Live: **https://joshuakeum9-cell.github.io/ctc-chapter-launch-workflow/**
 
 A static companion page for the CTC Newsletter Toolkit: three Claude skills
 (`ctc-source-map`, `ctc-harvest`, `ctc-assemble`) that help a volunteer city lead
