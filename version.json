@@ -1,6 +1,6 @@
 ﻿{
-  "version": "4.3.1",
-  "date": "2026-08-03",
+  "version": "5.0.0",
+  "date": "2026-08-04",
   "toolkit": {
     "skills": ["ctc-source-map", "ctc-harvest", "ctc-assemble"],
     "updated": "2026-08-03"

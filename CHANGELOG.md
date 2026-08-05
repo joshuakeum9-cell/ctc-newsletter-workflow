@@ -80,3 +80,11 @@ All toolkit releases. The site reads `version.json`; this file is the human-read
 - City config template now says to create a new Claude project and upload the file to it as a context file, with context file bolded. It previously said project file, which is the wrong term and did not say which project
 - Site aligned to the same wording in setup step 4, the download list, and troubleshooting
 - Both the document and the site warn against attaching it to a single chat, where it is forgotten on the next conversation
+
+## 5.0.0 - 2026-08-04
+
+- The site is now a chapter launch playbook rather than a newsletter toolkit. Two parts: branding first, then the newsletter
+- New branding section: the house logo prompt with the city filled in, reference logos to attach, guidance on picking among the ten concepts, and an explicit gate that nothing ships until the CTC founders sign it off
+- Reference images are the real Chicago and London chapter logos, served as full lockups and icon-only crops
+- The city field moved above both parts and now fills four prompts instead of three
+- Nav, page title, hero and footer renamed. The newsletter half is unchanged
