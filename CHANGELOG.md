@@ -103,3 +103,10 @@ All toolkit releases. The site reads `version.json`; this file is the human-read
 - Added a denoise pass that snaps compression noise onto the mark's real colours, restoring flat colour fields and cutting the icons from 922KB to 36KB
 - Set is now three chapters with no repeats: Chicago and London lockups, plus Chicago, London and New York icons. The Cities parent mark is dropped
 - New York is icon only, because no New York lockup is published
+
+## 5.3.0 - 2026-08-04
+
+- Removed the assigned days from the weekly run. Harvest on Thursday, cut on Friday, write on Monday and send on Tuesday are now simply steps one to four, run back to back or spread out as the lead prefers. Only the send day is worth keeping fixed, and that is their choice
+- Section ids renamed from days to collect, cut, write and send. Overview cards, headings, lane diagram and prose all updated
+- Cut the time estimate to match reality: per step now 10, 15, 20 and 10 minutes instead of 15, 30, 45 and 15, and the headline reads thirty minutes to an hour rather than two hours a week
+- Day names inside the sample issue are untouched, since those are event dates rather than instructions
