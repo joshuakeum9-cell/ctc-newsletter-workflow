@@ -95,3 +95,11 @@ All toolkit releases. The site reads `version.json`; this file is the human-read
 - Icon crops are located by the icon's own palette and a contiguous column walk, instead of assuming a square at the left edge, which had produced off-centre crops
 - Added the two canonical marks from the logo generator skill: the Climate Tech Cities parent mark and Climate Tech New York. Four chapters shown, six files to download
 - Chicago and London are high resolution and carry the proportions; Cities and New York exist only at small size and render at native size rather than upscaling
+
+## 5.2.0 - 2026-08-04
+
+- Fixed the brand reference resolution. The previous set was palette quantised to 32 colours with dithering, which speckles anti-aliased edges on flat vector marks and reads as low resolution. Quantisation removed
+- Icons now come from the Climate Tech Cities CDN, the files the live site serves: Chicago and London at 2500px, New York at 964px, replacing a 231px New York
+- Added a denoise pass that snaps compression noise onto the mark's real colours, restoring flat colour fields and cutting the icons from 922KB to 36KB
+- Set is now three chapters with no repeats: Chicago and London lockups, plus Chicago, London and New York icons. The Cities parent mark is dropped
+- New York is icon only, because no New York lockup is published
