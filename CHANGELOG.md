@@ -88,3 +88,10 @@ All toolkit releases. The site reads `version.json`; this file is the human-read
 - Reference images are the real Chicago and London chapter logos, served as full lockups and icon-only crops
 - The city field moved above both parts and now fills four prompts instead of three
 - Nav, page title, hero and footer renamed. The newsletter half is unchanged
+
+## 5.1.0 - 2026-08-04
+
+- Brand reference logos are now cropped tight to the artwork with no white margin, using the alpha channel on the transparent sources
+- Icon crops are located by the icon's own palette and a contiguous column walk, instead of assuming a square at the left edge, which had produced off-centre crops
+- Added the two canonical marks from the logo generator skill: the Climate Tech Cities parent mark and Climate Tech New York. Four chapters shown, six files to download
+- Chicago and London are high resolution and carry the proportions; Cities and New York exist only at small size and render at native size rather than upscaling

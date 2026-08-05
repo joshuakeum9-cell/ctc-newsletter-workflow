@@ -135,6 +135,9 @@
   /* logo references */
   .logo-fig { background: var(--white); border-radius: 12px; box-shadow: var(--card-shadow); padding: 18px; margin: 0; }
   .logo-fig img { width: 100%; height: auto; display: block; border-radius: 4px; }
+  /* low-resolution originals: show at native size rather than upscaling to mush */
+  .logo-fig.native { display: flex; flex-direction: column; justify-content: center; }
+  .logo-fig.native img { width: auto; max-width: 100%; margin: 0 auto; image-rendering: auto; }
   .logo-fig figcaption { font-size: 13.5px; color: var(--ink-soft); margin-top: 12px; font-weight: 500; }
 
   /* ---------- steps ---------- */
@@ -362,11 +365,19 @@
         <figcaption>Climate Tech Chicago</figcaption>
       </figure>
       <figure class="logo-fig">
-        <img src="downloads/brand/ctc-london.png" alt="Climate Tech London logo: the same square lavender icon format with an abstracted Big Ben silhouette, beside the words Climate Tech London stacked on three lines." loading="lazy" />
+        <img src="downloads/brand/ctc-london.png" alt="Climate Tech London logo: the same square lavender icon format with an abstracted clock tower silhouette, beside the words Climate Tech London stacked on three lines." loading="lazy" />
         <figcaption>Climate Tech London</figcaption>
       </figure>
+      <figure class="logo-fig native">
+        <img src="downloads/brand/ctc-cities.png" alt="Climate Tech Cities master logo: the square lavender icon with a generic stepped building silhouette, beside the words Climate Tech Cities stacked on three lines." loading="lazy" />
+        <figcaption>Climate Tech Cities · the parent mark every chapter descends from</figcaption>
+      </figure>
+      <figure class="logo-fig native">
+        <img src="downloads/brand/ctc-new-york.png" alt="Climate Tech New York logo: the square lavender icon with an abstracted tower silhouette, beside the words Climate Tech New York stacked on three lines." loading="lazy" />
+        <figcaption>Climate Tech New York</figcaption>
+      </figure>
     </div>
-    <p class="desc">Same lavender field, same orange horizon, same two greens, same wordmark. Chicago gets the Willis Tower, London gets the clock tower. That is the whole system.</p>
+    <p class="desc">Same lavender field, same orange horizon, same two greens, same wordmark, same proportions. Chicago gets the Willis Tower, London gets the clock tower, New York gets its own tower. Only the silhouette moves. That is the whole system, and matching it is the entire job.</p>
 
     <ol class="steps" style="margin-top:36px;">
       <li>
@@ -381,12 +392,19 @@
       <li>
         <h3>Attach the reference logos</h3>
         <p class="desc">Attach these to the same ChatGPT message. The prompt describes the house style in words, but the references are what actually hold it: without them you get something in the right colours and the wrong proportions.</p>
+        <p class="desc" style="margin-bottom:6px;"><strong>Attach these four.</strong> Between them they pin down the proportions, the palette and the range of silhouettes.</p>
         <ul class="dl-list">
-          <li><span><a href="downloads/brand/ctc-chicago.png" download>ctc-chicago.png</a> · full lockup, icon and wordmark</span><span class="pill time">reference</span></li>
-          <li><span><a href="downloads/brand/ctc-london.png" download>ctc-london.png</a> · full lockup, icon and wordmark</span><span class="pill time">reference</span></li>
-          <li><span><a href="downloads/brand/ctc-chicago-icon.png" download>ctc-chicago-icon.png</a> · icon only, for the silhouette treatment</span><span class="pill time">reference</span></li>
-          <li><span><a href="downloads/brand/ctc-london-icon.png" download>ctc-london-icon.png</a> · icon only, for the silhouette treatment</span><span class="pill time">reference</span></li>
+          <li><span><a href="downloads/brand/ctc-chicago.png" download>ctc-chicago.png</a> · full lockup, high resolution</span><span class="pill time">best reference</span></li>
+          <li><span><a href="downloads/brand/ctc-london.png" download>ctc-london.png</a> · full lockup, high resolution</span><span class="pill time">best reference</span></li>
+          <li><span><a href="downloads/brand/ctc-cities.png" download>ctc-cities.png</a> · the parent mark</span></li>
+          <li><span><a href="downloads/brand/ctc-new-york.png" download>ctc-new-york.png</a> · New York chapter</span></li>
         </ul>
+        <p class="desc" style="margin-bottom:6px;margin-top:20px;">Optional, and useful if the icon keeps coming back too busy. These are the icon squares on their own, with the wordmark cropped away:</p>
+        <ul class="dl-list">
+          <li><span><a href="downloads/brand/ctc-chicago-icon.png" download>ctc-chicago-icon.png</a> · icon only</span></li>
+          <li><span><a href="downloads/brand/ctc-london-icon.png" download>ctc-london-icon.png</a> · icon only</span></li>
+        </ul>
+        <div class="note">The Cities and New York marks are the canonical originals but only exist at small size, so lean on Chicago and London for proportions and use those two to confirm you have the right family.</div>
       </li>
       <li>
         <h3>Ask for ten concepts, then pick one</h3>
